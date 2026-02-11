@@ -1,0 +1,18 @@
+{
+  "id": "price_tcc_business",
+  "object": "price",
+  "active": true,
+  "currency": "usd",
+  "product": "prod_tcc_sovereignty",
+  "recurring": {
+    "interval": "month",
+    "interval_count": 1
+  },
+  "type": "recurring",
+  "unit_amount": 2900,
+  "unit_amount_decimal": "2900",
+  "metadata": {
+    "tier": "business",
+    "compression_depth": "68966"
+  }
+}
