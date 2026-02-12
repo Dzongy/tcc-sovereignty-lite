@@ -651,11 +651,9 @@ lastTap=now;
 /* ===== INIT ===== */
 async function init(){
 try{await initDB()}catch(e){console.error('DB init error:',e)}
-/* Auto-provision brains via bridge or local keys */
-await autoProvisionBrains();
-initializeSettings();
+try{await autoProvisionBrains()}catch(e){console.warn('autoProvisionBrains skipped:',e)}
+try{initializeSettings()}catch(e){console.warn('initializeSettings skipped:',e)}
 setupMobileInput();
-/* Load existing messages */
 try{
 const msgs=await getMessages();
 if(msgs.length>0){
