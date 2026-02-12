@@ -402,6 +402,7 @@ return html;
 /* ===== MESSAGE RENDERING ===== */
 function renderMessage(role,content){
 const area=document.getElementById('messagesArea');
+if(!area)return;
 const empty=area.querySelector('.empty-state');
 if(empty)empty.remove();
 const div=document.createElement('div');
@@ -422,7 +423,8 @@ area.scrollTop=area.scrollHeight;
 async function sendMessage(){
   console.log('sendMessage called');
   try{
-    const input=document.getElementById('userInput');
+    const input=document.getElementById('messageInput');
+    if(!input){console.log('messageInput not found');return;}
     const text=input.value.trim();
     console.log('Input text:', text);
     if(!text){console.log('Empty input, returning');return;}
@@ -430,7 +432,7 @@ async function sendMessage(){
     
     // Remove empty state if present
     const area=document.getElementById('messagesArea');
-    const empty=area.querySelector('.empty-state');
+    const empty=area?area.querySelector('.empty-state'):null;
     if(empty)empty.remove();
     
     // Show user message immediately
@@ -499,17 +501,18 @@ setTimeout(()=>toast.remove(),4000);
 }
 function switchPage(pageId){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(pageId).classList.add('active');
+var _pg=document.getElementById(pageId);if(_pg)_pg.classList.add('active');
 document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-document.querySelector('[data-page="'+pageId+'"]').classList.add('active');
+var _nav=document.querySelector('[data-page="'+pageId+'"]');if(_nav)_nav.classList.add('active');
 }
 function togglePw(n){
 const inp=document.getElementById('apiKey'+n);
+if(!inp)return;
 inp.type=inp.type==='password'?'text':'password';
 }
 function saveSettings(){
 for(let i=1;i<=7;i++){
-const val=document.getElementById('apiKey'+i).value;
+var _keyEl=document.getElementById('apiKey'+i);if(!_keyEl)return;const val=_keyEl.value;
 if(val&&val!=='bridge-managed'&&val!=='[Bridge Managed]'){
 localStorage.setItem('apiKey'+i,val);
 localStorage.removeItem('bridgeKey'+i);
@@ -595,7 +598,7 @@ try{
 await clearMessages();
 for(let i=1;i<=7;i++)localStorage.removeItem('apiKey'+i);
 document.querySelectorAll('.setting-input').forEach(inp=>inp.value='');
-document.getElementById('messagesArea').innerHTML='<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>Zenith Awaits</h3><p>All 7 brains fused into one mind. Speak and Zenith responds with the full mesh.</p></div>';
+var _mArea=document.getElementById('messagesArea');if(_mArea)_mArea.innerHTML='<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>Zenith Awaits</h3><p>All 7 brains fused into one mind. Speak and Zenith responds with the full mesh.</p></div>';
 updateBrainStatus();
 showSaved();
 }catch(e){showError('Clear failed: '+e.message)}
