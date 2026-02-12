@@ -1,0 +1,18 @@
+{
+  "id": "price_tcc_pro",
+  "object": "price",
+  "active": true,
+  "currency": "usd",
+  "product": "prod_tcc_sovereignty",
+  "recurring": {
+    "interval": "month",
+    "interval_count": 1
+  },
+  "type": "recurring",
+  "unit_amount": 9900,
+  "unit_amount_decimal": "9900",
+  "metadata": {
+    "tier": "pro",
+    "compression_depth": "68966"
+  }
+}
