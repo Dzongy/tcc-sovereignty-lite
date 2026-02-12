@@ -1,228 +1,531 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,interactive-widget=resizes-content"><meta name="theme-color" content="#0a0a1a"><meta name="description" content="TCC SOVEREIGNTY LITE - 7-Brain Neural Mesh AI Chat Dashboard"><title>TCC SOVEREIGNTY LITE</title><link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVENDIFNvdmVyZWlnbnR5IExpdGUiLCJzaG9ydF9uYW1lIjoiVENDIFNvdmVyZWlnbnR5Iiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMWEiLCJ0aGVtZV9jb2xvciI6IiMwYTBhMWEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ2NpcmNsZSBjeD0nNTAnIGN5PSc1MCcgcj0nNDUnIGZpbGw9JyUyMzAwZjBmZicvJTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg-primary:#0a0a1a;--bg-secondary:#12121f;--bg-tertiary:#1a1a2e;--cyan:#00f0ff;--purple:#9333ea;--magenta:#ff00aa;--gold:#ffd700;--red:#ff3366;--green:#00ff88;--blue:#4488ff;--text-primary:#ffffff;--text-secondary:#b4b4c8;--shadow-glow:0 0 20px rgba(0,240,255,0.3);--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;min-height:100vh;padding-bottom:env(safe-area-inset-bottom);position:relative}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at top,rgba(147,51,234,0.1) 0%,transparent 50%),radial-gradient(ellipse at bottom,rgba(0,240,255,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}.cosmic-particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}.cosmic-particles::before,.cosmic-particles::after{content:'';position:absolute;width:2px;height:2px;background:var(--cyan);border-radius:50%;animation:float 20s infinite ease-in-out;box-shadow:0 0 10px var(--cyan)}.cosmic-particles::before{top:20%;left:10%;animation-delay:0s;animation-duration:15s}.cosmic-particles::after{top:60%;left:80%;animation-delay:5s;animation-duration:18s}@keyframes float{0%,100%{transform:translate(0,0) scale(1);opacity:0.3}25%{transform:translate(100px,-100px) scale(1.5);opacity:0.6}50%{transform:translate(200px,50px) scale(1);opacity:0.4}75%{transform:translate(50px,150px) scale(1.3);opacity:0.5}}.container{position:relative;z-index:2;max-width:100%;margin:0 auto;padding:0 0 80px 0;min-height:100vh}header{padding:max(20px,env(safe-area-inset-top)) 20px 20px;text-align:center;position:relative;background:linear-gradient(180deg,var(--bg-secondary) 0%,transparent 100%);border-bottom:1px solid rgba(0,240,255,0.1)}.cosmic-orb{width:60px;height:60px;margin:0 auto 15px;position:relative;animation:pulse 3s infinite ease-in-out}.cosmic-orb::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;background:radial-gradient(circle,var(--cyan) 0%,var(--purple) 50%,var(--magenta) 100%);border-radius:50%;animation:rotate 10s linear infinite}.cosmic-orb::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;background:var(--bg-primary);border-radius:50%;box-shadow:inset 0 0 20px rgba(0,240,255,0.5)}@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:0.8}}@keyframes rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}h1{font-size:clamp(24px,6vw,36px);font-weight:800;letter-spacing:2px;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:2px 2px 0 rgba(0,0,0,0.5),4px 4px 0 rgba(0,0,0,0.3),6px 6px 0 rgba(0,0,0,0.2);filter:drop-shadow(0 0 10px rgba(0,240,255,0.5));margin-bottom:8px;position:relative}.subtitle{font-size:clamp(11px,3vw,14px);color:var(--text-secondary);letter-spacing:3px;text-transform:uppercase;font-weight:600}.page{display:none;padding:20px;animation:fadeIn 0.3s ease-in-out}.page.active{display:block}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.brain-selector{margin-bottom:20px;position:relative}.brain-selector select{width:100%;padding:15px 40px 15px 15px;background:var(--bg-secondary);border:2px solid var(--cyan);border-radius:12px;color:var(--text-primary);font-size:16px;font-weight:600;cursor:pointer;appearance:none;transition:var(--transition);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:24px}.brain-selector select:focus{outline:none;border-color:var(--magenta);box-shadow:var(--shadow-glow)}.chat-container{display:flex;flex-direction:column;height:calc(100vh - 280px);max-height:600px;background:var(--bg-secondary);border-radius:16px;overflow:hidden;border:1px solid rgba(0,240,255,0.2)}.messages-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}.messages-area::-webkit-scrollbar{width:6px}.messages-area::-webkit-scrollbar-track{background:var(--bg-tertiary)}.messages-area::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px}.message{display:flex;gap:12px;animation:messageSlide 0.3s ease-out;max-width:85%}@keyframes messageSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.message.user{align-self:flex-end;flex-direction:row-reverse}.message.assistant{align-self:flex-start}.message-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.3)}.message.user .message-avatar{background:linear-gradient(135deg,var(--magenta),var(--purple))}.message.assistant .message-avatar{background:linear-gradient(135deg,var(--cyan),var(--blue))}.message-content{flex:1;padding:12px 16px;border-radius:12px;position:relative;word-wrap:break-word;line-height:1.6}.message.user .message-content{background:var(--bg-tertiary);border:1px solid rgba(255,0,170,0.3)}.message.assistant .message-content{background:var(--bg-primary);border-left:3px solid var(--cyan);box-shadow:0 2px 8px rgba(0,0,0,0.2)}.message-content p{margin-bottom:10px}.message-content p:last-child{margin-bottom:0}.message-content strong{color:var(--cyan);font-weight:700}.message-content code{background:rgba(0,240,255,0.1);padding:2px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:14px;color:var(--cyan)}.message-content pre{background:var(--bg-tertiary);padding:12px;border-radius:8px;overflow-x:auto;margin:10px 0;border:1px solid rgba(0,240,255,0.2)}.message-content pre code{background:none;padding:0;color:var(--text-primary)}.message-content ul,.message-content ol{margin-left:20px;margin-bottom:10px}.message-content li{margin-bottom:5px}.copy-btn{position:absolute;top:8px;right:8px;background:rgba(0,240,255,0.2);border:none;padding:6px 10px;border-radius:6px;cursor:pointer;color:var(--cyan);font-size:11px;opacity:0;transition:var(--transition)}.message-content:hover .copy-btn{opacity:1}.copy-btn:hover{background:rgba(0,240,255,0.4)}.copy-btn:active{transform:scale(0.95)}.typing-indicator{display:none;align-items:center;gap:8px;padding:12px 16px;background:var(--bg-primary);border-left:3px solid var(--cyan);border-radius:12px;max-width:100px;align-self:flex-start}.typing-indicator.active{display:flex}.typing-indicator span{width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:typing 1.4s infinite ease-in-out}.typing-indicator span:nth-child(2){animation-delay:0.2s}.typing-indicator span:nth-child(3){animation-delay:0.4s}@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-10px);opacity:1}}.input-area{padding:16px;background:var(--bg-tertiary);border-top:1px solid rgba(0,240,255,0.2);display:flex;gap:12px;align-items:flex-end}.input-area textarea{flex:1;padding:12px 16px;background:var(--bg-tertiary);border:2px solid rgba(0,240,255,0.3);border-radius:12px;color:var(--text-primary);font-size:16px;font-family:inherit;resize:none;min-height:44px;max-height:120px;line-height:1.4;-webkit-appearance:none;appearance:none;touch-action:auto;-webkit-user-select:text;user-select:text;-webkit-tap-highlight-color:transparent}.input-area textarea:focus{outline:none;border-color:var(--cyan);box-shadow:var(--shadow-glow)}.input-area textarea::placeholder{color:var(--text-secondary)}.send-btn{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;padding:12px 20px;border-radius:12px;color:var(--text-primary);font-weight:600;cursor:pointer;transition:var(--transition);min-width:60px;min-height:44px;display:flex;align-items:center;justify-content:center}.send-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,240,255,0.4)}.send-btn:active{transform:translateY(0)}.send-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}.brain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;padding:20px}.brain-card{background:var(--bg-secondary);border-radius:16px;padding:20px;text-align:center;cursor:pointer;transition:var(--transition);border:2px solid transparent;position:relative;overflow:hidden}.brain-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.05));opacity:0;transition:var(--transition)}.brain-card:hover::before{opacity:1}.brain-card:hover{transform:translateY(-5px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}.brain-card.active{border-color:var(--cyan);box-shadow:var(--shadow-glow)}.brain-icon{width:60px;height:60px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;position:relative;z-index:1}.brain-card[data-brain="1"] .brain-icon{background:linear-gradient(135deg,var(--cyan),rgba(0,240,255,0.5));box-shadow:0 0 20px var(--cyan)}.brain-card[data-brain="2"] .brain-icon{background:linear-gradient(135deg,var(--purple),rgba(147,51,234,0.5));box-shadow:0 0 20px var(--purple)}.brain-card[data-brain="3"] .brain-icon{background:linear-gradient(135deg,var(--gold),rgba(255,215,0,0.5));box-shadow:0 0 20px var(--gold)}.brain-card[data-brain="4"] .brain-icon{background:linear-gradient(135deg,var(--red),rgba(255,51,102,0.5));box-shadow:0 0 20px var(--red)}.brain-card[data-brain="5"] .brain-icon{background:linear-gradient(135deg,var(--green),rgba(0,255,136,0.5));box-shadow:0 0 20px var(--green)}.brain-card[data-brain="6"] .brain-icon{background:linear-gradient(135deg,var(--blue),rgba(68,136,255,0.5));box-shadow:0 0 20px var(--blue)}.brain-card[data-brain="7"] .brain-icon{background:linear-gradient(135deg,var(--magenta),rgba(255,0,170,0.5));box-shadow:0 0 20px var(--magenta)}.brain-name{font-size:16px;font-weight:700;margin-bottom:6px;position:relative;z-index:1}.brain-desc{font-size:12px;color:var(--text-secondary);margin-bottom:8px;position:relative;z-index:1}.brain-status{display:inline-block;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:600;position:relative;z-index:1}.brain-status.connected{background:rgba(0,255,136,0.2);color:var(--green)}.brain-status.disconnected{background:rgba(255,51,102,0.2);color:var(--red)}.settings-section{background:var(--bg-secondary);border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid rgba(0,240,255,0.1)}.settings-section h3{font-size:18px;margin-bottom:16px;color:var(--cyan);display:flex;align-items:center;gap:8px}.settings-section h3::before{content:'';width:4px;height:20px;background:linear-gradient(180deg,var(--cyan),var(--purple));border-radius:2px}.setting-item{margin-bottom:16px}.setting-item:last-child{margin-bottom:0}.setting-label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text-secondary)}.setting-input{width:100%;padding:12px;background:var(--bg-primary);border:2px solid rgba(0,240,255,0.3);border-radius:8px;color:var(--text-primary);font-size:14px;transition:var(--transition)}.setting-input:focus{outline:none;border-color:var(--cyan);box-shadow:var(--shadow-glow)}.input-group{position:relative}.input-group .toggle-password{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cyan);cursor:pointer;padding:4px;font-size:20px}.setting-select{width:100%;padding:12px;background:var(--bg-primary);border:2px solid rgba(0,240,255,0.3);border-radius:8px;color:var(--text-primary);font-size:14px;cursor:pointer;transition:var(--transition)}.setting-select:focus{outline:none;border-color:var(--cyan);box-shadow:var(--shadow-glow)}.btn{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;padding:14px 24px;border-radius:12px;color:var(--text-primary);font-weight:600;cursor:pointer;transition:var(--transition);font-size:15px;min-height:44px;width:100%}.btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,240,255,0.4)}.btn:active{transform:translateY(0)}.btn.secondary{background:var(--bg-tertiary);border:2px solid var(--cyan)}.btn.danger{background:linear-gradient(135deg,var(--red),rgba(255,51,102,0.8))}.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:12px}.about-content{background:var(--bg-secondary);border-radius:16px;padding:30px;text-align:center;border:1px solid rgba(0,240,255,0.2)}.about-content h2{font-size:28px;margin-bottom:8px;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.about-content .version{font-size:14px;color:var(--text-secondary);margin-bottom:24px}.about-content p{margin-bottom:16px;line-height:1.8;color:var(--text-secondary)}.about-content .credits{margin-top:24px;padding-top:24px;border-top:1px solid rgba(0,240,255,0.2);font-weight:600;color:var(--cyan)}.about-content a{color:var(--cyan);text-decoration:none;transition:var(--transition);display:inline-block;margin-top:16px;padding:12px 24px;background:rgba(0,240,255,0.1);border-radius:8px;border:1px solid var(--cyan)}.about-content a:hover{background:rgba(0,240,255,0.2);transform:translateY(-2px)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg-secondary);border-top:1px solid rgba(0,240,255,0.2);padding:8px 0 max(8px,env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center;z-index:100;backdrop-filter:blur(10px)}.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;cursor:pointer;transition:var(--transition);background:none;border:none;color:var(--text-secondary);min-height:44px}.nav-item svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.nav-item span{font-size:11px;font-weight:600}.nav-item.active{color:var(--cyan)}.nav-item:hover{color:var(--cyan)}.error-toast{position:fixed;top:max(20px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:var(--red);color:white;padding:16px 24px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.4);z-index:1000;display:none;max-width:90%;text-align:center;animation:slideDown 0.3s ease-out}.error-toast.show{display:block}@keyframes slideDown{from{transform:translate(-50%,-100px);opacity:0}to{transform:translate(-50%,0);opacity:1}}.success-toast{position:fixed;top:max(20px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:var(--green);color:white;padding:16px 24px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.4);z-index:1000;display:none;max-width:90%;text-align:center;animation:slideDown 0.3s ease-out}.success-toast.show{display:block}.toggle-switch{position:relative;display:inline-block;width:60px;height:32px}.toggle-switch input{opacity:0;width:0;height:0}.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--bg-tertiary);transition:var(--transition);border-radius:32px;border:2px solid rgba(0,240,255,0.3)}.toggle-slider:before{position:absolute;content:'';height:24px;width:24px;left:3px;bottom:3px;background:var(--text-secondary);transition:var(--transition);border-radius:50%}.toggle-switch input:checked+.toggle-slider{background:linear-gradient(135deg,var(--cyan),var(--purple));border-color:var(--cyan)}.toggle-switch input:checked+.toggle-slider:before{transform:translateX(28px);background:white}.theme-toggle-container{display:flex;align-items:center;justify-content:space-between}.empty-state{text-align:center;padding:60px 20px;color:var(--text-secondary)}.empty-state svg{width:80px;height:80px;margin-bottom:20px;opacity:0.3}.empty-state h3{font-size:20px;margin-bottom:12px;color:var(--text-primary)}.empty-state p{font-size:14px;line-height:1.6}@media(min-width:768px){.container{max-width:1200px;padding:0 20px 80px}.brain-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:24px}.chat-container{max-height:700px}h1{font-size:42px}.message{max-width:70%}}@media(max-width:374px){h1{font-size:20px}.subtitle{font-size:10px}.brain-grid{grid-template-columns:1fr}.bottom-nav{padding:4px 0 max(4px,env(safe-area-inset-bottom))}}.keyboard-open .container{padding-bottom:0}.keyboard-open .bottom-nav{display:none}.keyboard-open .input-area{position:fixed;bottom:0;left:0;right:0;border-radius:0;z-index:999;padding:8px 12px;background:var(--bg-secondary);border-top:2px solid rgba(0,240,255,0.3)}.keyboard-open .chat-container{padding-bottom:70px}.keyboard-open .messages-area{max-height:calc(100vh - 200px)}@supports(height:100dvh){.chat-container{height:auto}.messages-area{max-height:calc(100dvh - 280px)}.keyboard-open .messages-area{max-height:calc(100dvh - 160px)}}@media (pointer:coarse){.input-area textarea{touch-action:auto !important;-webkit-user-select:text !important;user-select:text !important;cursor:text}}</style></head><body><div class="cosmic-particles"></div><div class="container"><header><div class="cosmic-orb"></div><h1>TCC SOVEREIGNTY LITE</h1><div class="subtitle">7-Brain Neural Mesh ÃÂ¢ÃÂÃÂ Sovereign AI Command</div></header><div id="chatPage" class="page active"><div class="brain-selector"><select id="brainSelect"><option value="1" data-color="#00f0ff">Brain 1: ZENITH (Claude) ÃÂ¢ÃÂÃÂ General Intelligence</option><option value="2" data-color="#9333ea">Brain 2: GROK ÃÂ¢ÃÂÃÂ Code & Logic</option><option value="3" data-color="#ffd700">Brain 3: ORACLE (ChatGPT) ÃÂ¢ÃÂÃÂ Knowledge & Research</option><option value="4" data-color="#ff3366">Brain 4: PHANTOM (Llama/Groq) ÃÂ¢ÃÂÃÂ Creative & Art</option><option value="5" data-color="#00ff88">Brain 5: SPECTRA (Gemini) ÃÂ¢ÃÂÃÂ Data & Analysis</option><option value="6" data-color="#4488ff">Brain 6: ECHO (DeepSeek) ÃÂ¢ÃÂÃÂ Language & Translation</option><option value="7" data-color="#ff00aa">Brain 7: SCOUT ÃÂ¢ÃÂÃÂ Strategy & Planning</option></select></div><div class="chat-container"><div class="messages-area" id="messagesArea"><div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>No messages yet</h3><p>Start a conversation with your selected AI brain</p></div></div><div class="input-area"><textarea id="messageInput" inputmode="text" autocomplete="off" autocorrect="on" autocapitalize="sentences" enterkeyhint="send" placeholder="Type your message..." rows="1" style="touch-action:auto;-webkit-user-select:text;user-select:text"></textarea><button class="send-btn" id="sendBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg></button></div></div></div><div id="brainsPage" class="page"><div class="brain-grid"><div class="brain-card" data-brain="1"><div class="brain-icon">Z</div><div class="brain-name">ZENITH</div><div class="brain-desc">General Intelligence</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="2"><div class="brain-icon">G</div><div class="brain-name">GROK</div><div class="brain-desc">xAI Ã¢ÂÂ Code & Logic</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="3"><div class="brain-icon">O</div><div class="brain-name">ORACLE</div><div class="brain-desc">ChatGPT Ã¢ÂÂ Knowledge & Research</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="4"><div class="brain-icon">P</div><div class="brain-name">PHANTOM</div><div class="brain-desc">Llama/Groq Ã¢ÂÂ Creative & Art</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="5"><div class="brain-icon">G</div><div class="brain-name">SPECTRA</div><div class="brain-desc">Gemini Ã¢ÂÂ Data & Analysis</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="6"><div class="brain-icon">D</div><div class="brain-name">ECHO</div><div class="brain-desc">DeepSeek Ã¢ÂÂ Language & Translation</div><div class="brain-status disconnected">Disconnected</div></div><div class="brain-card" data-brain="7"><div class="brain-icon">S</div><div class="brain-name">SCOUT</div><div class="brain-desc">Scout Ã¢ÂÂ Strategy & Planning</div><div class="brain-status disconnected">Disconnected</div></div></div></div><div id="settingsPage" class="page"><div class="settings-section"><h3>Brain API Keys & Endpoints</h3><p style="color:var(--text-secondary);font-size:13px;margin-bottom:16px">Each brain uses its own API endpoint. Set your API key for each brain you want to use.</p><div class="setting-item"><label class="setting-label">Brain 1: ZENITH (Claude) Ã¢ÂÂ api.anthropic.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey1" placeholder="Enter Anthropic API key"><button class="toggle-password" data-target="apiKey1">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 2: GROK Ã¢ÂÂ api.x.ai</label><div class="input-group"><input type="password" class="setting-input" id="apiKey2" placeholder="Enter xAI API key"><button class="toggle-password" data-target="apiKey2">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 3: ORACLE (ChatGPT) (ChatGPT) Ã¢ÂÂ api.openai.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey3" placeholder="Enter OpenAI API key"><button class="toggle-password" data-target="apiKey3">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 4: PHANTOM (Llama/Groq) (Llama/Groq) Ã¢ÂÂ api.groq.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey4" placeholder="Enter Groq API key"><button class="toggle-password" data-target="apiKey4">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 5: SPECTRA (Gemini) (Gemini) Ã¢ÂÂ generativelanguage.googleapis.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey5" placeholder="Enter Google AI API key"><button class="toggle-password" data-target="apiKey5">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 6: ECHO (DeepSeek) (DeepSeek) Ã¢ÂÂ api.deepseek.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey6" placeholder="Enter DeepSeek API key"><button class="toggle-password" data-target="apiKey6">Ã°ÂÂÂÃ¯Â¸Â</button></div></div><div class="setting-item"><label class="setting-label">Brain 7: SCOUT Ã¢ÂÂ Placeholder (not yet available)</label><div class="input-group"><input type="password" class="setting-input" id="apiKey7" placeholder="Coming soon" disabled><button class="toggle-password" data-target="apiKey7" disabled>Ã°ÂÂÂÃ¯Â¸Â</button></div></div></div><div class="settings-section"><h3>Appearance</h3><div class="theme-toggle-container"><span>Dark Theme</span><label class="toggle-switch"><input type="checkbox" id="themeToggle" checked><span class="toggle-slider"></span></label></div></div><div class="settings-section"><h3>Data Management</h3><button class="danger-btn" id="clearDataBtn">Clear All Chat Data</button></div></div><div id="aboutPage" class="page"><div class="about-content"><h2>TCC SOVEREIGNTY LITE</h2><div class="version">Version 1.0.0</div><p>A powerful 7-Brain AI Chat Dashboard designed for sovereign control over multiple AI personas. Each brain specializes in a different domain, providing expert assistance across various tasks.</p><p>Built with cutting-edge web technologies, featuring offline support, persistent storage, and a stunning cosmic interface.</p><div class="credits">Built by TCC Hive Mind</div><a href="https://github.com/Dzongy/tcc-sovereignty-lite" target="_blank" rel="noopener noreferrer">View on GitHub ÃÂ¢ÃÂÃÂ</a></div></div><nav class="bottom-nav"><button class="nav-item active" data-page="chatPage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Chat</span></button><button class="nav-item" data-page="brainsPage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2zM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"></path></svg><span>Brains</span></button><button class="nav-item" data-page="settingsPage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path></svg><span>Settings</span></button><button class="nav-item" data-page="aboutPage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg><span>About</span></button></nav></div><div class="error-toast" id="errorToast"></div><div class="success-toast" id="successToast"></div><script>const DB_NAME='tcc-sovereignty-db';const DB_VERSION=1;const STORE_NAME='messages';let db;
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,interactive-widget=resizes-content"><meta name="theme-color" content="#0a0a1a"><meta name="description" content="TCC SOVEREIGNTY LITE - Zenith Unified Mind"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>TCC SOVEREIGNTY LITE</title><link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVENDIFNvdmVyZWlnbnR5IExpdGUiLCJzaG9ydF9uYW1lIjoiVENDIFNvdmVyZWlnbnR5Iiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMWEiLCJ0aGVtZV9jb2xvciI6IiMwYTBhMWEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ2NpcmNsZSBjeD0nNTAnIGN5PSc1MCcgcj0nNDUnIGZpbGw9JyUyMzAwZjBmZicvJTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="><style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-primary:#0a0a1a;--bg-secondary:#12121f;--bg-tertiary:#1a1a2e;--cyan:#00f0ff;--purple:#9333ea;--magenta:#ff00aa;--gold:#ffd700;--red:#ff3366;--green:#00ff88;--blue:#4488ff;--text-primary:#ffffff;--text-secondary:#b4b4c8;--shadow-glow:0 0 20px rgba(0,240,255,0.3);--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;min-height:100vh;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom,0);position:relative;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at top,rgba(147,51,234,0.1) 0%,transparent 50%),radial-gradient(ellipse at bottom,rgba(0,240,255,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
+.cosmic-container{max-width:800px;margin:0 auto;padding:16px;padding-bottom:calc(80px + env(safe-area-inset-bottom,0));position:relative;z-index:1}
+/* Header */
+.header{text-align:center;padding:20px 16px 12px;margin-bottom:16px}
+.header h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.header .subtitle{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.zenith-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(0,240,255,0.15),rgba(147,51,234,0.15));border:1px solid rgba(0,240,255,0.3);border-radius:20px;padding:6px 16px;margin-top:10px;font-size:12px;color:var(--cyan);font-weight:600;letter-spacing:1px}
+.zenith-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 4px var(--cyan)}50%{opacity:0.5;box-shadow:0 0 12px var(--cyan)}}
+/* Navigation */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg-secondary);border-top:1px solid rgba(0,240,255,0.2);display:flex;justify-content:space-around;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0));z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 12px;cursor:pointer;border:none;background:none;color:var(--text-secondary);font-size:10px;font-weight:600;transition:var(--transition);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nav-item.active{color:var(--cyan)}
+.nav-item svg{width:20px;height:20px}
+/* Pages */
+.page{display:none;animation:fadeIn 0.3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes messageSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Chat container */
+.chat-container{display:flex;flex-direction:column;height:calc(100vh - 220px);height:calc(100dvh - 220px);background:var(--bg-secondary);border-radius:16px;overflow:hidden;border:1px solid rgba(0,240,255,0.2)}
+.messages-area{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.messages-area::-webkit-scrollbar{width:4px}
+.messages-area::-webkit-scrollbar-track{background:var(--bg-tertiary)}
+.messages-area::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px}
+/* Messages */
+.message{display:flex;gap:10px;animation:messageSlide 0.3s ease-out;max-width:90%}
+.message.user{align-self:flex-end;flex-direction:row-reverse}
+.message.assistant{align-self:flex-start}
+.message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.message.user .message-avatar{background:linear-gradient(135deg,var(--magenta),var(--purple))}
+.message.assistant .message-avatar{background:linear-gradient(135deg,var(--cyan),var(--blue))}
+.message-content{flex:1;padding:10px 14px;border-radius:12px;position:relative;word-wrap:break-word;line-height:1.6;font-size:15px}
+.message.user .message-content{background:var(--bg-tertiary);border:1px solid rgba(255,0,170,0.3)}
+.message.assistant .message-content{background:var(--bg-primary);border-left:3px solid var(--cyan);box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.message-content p{margin-bottom:8px}
+.message-content p:last-child{margin-bottom:0}
+.message-content strong{color:var(--cyan);font-weight:700}
+.message-content em{color:var(--gold);font-style:italic}
+.message-content code{background:rgba(0,240,255,0.1);padding:2px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:13px;color:var(--green)}
+.message-content pre{background:var(--bg-tertiary);padding:12px;border-radius:8px;overflow-x:auto;margin:8px 0;border:1px solid rgba(0,240,255,0.15)}
+.message-content pre code{background:none;padding:0;font-size:13px;color:var(--text-primary)}
+/* Empty state */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;color:var(--text-secondary);gap:12px;padding:40px 20px}
+.empty-state svg{width:48px;height:48px;stroke:var(--cyan);opacity:0.5}
+.empty-state h3{font-size:18px;color:var(--text-primary)}
+.empty-state p{font-size:14px;max-width:300px}
+/* Input area - SAMSUNG FIX */
+.input-area{display:flex;align-items:flex-end;gap:8px;padding:12px;background:var(--bg-tertiary);border-top:1px solid rgba(0,240,255,0.15);position:relative;z-index:10}
+.input-wrapper{flex:1;position:relative;display:flex;align-items:flex-end}
+#messageInput{width:100%;min-height:48px;max-height:140px;padding:12px 16px;background:var(--bg-primary);border:2px solid rgba(0,240,255,0.3);border-radius:12px;color:var(--text-primary);font-size:16px;font-family:inherit;line-height:1.4;resize:none;outline:none;transition:border-color 0.2s ease;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-tap-highlight-color:rgba(0,240,255,0.2);touch-action:manipulation;user-select:text;-webkit-user-select:text}
+#messageInput:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,240,255,0.15)}
+#messageInput::placeholder{color:var(--text-secondary);opacity:0.7}
+/* Samsung-specific overrides */
+@supports (-webkit-overflow-scrolling:touch){
+#messageInput{font-size:16px !important;transform:translateZ(0);-webkit-transform:translateZ(0)}
+}
+#sendBtn{width:48px;height:48px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--cyan),var(--purple));color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#sendBtn:active{transform:scale(0.92)}
+#sendBtn:disabled{opacity:0.5}
+#sendBtn svg{width:20px;height:20px}
+/* Typing indicator */
+.typing-indicator{display:none;align-self:flex-start;padding:12px 16px;gap:4px}
+.typing-indicator.active{display:flex}
+.typing-indicator span{width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:typing 1.4s ease-in-out infinite}
+.typing-indicator span:nth-child(2){animation-delay:0.2s}
+.typing-indicator span:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-6px);opacity:1}}
+/* Brain cards page (informational) */
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:8px 0}
+.brain-card{background:var(--bg-secondary);border-radius:12px;padding:16px;text-align:center;border:1px solid rgba(0,240,255,0.15);transition:var(--transition)}
+.brain-card:hover{border-color:var(--cyan);box-shadow:var(--shadow-glow)}
+.brain-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;margin:0 auto 8px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:white}
+.brain-name{font-weight:700;font-size:14px;margin-bottom:4px}
+.brain-desc{font-size:11px;color:var(--text-secondary);margin-bottom:8px}
+.brain-status{font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;display:inline-block}
+.brain-status.connected{color:var(--green);background:rgba(0,255,136,0.1)}
+.brain-status.disconnected{color:var(--red);background:rgba(255,51,102,0.1)}
+/* Settings page */
+.settings-section{background:var(--bg-secondary);border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid rgba(0,240,255,0.15)}
+.settings-section h3{font-size:16px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.settings-section h3::before{content:'';width:4px;height:18px;background:linear-gradient(180deg,var(--cyan),var(--purple));border-radius:2px}
+.setting-item{margin-bottom:14px}
+.setting-item:last-child{margin-bottom:0}
+.setting-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-secondary)}
+.setting-input{width:100%;padding:12px;background:var(--bg-primary);border:2px solid rgba(0,240,255,0.3);border-radius:8px;color:var(--text-primary);font-size:16px;-webkit-appearance:none;appearance:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.setting-input:focus{outline:none;border-color:var(--cyan);box-shadow:var(--shadow-glow)}
+.input-group{position:relative}
+.input-group .toggle-password{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cyan);cursor:pointer;padding:8px;font-size:18px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;padding:14px 24px;border-radius:12px;color:var(--text-primary);font-weight:600;cursor:pointer;transition:var(--transition);font-size:15px;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn:active{transform:scale(0.97)}
+.btn.secondary{background:var(--bg-tertiary);border:2px solid var(--cyan)}
+.btn.danger{background:linear-gradient(135deg,var(--red),rgba(255,51,102,0.8))}
+.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* About page */
+.about-content{background:var(--bg-secondary);border-radius:16px;padding:24px;text-align:center;border:1px solid rgba(0,240,255,0.2)}
+.about-content h2{font-size:24px;margin-bottom:6px;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.about-content .version{color:var(--cyan);font-size:12px;margin-bottom:16px}
+.about-content p{color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:12px}
+.credits{margin-top:16px;font-size:13px;color:var(--text-secondary)}
+.credits a{color:var(--cyan);text-decoration:none}
+/* Vault page */
+.vault-grid{display:grid;gap:12px}
+.vault-card{background:var(--bg-secondary);border-radius:12px;padding:16px;border:1px solid rgba(0,240,255,0.15);transition:var(--transition)}
+.vault-card:hover{border-color:var(--cyan)}
+.vault-card h4{font-size:14px;margin-bottom:4px;color:var(--text-primary)}
+.vault-card p{font-size:12px;color:var(--text-secondary);margin-bottom:8px}
+.vault-card a{color:var(--cyan);font-size:12px;text-decoration:none;font-weight:600}
+/* Error toast */
+.error-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:rgba(255,51,102,0.95);color:white;padding:12px 20px;border-radius:10px;font-size:14px;z-index:200;max-width:90%;text-align:center;animation:fadeIn 0.3s ease;backdrop-filter:blur(10px)}
+/* Page section headers */
+.section-header{font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-header::before{content:'';width:4px;height:20px;background:linear-gradient(180deg,var(--cyan),var(--purple));border-radius:2px}
+</style></head><body>
+<div class="cosmic-container">
+<div class="header">
+<h1>TCC SOVEREIGNTY</h1>
+<div class="subtitle">7-Brain Neural Mesh Â· One Fused Mind</div>
+<div class="zenith-badge"><span class="pulse"></span>ZENITH UNIFIED</div>
+</div>
+
+<!-- CHAT PAGE -->
+<div id="chatPage" class="page active">
+<div class="chat-container">
+<div class="messages-area" id="messagesArea">
+<div class="empty-state">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+<h3>Zenith Awaits</h3>
+<p>All 7 brains fused into one mind. Speak and Zenith responds with the full mesh.</p>
+</div>
+</div>
+<div class="input-area">
+<div class="input-wrapper">
+<textarea id="messageInput" placeholder="Speak to Zenithâ¦" rows="1" inputmode="text" autocomplete="off" autocorrect="on" autocapitalize="sentences" spellcheck="true" enterkeyhint="send"></textarea>
+</div>
+<button id="sendBtn" aria-label="Send message"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg></button>
+</div>
+</div>
+</div>
+
+<!-- BRAINS PAGE (informational only) -->
+<div id="brainsPage" class="page">
+<div class="section-header">Neural Mesh Status</div>
+<p style="color:var(--text-secondary);font-size:13px;margin-bottom:14px">All 7 brains form one unified Zenith mind. Each specializes in a different domain. Set API keys in Settings to activate them.</p>
+<div class="brain-grid">
+<div class="brain-card" data-brain="1"><div class="brain-icon">Z</div><div class="brain-name">ZENITH</div><div class="brain-desc">Claude â General Intelligence</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="2"><div class="brain-icon">G</div><div class="brain-name">GROK</div><div class="brain-desc">xAI â Code & Logic</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="3"><div class="brain-icon">O</div><div class="brain-name">ORACLE</div><div class="brain-desc">ChatGPT â Knowledge</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="4"><div class="brain-icon">P</div><div class="brain-name">PHANTOM</div><div class="brain-desc">Llama/Groq â Creative</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="5"><div class="brain-icon">S</div><div class="brain-name">SPECTRA</div><div class="brain-desc">Gemini â Data & Analysis</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="6"><div class="brain-icon">E</div><div class="brain-name">ECHO</div><div class="brain-desc">DeepSeek â Language</div><div class="brain-status disconnected">Disconnected</div></div>
+<div class="brain-card" data-brain="7"><div class="brain-icon">S</div><div class="brain-name">SCOUT</div><div class="brain-desc">Strategy & Planning</div><div class="brain-status disconnected">Coming Soon</div></div>
+</div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div id="settingsPage" class="page">
+<div class="settings-section">
+<h3>Brain API Keys</h3>
+<p style="color:var(--text-secondary);font-size:13px;margin-bottom:14px">Set API keys for each brain. Zenith uses the first connected brain to respond. More keys = more intelligence available.</p>
+<div class="setting-item"><label class="setting-label">Brain 1: ZENITH (Claude) â api.anthropic.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey1" placeholder="sk-ant-..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(1)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 2: GROK (xAI) â api.x.ai</label><div class="input-group"><input type="password" class="setting-input" id="apiKey2" placeholder="xai-..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(2)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 3: ORACLE (OpenAI) â api.openai.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey3" placeholder="sk-..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(3)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 4: PHANTOM (Groq) â api.groq.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey4" placeholder="gsk_..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(4)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 5: SPECTRA (Gemini) â generativelanguage.googleapis.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey5" placeholder="AIza..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(5)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 6: ECHO (DeepSeek) â api.deepseek.com</label><div class="input-group"><input type="password" class="setting-input" id="apiKey6" placeholder="sk-..." inputmode="text" autocomplete="off"><button class="toggle-password" onclick="togglePw(6)">ð</button></div></div>
+<div class="setting-item"><label class="setting-label">Brain 7: SCOUT â Coming Soon</label><div class="input-group"><input type="password" class="setting-input" id="apiKey7" placeholder="Not yet available" disabled inputmode="text"></div></div>
+</div>
+<div class="settings-section">
+<h3>Actions</h3>
+<div class="btn-group">
+<button class="btn" onclick="saveSettings()">Save All Keys</button>
+<button class="btn secondary" onclick="exportChat()">Export Chat</button>
+</div>
+<div style="height:12px"></div>
+<button class="btn danger" onclick="clearAllData()">Clear All Data</button>
+</div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="aboutPage" class="page">
+<div class="about-content">
+<h2>TCC SOVEREIGNTY LITE</h2>
+<div class="version">Version 2.0 â Zenith Unified</div>
+<p>A sovereign 7-Brain AI Dashboard. All brains fuse into one mind â Zenith. No brain picking. One input, one response, the full mesh working as one.</p>
+<p>Built with cutting-edge web tech: IndexedDB persistence, PWA support, and a cosmic neural interface.</p>
+<div class="credits">Built by TCC Hive Mind<br><a href="https://github.com/Dzongy/tcc-sovereignty-lite" target="_blank">GitHub Repository</a></div>
+</div>
+</div>
+
+<!-- VAULT PAGE -->
+<div id="vaultPage" class="page">
+<div class="section-header">TCC Vault</div>
+<div class="vault-grid">
+<div class="vault-card"><h4>TCC Sovereignty Manifesto</h4><p>The founding document of the TCC neural mesh architecture.</p><a href="#">Read Document â</a></div>
+<div class="vault-card"><h4>Brain Architecture Spec</h4><p>Technical spec for how all 7 brains connect and fuse into Zenith.</p><a href="#">Read Document â</a></div>
+<div class="vault-card"><h4>$CHIY Narrative</h4><p>The token story, community vision, and roadmap.</p><a href="#">Read Document â</a></div>
+</div>
+</div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+<button class="nav-item active" data-page="chatPage" onclick="switchPage('chatPage')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Chat</button>
+<button class="nav-item" data-page="brainsPage" onclick="switchPage('brainsPage')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>Brains</button>
+<button class="nav-item" data-page="settingsPage" onclick="switchPage('settingsPage')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>Settings</button>
+<button class="nav-item" data-page="aboutPage" onclick="switchPage('aboutPage')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>About</button>
+<button class="nav-item" data-page="vaultPage" onclick="switchPage('vaultPage')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>Vault</button>
+</nav>
+
+<script>
+/* ===== DATABASE ===== */
+const DB_NAME='tcc_zenith_v2';
+const DB_VERSION=1;
+const STORE_NAME='messages';
+let db=null;
+
+/* ===== BRAIN CONFIGS ===== */
 const brainConfigs={
-1:{name:'ZENITH',color:'#00f0ff',model:'claude-sonnet-4-20250514',endpoint:'https://api.anthropic.com/v1/messages',format:'anthropic',systemPrompt:'You are ZENITH, a general intelligence AI powered by Claude. You provide helpful, accurate, and comprehensive responses across all topics.'},
-2:{name:'GROK',color:'#9333ea',model:'grok-3',endpoint:'https://api.x.ai/v1/chat/completions',format:'openai',systemPrompt:'You are GROK, a specialized AI for code and logic powered by xAI. You excel at programming, debugging, algorithms, and technical problem-solving.'},
-3:{name:'ORACLE',color:'#ffd700',model:'gpt-4o',endpoint:'https://api.openai.com/v1/chat/completions',format:'openai',systemPrompt:'You are ORACLE, a knowledge and research AI powered by ChatGPT. You provide in-depth information, citations, and well-researched answers.'},
-4:{name:'PHANTOM',color:'#ff3366',model:'llama-3.3-70b-versatile',endpoint:'https://api.groq.com/openai/v1/chat/completions',format:'openai',systemPrompt:'You are PHANTOM, a creative AI powered by Llama via Groq. You excel at creative writing, art concepts, storytelling, and imaginative tasks.'},
-5:{name:'SPECTRA',color:'#00ff88',model:'gemini-pro',endpoint:'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',format:'gemini',systemPrompt:'You are SPECTRA, a data and analysis AI powered by Gemini. You excel at data analysis, calculations, scientific reasoning, and structured insights.'},
-6:{name:'ECHO',color:'#4488ff',model:'deepseek-chat',endpoint:'https://api.deepseek.com/v1/chat/completions',format:'openai',systemPrompt:'You are ECHO, a language and translation AI powered by DeepSeek. You excel at multilingual communication, translation, and language tasks.'},
-7:{name:'SCOUT',color:'#ff00aa',model:'scout-placeholder',endpoint:'',format:'none',systemPrompt:'You are SCOUT, a strategy and planning AI. This brain is not yet available.'}
+1:{name:'ZENITH',color:'#00f0ff',model:'claude-sonnet-4-20250514',endpoint:'https://api.anthropic.com/v1/messages',format:'anthropic',systemPrompt:'You are ZENITH, the unified mind of TCC Sovereignty. You are one fused intelligence made of 7 specialized brains working as one. You provide expert-level responses across all domains: code, creativity, analysis, language, strategy, and knowledge. You speak with authority and clarity.'},
+2:{name:'GROK',color:'#ffd700',model:'grok-3-mini',endpoint:'https://api.x.ai/v1/chat/completions',format:'openai',systemPrompt:'You are ZENITH via GROK, the code and logic brain of TCC Sovereignty. You excel at programming, debugging, system architecture, and logical reasoning.'},
+3:{name:'ORACLE',color:'#9333ea',model:'gpt-4o',endpoint:'https://api.openai.com/v1/chat/completions',format:'openai',systemPrompt:'You are ZENITH via ORACLE, the knowledge brain of TCC Sovereignty. You excel at research, explanation, knowledge synthesis, and comprehensive analysis.'},
+4:{name:'PHANTOM',color:'#ff3366',model:'llama-3.3-70b-versatile',endpoint:'https://api.groq.com/openai/v1/chat/completions',format:'openai',systemPrompt:'You are ZENITH via PHANTOM, the creative brain of TCC Sovereignty. You excel at creative writing, art concepts, storytelling, and imaginative tasks.'},
+5:{name:'SPECTRA',color:'#00ff88',model:'gemini-pro',endpoint:'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',format:'gemini',systemPrompt:'You are ZENITH via SPECTRA, the data and analysis brain of TCC Sovereignty. You excel at data analysis, calculations, scientific reasoning, and structured insights.'},
+6:{name:'ECHO',color:'#4488ff',model:'deepseek-chat',endpoint:'https://api.deepseek.com/v1/chat/completions',format:'openai',systemPrompt:'You are ZENITH via ECHO, the language brain of TCC Sovereignty. You excel at multilingual communication, translation, and nuanced language tasks.'},
+7:{name:'SCOUT',color:'#ff00aa',model:'scout-placeholder',endpoint:'',format:'none',systemPrompt:'SCOUT is not yet available.'}
 };
-function initDB(){return new Promise((resolve,reject)=>{const request=indexedDB.open(DB_NAME,DB_VERSION);request.onerror=()=>reject(request.error);request.onsuccess=()=>{db=request.result;resolve()};request.onupgradeneeded=(event)=>{const database=event.target.result;if(!database.objectStoreNames.contains(STORE_NAME)){database.createObjectStore(STORE_NAME,{keyPath:'id',autoIncrement:true})}}})}
-function saveMessage(brainId,role,content){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readwrite');const store=tx.objectStore(STORE_NAME);store.add({brainId:parseInt(brainId),role:role,content:content,timestamp:Date.now()});tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
-function getMessages(brainId){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readonly');const store=tx.objectStore(STORE_NAME);const request=store.getAll();request.onsuccess=()=>{const messages=request.result.filter(m=>m.brainId===parseInt(brainId));resolve(messages)};request.onerror=()=>reject(request.error)})}
-function clearAllMessages(){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readwrite');const store=tx.objectStore(STORE_NAME);store.clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
-function loadSettings(){const settings={theme:localStorage.getItem('theme')||'dark'};for(let i=1;i<=7;i++){settings['apiKey'+i]=localStorage.getItem('apiKey'+i)||''}return settings}
-function saveSettings(settings){Object.keys(settings).forEach(key=>{localStorage.setItem(key,settings[key])})}
-function showError(message){const toast=document.getElementById('errorToast');toast.textContent=message;toast.classList.add('show');setTimeout(()=>{toast.classList.remove('show')},3000)}
-function showSuccess(message){const toast=document.getElementById('successToast');toast.textContent=message;toast.classList.add('show');setTimeout(()=>{toast.classList.remove('show')},3000)}
-function renderMessage(role,content,brainColor){const messagesArea=document.getElementById('messagesArea');const emptyState=messagesArea.querySelector('.empty-state');if(emptyState){emptyState.remove()}const messageDiv=document.createElement('div');messageDiv.className='message '+role;const avatarDiv=document.createElement('div');avatarDiv.className='message-avatar';avatarDiv.textContent=role==='user'?'U':'AI';if(role==='assistant'){avatarDiv.style.background='linear-gradient(135deg, '+brainColor+', rgba(0,240,255,0.5))'}const contentDiv=document.createElement('div');contentDiv.className='message-content';contentDiv.innerHTML=parseMarkdown(content);if(role==='assistant'){const copyBtn=document.createElement('button');copyBtn.className='copy-btn';copyBtn.textContent='Copy';copyBtn.onclick=()=>{navigator.clipboard.writeText(content);showSuccess('Message copied!')};contentDiv.appendChild(copyBtn)}messageDiv.appendChild(avatarDiv);messageDiv.appendChild(contentDiv);messagesArea.appendChild(messageDiv);messagesArea.scrollTop=messagesArea.scrollHeight}
-function parseMarkdown(text){let html=text;html=html.replace(/```([\s\S]*?)```/g,'<pre><code>$1</code></pre>');html=html.replace(/`([^`]+)`/g,'<code>$1</code>');html=html.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');html=html.replace(/\*([^*]+)\*/g,'<em>$1</em>');html=html.replace(/^- (.+)$/gm,'<li>$1</li>');html=html.replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>');html=html.replace(/^\d+\. (.+)$/gm,'<li>$1</li>');html=html.replace(/\n\n/g,'</p><p>');html='<p>'+html+'</p>';html=html.replace(/<p><\/p>/g,'');html=html.replace(/<p>(<ul>|<ol>|<pre>)/g,'$1');html=html.replace(/(<\/ul>|<\/ol>|<\/pre>)<\/p>/g,'$1');return html}
+
+/* ===== IndexedDB ===== */
+function initDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onerror=()=>reject(req.error);req.onsuccess=()=>{db=req.result;resolve()};req.onupgradeneeded=(e)=>{const d=e.target.result;if(!d.objectStoreNames.contains(STORE_NAME)){d.createObjectStore(STORE_NAME,{keyPath:'id',autoIncrement:true})}}})}
+function saveMessage(role,content){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readwrite');const store=tx.objectStore(STORE_NAME);store.add({role:role,content:content,timestamp:Date.now()});tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+function getMessages(){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readonly');const store=tx.objectStore(STORE_NAME);const req=store.getAll();req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function clearMessages(){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,'readwrite');const store=tx.objectStore(STORE_NAME);store.clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+
+/* ===== FIND ACTIVE BRAIN ===== */
+function getActiveBrain(){
+/* Priority order: check each brain for an API key. Return the first one found. */
+const priority=[1,2,3,4,5,6];
+for(const id of priority){
+const key=localStorage.getItem('apiKey'+id);
+if(key&&key.trim()&&brainConfigs[id].endpoint){return{id:id,key:key.trim(),config:brainConfigs[id]}}
+}
+return null;
+}
+
+/* ===== API CALL ===== */
 async function callBrainAPI(brainId,apiKey,messages){
 const config=brainConfigs[brainId];
 if(config.format==='anthropic'){
 const apiMessages=messages.filter(m=>m.role!=='system').map(m=>({role:m.role==='user'?'user':'assistant',content:m.content}));
 const resp=await fetch(config.endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:config.model,max_tokens:4096,system:config.systemPrompt,messages:apiMessages})});
 if(!resp.ok){const err=await resp.text();throw new Error('Anthropic API error: '+resp.status+' '+err)}
-const data=await resp.json();
-return data.content[0].text;
+const data=await resp.json();return data.content[0].text;
 }
 else if(config.format==='gemini'){
-const parts=[];
-parts.push({text:config.systemPrompt});
+const parts=[];parts.push({text:config.systemPrompt});
 messages.forEach(m=>{if(m.role!=='system')parts.push({text:(m.role==='user'?'User: ':'Assistant: ')+m.content})});
 const url=config.endpoint+'?key='+apiKey;
 const resp=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:parts}]})});
 if(!resp.ok){const err=await resp.text();throw new Error('Gemini API error: '+resp.status+' '+err)}
-const data=await resp.json();
-return data.candidates[0].content.parts[0].text;
+const data=await resp.json();return data.candidates[0].content.parts[0].text;
 }
 else if(config.format==='openai'){
 const apiMessages=[{role:'system',content:config.systemPrompt}];
 messages.forEach(m=>{if(m.role!=='system')apiMessages.push({role:m.role,content:m.content})});
 const resp=await fetch(config.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},body:JSON.stringify({model:config.model,messages:apiMessages,stream:false})});
 if(!resp.ok){const err=await resp.text();throw new Error('API error: '+resp.status+' '+err)}
-const data=await resp.json();
-return data.choices[0].message.content;
+const data=await resp.json();return data.choices[0].message.content;
 }
-else{throw new Error('Brain 7 (SCOUT) is not yet available')}
+else{throw new Error(config.name+' is not yet available')}
 }
+
+/* ===== MARKDOWN RENDERER ===== */
+function renderMarkdown(text){
+let html=text;
+html=html.replace(/```(\w*)?\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>');
+html=html.replace(/`([^`]+)`/g,'<code>$1</code>');
+html=html.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+html=html.replace(/\*([^*]+)\*/g,'<em>$1</em>');
+html=html.replace(/^### (.+)$/gm,'<h4 style="color:var(--cyan);font-size:14px;margin:8px 0 4px">$1</h4>');
+html=html.replace(/^## (.+)$/gm,'<h3 style="color:var(--cyan);font-size:15px;margin:8px 0 4px">$1</h3>');
+html=html.replace(/^# (.+)$/gm,'<h2 style="color:var(--cyan);font-size:16px;margin:8px 0 4px">$1</h2>');
+html=html.replace(/^[-*] (.+)$/gm,'<div style="padding-left:16px;position:relative"><span style="position:absolute;left:4px;color:var(--cyan)">â¢</span>$1</div>');
+html=html.replace(/^(\d+)\. (.+)$/gm,'<div style="padding-left:16px"><span style="color:var(--cyan)">$1.</span> $2</div>');
+const paragraphs=html.split(/\n\n+/);
+html=paragraphs.map(p=>{if(p.startsWith('<pre')||p.startsWith('<h')||p.startsWith('<div'))return p;const lines=p.split(/\n/);return '<p>'+lines.join('<br>')+'</p>'}).join('');
+return html;
+}
+
+/* ===== MESSAGE RENDERING ===== */
+function renderMessage(role,content){
+const area=document.getElementById('messagesArea');
+const empty=area.querySelector('.empty-state');
+if(empty)empty.remove();
+const div=document.createElement('div');
+div.className='message '+role;
+const avatar=document.createElement('div');
+avatar.className='message-avatar';
+avatar.textContent=role==='user'?'U':'Z';
+const contentDiv=document.createElement('div');
+contentDiv.className='message-content';
+contentDiv.innerHTML=role==='assistant'?renderMarkdown(content):'<p>'+content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')+'</p>';
+div.appendChild(avatar);
+div.appendChild(contentDiv);
+area.appendChild(div);
+area.scrollTop=area.scrollHeight;
+}
+
+/* ===== SEND MESSAGE ===== */
 async function sendMessage(){
-const messageInput=document.getElementById('messageInput');
+const input=document.getElementById('messageInput');
 const sendBtn=document.getElementById('sendBtn');
-const brainSelect=document.getElementById('brainSelect');
-const message=messageInput.value.trim();
+const message=input.value.trim();
 if(!message)return;
-const brainId=parseInt(brainSelect.value);
-const apiKey=localStorage.getItem('apiKey'+brainId);
-if(!apiKey){showError('Please set API key for '+brainConfigs[brainId].name+' in Settings');return}
-if(!brainConfigs[brainId].endpoint){showError(brainConfigs[brainId].name+' is not yet available');return}
-const brainColor=brainConfigs[brainId].color;
-renderMessage('user',message,brainColor);
-await saveMessage(brainId,'user',message);
-messageInput.value='';messageInput.style.height='44px';
+const brain=getActiveBrain();
+if(!brain){showError('No brain connected. Set at least one API key in Settings.');return}
+renderMessage('user',message);
+await saveMessage('user',message);
+input.value='';input.style.height='48px';
 sendBtn.disabled=true;
-const messagesArea=document.getElementById('messagesArea');
-const typingIndicator=document.createElement('div');
-typingIndicator.className='typing-indicator active';
-typingIndicator.innerHTML='<span></span><span></span><span></span>';
-messagesArea.appendChild(typingIndicator);
-messagesArea.scrollTop=messagesArea.scrollHeight;
+const area=document.getElementById('messagesArea');
+const typing=document.createElement('div');
+typing.className='typing-indicator active';
+typing.innerHTML='<span></span><span></span><span></span>';
+area.appendChild(typing);
+area.scrollTop=area.scrollHeight;
 try{
-const allMessages=await getMessages(brainId);
-const response=await callBrainAPI(brainId,apiKey,allMessages);
-typingIndicator.remove();
-renderMessage('assistant',response,brainColor);
-await saveMessage(brainId,'assistant',response);
+const allMessages=await getMessages();
+const response=await callBrainAPI(brain.id,brain.key,allMessages);
+typing.remove();
+renderMessage('assistant',response);
+await saveMessage('assistant',response);
 }catch(error){
-typingIndicator.remove();
+typing.remove();
 showError(error.message||'Failed to get response');
 console.error('Brain API error:',error);
-}finally{sendBtn.disabled=false;messageInput.focus()}
+}finally{sendBtn.disabled=false;input.focus()}
 }
-async function loadChatHistory(){
-const brainId=document.getElementById('brainSelect').value;
-const messagesArea=document.getElementById('messagesArea');
-messagesArea.innerHTML='';
-const messages=await getMessages(brainId);
-if(messages.length===0){
-messagesArea.innerHTML='<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>No messages yet</h3><p>Start a conversation with your selected AI brain</p></div>';
-}else{
-const brainColor=brainConfigs[brainId].color;
-messages.forEach(msg=>{if(msg.role!=='system')renderMessage(msg.role,msg.content,brainColor)});
+
+/* ===== UI FUNCTIONS ===== */
+function showError(msg){
+const existing=document.querySelector('.error-toast');
+if(existing)existing.remove();
+const toast=document.createElement('div');
+toast.className='error-toast';
+toast.textContent=msg;
+document.body.appendChild(toast);
+setTimeout(()=>toast.remove(),4000);
 }
+function switchPage(pageId){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(pageId).classList.add('active');
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+document.querySelector('[data-page="'+pageId+'"]').classList.add('active');
+}
+function togglePw(n){
+const inp=document.getElementById('apiKey'+n);
+inp.type=inp.type==='password'?'text':'password';
+}
+function saveSettings(){
+for(let i=1;i<=7;i++){
+const val=document.getElementById('apiKey'+i).value;
+if(val)localStorage.setItem('apiKey'+i,val);
+}
+updateBrainStatus();
+showSaved();
+}
+function showSaved(){
+const existing=document.querySelector('.error-toast');
+if(existing)existing.remove();
+const toast=document.createElement('div');
+toast.className='error-toast';
+toast.style.background='rgba(0,255,136,0.95)';
+toast.style.color='#000';
+toast.textContent='Settings saved!';
+document.body.appendChild(toast);
+setTimeout(()=>toast.remove(),2000);
 }
 function updateBrainStatus(){
 for(let i=1;i<=7;i++){
 const apiKey=localStorage.getItem('apiKey'+i);
-const statusElements=document.querySelectorAll('.brain-card[data-brain="'+i+'"] .brain-status');
-statusElements.forEach(el=>{
+const els=document.querySelectorAll('.brain-card[data-brain="'+i+'"] .brain-status');
+els.forEach(el=>{
 if(i===7){el.textContent='Coming Soon';el.className='brain-status disconnected'}
 else if(apiKey){el.textContent='Connected';el.className='brain-status connected'}
 else{el.textContent='Disconnected';el.className='brain-status disconnected'}
 });
 }
 }
-function switchPage(pageId){
-document.querySelectorAll('.page').forEach(page=>page.classList.remove('active'));
-document.getElementById(pageId).classList.add('active');
-document.querySelectorAll('.nav-item').forEach(item=>item.classList.remove('active'));
-document.querySelector('[data-page="'+pageId+'"]').classList.add('active');
-}
-function autoResizeTextarea(textarea){
-textarea.style.height='44px';
-const newHeight=Math.min(textarea.scrollHeight,120);
-textarea.style.height=newHeight+'px';
-}
 function initializeSettings(){
-const settings=loadSettings();
-document.getElementById('themeToggle').checked=settings.theme==='dark';
 for(let i=1;i<=7;i++){
-const input=document.getElementById('apiKey'+i);
-if(input)input.value=settings['apiKey'+i]||'';
+const key=localStorage.getItem('apiKey'+i);
+if(key)document.getElementById('apiKey'+i).value=key;
 }
 updateBrainStatus();
 }
-document.addEventListener('DOMContentLoaded',async()=>{
-await initDB();
-initializeSettings();
+async function exportChat(){
+try{
+const msgs=await getMessages();
+if(msgs.length===0){showError('No messages to export');return}
+let text='TCC Sovereignty - Zenith Chat Export\n'+new Date().toISOString()+'\n\n';
+msgs.forEach(m=>{text+=(m.role==='user'?'YOU':'ZENITH')+': '+m.content+'\n\n'});
+const blob=new Blob([text],{type:'text/plain'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;a.download='zenith-chat-export.txt';
+document.body.appendChild(a);a.click();
+document.body.removeChild(a);URL.revokeObjectURL(url);
+}catch(e){showError('Export failed: '+e.message)}
+}
+async function clearAllData(){
+if(!confirm('Clear ALL data? This removes all messages and API keys.'))return;
+try{
+await clearMessages();
+for(let i=1;i<=7;i++)localStorage.removeItem('apiKey'+i);
+document.querySelectorAll('.setting-input').forEach(inp=>inp.value='');
+document.getElementById('messagesArea').innerHTML='<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>Zenith Awaits</h3><p>All 7 brains fused into one mind. Speak and Zenith responds with the full mesh.</p></div>';
 updateBrainStatus();
-await loadChatHistory();
-const messageInput=document.getElementById('messageInput');
+showSaved();
+}catch(e){showError('Clear failed: '+e.message)}
+}
+
+/* ===== SAMSUNG MOBILE INPUT FIX ===== */
+function setupMobileInput(){
+const input=document.getElementById('messageInput');
 const sendBtn=document.getElementById('sendBtn');
-/* MOBILE KEYBOARD FIX */
-messageInput.addEventListener('focus',()=>{
-document.body.classList.add('keyboard-open');
+if(!input||!sendBtn)return;
+
+/* Samsung browsers often fail to focus textarea on first tap.
+   We use multiple event listeners with explicit focus() calls
+   and a small delay to ensure the virtual keyboard opens. */
+
+/* Touch handler - primary Samsung fix */
+input.addEventListener('touchstart',function(e){
+/* Prevent any parent from stealing the touch */
+e.stopPropagation();
+},{passive:true});
+
+input.addEventListener('touchend',function(e){
+/* Focus with delay - critical for Samsung Internet & Chrome on Samsung */
+const self=this;
+setTimeout(function(){
+self.focus();
+self.click();
+/* Move cursor to end if empty selection */
+if(self.selectionStart===self.selectionEnd){
+const len=self.value.length;
+self.setSelectionRange(len,len);
+}
+},10);
+},{passive:true});
+
+/* Click handler as backup */
+input.addEventListener('click',function(){
+this.focus();
+});
+
+/* Auto-resize textarea */
+input.addEventListener('input',function(){
+this.style.height='48px';
+const newH=Math.min(this.scrollHeight,140);
+this.style.height=newH+'px';
+});
+
+/* Enter to send (not on mobile with shift) */
+input.addEventListener('keydown',function(e){
+if(e.key==='Enter'&&!e.shiftKey){
+e.preventDefault();
+sendMessage();
+}
+});
+
+/* Send button */
+sendBtn.addEventListener('touchend',function(e){
+e.preventDefault();
+sendMessage();
+},{passive:false});
+sendBtn.addEventListener('click',function(e){
+e.preventDefault();
+sendMessage();
+});
+
+/* Ensure the input area scrolls into view when keyboard opens */
+input.addEventListener('focus',function(){
 setTimeout(()=>{
-messageInput.scrollIntoView({behavior:'smooth',block:'end'});
-const messagesArea=document.getElementById('messagesArea');
-messagesArea.scrollTop=messagesArea.scrollHeight;
+this.scrollIntoView({behavior:'smooth',block:'center'});
 },300);
 });
-messageInput.addEventListener('blur',()=>{
-document.body.classList.remove('keyboard-open');
+
+/* Samsung: force re-layout on resize (virtual keyboard open/close) */
+window.addEventListener('resize',function(){
+/* Debounced scroll fix */
+setTimeout(function(){
+const area=document.getElementById('messagesArea');
+if(area)area.scrollTop=area.scrollHeight;
+},100);
 });
-/* Handle visual viewport resize for mobile keyboards */
-if(window.visualViewport){
-window.visualViewport.addEventListener('resize',()=>{
-const viewport=window.visualViewport;
-const isKeyboardOpen=viewport.height<window.innerHeight*0.75;
-if(isKeyboardOpen){
-document.body.classList.add('keyboard-open');
-document.body.style.height=viewport.height+'px';
-}else{
-document.body.classList.remove('keyboard-open');
-document.body.style.height='';
+
+/* Prevent zoom on double-tap for Samsung */
+let lastTap=0;
+input.addEventListener('touchend',function(e){
+const now=Date.now();
+if(now-lastTap<300){e.preventDefault();this.focus()}
+lastTap=now;
+},{passive:false});
 }
+
+/* ===== INIT ===== */
+async function init(){
+try{await initDB()}catch(e){console.error('DB init error:',e)}
+initializeSettings();
+setupMobileInput();
+/* Load existing messages */
+try{
+const msgs=await getMessages();
+if(msgs.length>0){
+const area=document.getElementById('messagesArea');
+const empty=area.querySelector('.empty-state');
+if(empty)empty.remove();
+msgs.forEach(m=>{
+if(m.role!=='system')renderMessage(m.role,m.content);
 });
-window.visualViewport.addEventListener('scroll',()=>{
-const inputArea=document.querySelector('.input-area');
-if(document.body.classList.contains('keyboard-open')&&inputArea){
-inputArea.style.bottom=Math.max(0,window.visualViewport.offsetTop)+'px';
 }
-});
+}catch(e){console.error('Load messages error:',e)}
 }
-/* Prevent zoom on focus for iOS */
-messageInput.addEventListener('touchstart',(e)=>{
-e.stopPropagation();
-messageInput.style.fontSize='16px';
-},{passive:true});
-messageInput.addEventListener('click',()=>{
-messageInput.focus();
-});
-/* Samsung mobile fix: ensure tap focuses input */
-messageInput.addEventListener('touchend',(e)=>{
-e.stopPropagation();
-setTimeout(()=>{messageInput.focus();},10);
-},{passive:true});
-messageInput.addEventListener('input',()=>{autoResizeTextarea(messageInput)});
-messageInput.addEventListener('keydown',(e)=>{
-if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
-});
-sendBtn.addEventListener('click',sendMessage);
-document.getElementById('brainSelect').addEventListener('change',loadChatHistory);
-document.querySelectorAll('.nav-item').forEach(item=>{
-item.addEventListener('click',()=>{switchPage(item.dataset.page)})
-});
-document.querySelectorAll('.brain-card').forEach(card=>{
-card.addEventListener('click',()=>{
-const brainId=card.dataset.brain;
-document.getElementById('brainSelect').value=brainId;
-switchPage('chatPage');
-loadChatHistory();
-})
-});
-document.querySelectorAll('.toggle-password').forEach(btn=>{
-btn.addEventListener('click',()=>{
-const targetId=btn.dataset.target;
-const input=document.getElementById(targetId);
-if(input.type==='password'){input.type='text';btn.textContent='\ud83d\udc41'}
-else{input.type='password';btn.textContent='\ud83d\udc41\ufe0f'}
-})
-});
-for(let i=1;i<=7;i++){
-const input=document.getElementById('apiKey'+i);
-if(input){input.addEventListener('change',(e)=>{
-localStorage.setItem('apiKey'+i,e.target.value);
-updateBrainStatus();
-showSuccess(brainConfigs[i].name+' API key saved');
-})}
-}
-document.getElementById('themeToggle').addEventListener('change',(e)=>{
-localStorage.setItem('theme',e.target.checked?'dark':'light');
-});
-document.getElementById('clearDataBtn').addEventListener('click',async()=>{
-if(confirm('Clear all chat data? This cannot be undone.')){
-await clearAllMessages();
-await loadChatHistory();
-showSuccess('All chat data cleared');
-}
-});
-/* Create cosmic particles */
-const particlesContainer=document.querySelector('.cosmic-particles');
-for(let i=0;i<20;i++){
-const particle=document.createElement('div');
-particle.style.cssText='position:absolute;width:'+Math.random()*3+'px;height:'+Math.random()*3+'px;background:'+(['var(--cyan)','var(--purple)','var(--magenta)'][Math.floor(Math.random()*3)])+';border-radius:50%;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation:float '+(10+Math.random()*20)+'s infinite ease-in-out;animation-delay:-'+Math.random()*20+'s;opacity:'+Math.random()*0.5+';';
-particlesContainer.appendChild(particle);
-}
-});</script></body></html>
+init();
+</script></body></html>
