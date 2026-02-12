@@ -1,0 +1,17 @@
+{
+  "service": "tcc-sovereignty",
+  "platform": "render.com",
+  "type": "web_service",
+  "env": "node",
+  "region": "oregon",
+  "plan": "free",
+  "buildCommand": "npm install",
+  "startCommand": "node server.js",
+  "envVars": {
+    "NODE_ENV": "production",
+    "PORT": "10000"
+  },
+  "autoDeploy": true,
+  "branch": "main",
+  "note": "Reserved for future dynamic service deployment. Currently using GitHub Pages for static hosting."
+}
