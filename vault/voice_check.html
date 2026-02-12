@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TCC Voice System Check</title>
+<style>
+body{font-family:monospace;background:#0a0a1a;color:#00f0ff;padding:20px;margin:0}
+h1{text-align:center;color:#9333ea}
+.check{padding:10px;margin:10px 0;border:1px solid #1a1a2e;border-radius:8px}
+.pass{border-color:#00ff88;color:#00ff88}
+.fail{border-color:#ff3366;color:#ff3366}
+.pending{border-color:#ffd700;color:#ffd700}
+button{background:#9333ea;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:16px;cursor:pointer;margin:10px 0}
+button:hover{background:#7928ca}
+#results{margin-top:20px}
+</style>
+</head>
+<body>
+<h1>TCC VOICE SYSTEM CHECK</h1>
+<p>Diagnostic tool for Zenith Voice App compatibility</p>
+<button onclick="runChecks()">Run All Checks</button>
+<div id="results"></div>
+<script>
+function runChecks(){
+const r=document.getElementById('results');
+r.innerHTML='';
+const checks=[
+{name:'Speech Synthesis API',test:()=>'speechSynthesis' in window},
+{name:'Speech Recognition API',test:()=>'SpeechRecognition' in window||'webkitSpeechRecognition' in window},
+{name:'Audio Context',test:()=>{try{new(window.AudioContext||window.webkitAudioContext)();return true}catch(e){return false}}},
+{name:'MediaDevices API',test:()=>!!navigator.mediaDevices},
+{name:'getUserMedia',test:()=>!!navigator.mediaDevices?.getUserMedia},
+{name:'Available Voices',test:()=>{const v=speechSynthesis.getVoices();return v.length>0?v.length+' voices':'Loading...'}},
+{name:'Service Worker Support',test:()=>'serviceWorker' in navigator},
+{name:'LocalStorage',test:()=>{try{localStorage.setItem('test','1');localStorage.removeItem('test');return true}catch(e){return false}}},
+{name:'IndexedDB',test:()=>!!window.indexedDB},
+{name:'WebSocket Support',test:()=>!!window.WebSocket}
+];
+checks.forEach(c=>{
+const div=document.createElement('div');
+let result;
+try{result=c.test()}catch(e){result=false}
+const pass=result===true||typeof result==='string';
+div.className='check '+(pass?'pass':'fail');
+div.textContent=c.name+': '+(result===true?'PASS':result===false?'FAIL':result);
+r.appendChild(div);
+});
+}
+setTimeout(runChecks,500);
+</script>
+</body>
+</html>
