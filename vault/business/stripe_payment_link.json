@@ -1,0 +1,33 @@
+{
+  "product": "TCC Sovereignty",
+  "tiers": {
+    "business": {
+      "name": "TCC Business",
+      "price": 2900,
+      "currency": "usd",
+      "interval": "month",
+      "features": [
+        "7-Brain Neural Mesh Access",
+        "Compression Chain API",
+        "Standing Orders Engine",
+        "Priority Squad Relay"
+      ]
+    },
+    "pro": {
+      "name": "TCC Pro",
+      "price": 9900,
+      "currency": "usd",
+      "interval": "month",
+      "features": [
+        "Everything in Business",
+        "Direct Grok Relay (when available)",
+        "Custom Compression Pipelines",
+        "Vault Access",
+        "Priority Support",
+        "White-label Deployment"
+      ]
+    }
+  },
+  "created": "2026-02-01",
+  "status": "active"
+}
