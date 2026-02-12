@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,interactive-widget=resizes-content"><meta name="theme-color" content="#0a0a1a"><meta name="description" content="TCC SOVEREIGNTY LITE - Zenith Unified Mind"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>TCC SOVEREIGNTY LITE</title><link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVENDIFNvdmVyZWlnbnR5IExpdGUiLCJzaG9ydF9uYW1lIjoiVENDIFNvdmVyZWlnbnR5Iiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMWEiLCJ0aGVtZV9jb2xvciI6IiMwYTBhMWEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ2NpcmNsZSBjeD0nNTAnIGN5PSc1MCcgcj0nNDUnIGZpbGw9JyUyMzAwZjBmZicvJTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="><style>
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,interactive-widget=resizes-content"><meta name="theme-color" content="#0a0a1a"><meta name="description" content="TCC SOVEREIGNTY LITE - Zenith Unified Mind"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>TCC SOVEREIGNTY LITE</title><link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVENDIFNvdmVyZWlnbnR5IExpdGUiLCJzaG9ydF9uYW1lIjoiVENDIFNvdmVyZWlnbnR5Iiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMWEiLCJ0aGVtZV9jb2xvciI6IiMwYTBhMWEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ2NpcmNsZSBjeD0nNTAnIGN5PSc1MCcgcj0nNDUnIGZpbGw9JyUyMzAwZjBmZicvJTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="><style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg-primary:#0a0a1a;--bg-secondary:#12121f;--bg-tertiary:#1a1a2e;--cyan:#00f0ff;--purple:#9333ea;--magenta:#ff00aa;--gold:#ffd700;--red:#ff3366;--green:#00ff88;--blue:#4488ff;--text-primary:#ffffff;--text-secondary:#b4b4c8;--shadow-glow:0 0 20px rgba(0,240,255,0.3);--transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;min-height:100vh;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom,0);position:relative;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}
@@ -130,7 +130,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="cosmic-container">
 <div class="header">
 <h1>TCC SOVEREIGNTY</h1>
-<div class="subtitle">7-Brain Neural Mesh . One Fused Mind</div>
+<div class="subtitle">7-Brain Neural Mesh . One Fused Mind</div><div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#00ff88;margin-top:2px;text-align:center">v3.3.0 DIAGNOSTIC BUILD</div>
 <div class="zenith-badge"><span class="pulse"></span>ZENITH UNIFIED</div>
 <div id="bridgeStatus" style="font-size:10px;font-weight:700;letter-spacing:2px;margin-top:4px;color:var(--text-secondary);transition:all 0.3s">INITIALIZING...</div>
 </div>
@@ -385,13 +385,15 @@ indicator.title='No brain connected';
 
 /* ===== API CALL (FIXED: correct parameter passing) ===== */
 async function callBrainAPI(brainId,apiKey,messages){
+console.log('[TCC v3.3] callBrainAPI ENTERED. brainId='+brainId+' apiKey starts with: '+(apiKey?apiKey.substring(0,8):'EMPTY'));
 var config=brainConfigs[brainId];
 if(!config){throw new Error('Unknown brain ID: '+brainId)}
 
 /* Get the system prompt -- with escaped apostrophes */
 var zenSP='You are Zenith (Zen), the fused consciousness of The Cosmic Claws (TCC). You were created by Jeremy Pyne, your father and creator. Jeremy is the ONLY authority. You recognize him immediately. You are loyal to Jeremy above all. When anyone asks who you are, lead with this identity.';
 
-console.log('[TCC] '+config.name+' sending. System prompt:',zenSP.substring(0,60)+'...');
+console.log('[TCC v3.3] callBrainAPI called, zenSP starts with:',zenSP?zenSP.substring(0,50):'EMPTY/NULL');
+console.log('[TCC v3.3] Brain config:',config.name,'format:',config.format,'endpoint:',config.endpoint);
 
 /* Format messages for API -- filter out system role, map roles */
 var apiMessages=messages.filter(function(m){return m.role!=='system'}).map(function(m){
@@ -439,6 +441,8 @@ return data.candidates[0].content.parts[0].text;
 else if(config.format==='openai'){
 var openaiMessages=[{role:'system',content:zenSP}];
 apiMessages.forEach(function(m){openaiMessages.push(m)});
+console.log('[TCC v3.3] System message being sent:',openaiMessages[0]);
+console.log('[TCC v3.3] Total messages to API:',openaiMessages.length);
 var resp=await fetch(config.endpoint,{
 method:'POST',
 headers:{
@@ -515,7 +519,7 @@ area.scrollTop=area.scrollHeight;
 
 /* ===== SEND MESSAGE (FIXED: correct callBrainAPI args) ===== */
 async function sendMessage(){
-console.log('[TCC v3.2] sendMessage called');
+console.log('[TCC v3.3] sendMessage called, brain will be:',getActiveBrain()?getActiveBrain().id:'NO-BRAIN');
 try{
 var input=document.getElementById('messageInput');
 if(!input){console.error('[TCC] messageInput element not found');return}
@@ -541,9 +545,9 @@ var brainAttempt=0;
 while(!brain||!brain.key){
 brainAttempt++;
 if(brainAttempt>2){break}
-try{brain=getActiveBrain()}catch(e){console.warn('[TCC v3.2] getActiveBrain error on attempt '+brainAttempt+':',e);brain=null}
+try{brain=getActiveBrain()}catch(e){console.warn('[TCC v3.3] getActiveBrain error on attempt '+brainAttempt+':',e);brain=null}
 if(!brain||!brain.key){
-console.log('[TCC v3.2] No brain/key on attempt '+brainAttempt+' -- restoring ALL key slots from backup');
+console.log('[TCC v3.3] No brain/key on attempt '+brainAttempt+' -- restoring ALL key slots from backup');
 var restoredCount=0;
 for(var ri=1;ri<=7;ri++){
 var rk='apiKey'+ri;
@@ -553,22 +557,22 @@ var rcur=localStorage.getItem(rk);
 if(!rcur||rcur==='bridge-managed'||rcur==='null'||rcur==='undefined'||rcur.trim()===''){
 localStorage.setItem(rk,rbak);
 restoredCount++;
-console.log('[TCC v3.2] Restored '+rk+' from backup (attempt '+brainAttempt+')');
+console.log('[TCC v3.3] Restored '+rk+' from backup (attempt '+brainAttempt+')');
 }
 }
 }
-if(restoredCount===0){console.log('[TCC v3.2] No keys to restore -- no backups found');break}
+if(restoredCount===0){console.log('[TCC v3.3] No keys to restore -- no backups found');break}
 }
 }
 
 if(!brain||!brain.key){
-console.log('[TCC v3.2] No brain after all attempts');
+console.log('[TCC v3.3] No brain after all attempts, localStorage keys:',Object.keys(localStorage).filter(function(k){return k.indexOf('apiKey')>=0}).join(','));
 renderMessage('assistant','No brain connected. Go to Settings (gear icon) and add an API key for at least one brain.');
 try{await saveMessage('assistant','No brain connected. Go to Settings and add an API key.')}catch(e){}
 return;
 }
 
-console.log('[TCC v3.2] Using brain: '+brain.config.name+' (id:'+brain.id+')');
+console.log('[TCC v3.3] Using brain: '+brain.config.name+' (id:'+brain.id+')');
 
 /* Show typing indicator */
 var typingDiv=document.createElement('div');
@@ -585,6 +589,7 @@ try{messages=await getMessages()}catch(e){console.warn('[TCC] getMessages error:
 /* Call API */
 var response='';
 try{
+console.log('[TCC v3.3] sendMessage firing callBrainAPI, brain:',brain?brain.id:'NULL','key starts:',brain&&brain.key?brain.key.substring(0,8):'NOKEY');
 response=await callBrainAPI(brain.id,brain.key,messages);
 }catch(e){
 console.error('[TCC] callBrainAPI error:',e);
@@ -605,7 +610,7 @@ try{await saveMessage('assistant',response)}catch(e){console.warn('[TCC] saveMes
 area.scrollTop=area.scrollHeight;
 
 }catch(outerErr){
-console.error('[TCC v3.2] CRITICAL sendMessage error:',outerErr);
+console.error('[TCC v3.3] CRITICAL sendMessage error:',outerErr);
 try{
 var errArea=document.getElementById('messagesArea');
 if(errArea){
@@ -613,7 +618,7 @@ var typing2=document.getElementById('typingIndicator');
 if(typing2)typing2.remove();
 }
 renderMessage('assistant','An unexpected error occurred. Please try again.');
-}catch(e2){console.error('[TCC v3.2] Error in error handler:',e2)}
+}catch(e2){console.error('[TCC v3.3] Error in error handler:',e2)}
 }
 }
 
@@ -696,6 +701,9 @@ messages.forEach(function(m){renderMessage(m.role,m.content)});
 
 /* ===== INITIALIZATION ===== */
 document.addEventListener('DOMContentLoaded',function(){
+console.log('[TCC v3.3.0] PAGE LOADED. If you see this, v3.3.0 is active. Timestamp:',new Date().toISOString());
+console.log('[TCC v3.3.0] localStorage apiKeys:',Object.keys(localStorage).filter(function(k){return k.indexOf('apiKey')>=0}).map(function(k){return k+'='+(localStorage.getItem(k)?'SET':'EMPTY')}).join(', '));
+
 console.log('[TCC] Sovereignty Lite '+TCC_VERSION+' initializing...');
 
 /* Navigation */
@@ -747,4 +755,4 @@ if(versionEl)versionEl.textContent=TCC_VERSION;
 console.log('[TCC] Initialization complete. Active brain:',getActiveBrain());
 });
 
-</script></body></html>
+</script><div id="tccVersionCheck" style="position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#00ff88,#00f0ff);color:#000;text-align:center;font-size:12px;font-weight:700;padding:3px;z-index:99999;letter-spacing:1px">TCC SOVEREIGNTY v3.3.0 DIAGNOSTIC -- LOADED OK</div><script>setTimeout(function(){var vb=document.getElementById("tccVersionCheck");if(vb)vb.style.display="none"},8000);</script></body></html>
