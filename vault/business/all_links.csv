@@ -1,0 +1,10 @@
+type,name,url,status,created
+payment,TCC Business Stripe,https://buy.stripe.com/tcc-sovereignty-business,active,2026-02-01
+payment,TCC Pro Stripe,https://buy.stripe.com/tcc-sovereignty-pro,active,2026-02-01
+deployment,TCC Sovereignty Lite,https://dzongy.github.io/tcc-sovereignty-lite/,active,2026-02-09
+repository,GitHub Repo,https://github.com/Dzongy/tcc-sovereignty-lite,active,2026-02-09
+vault,Vault README,https://github.com/Dzongy/tcc-sovereignty-lite/tree/main/vault,active,2026-02-11
+social,Moltbook,https://moltbook.com/tcc,planned,2026-02-01
+social,X/Twitter,https://x.com/tcc_sovereignty,planned,2026-02-01
+social,Reddit,https://reddit.com/r/tcc_sovereignty,planned,2026-02-01
+voice,Zenith Voice App,https://dzongy.github.io/tcc-sovereignty-lite/vault/voice.html,active,2026-02-11
