@@ -420,33 +420,71 @@ area.scrollTop=area.scrollHeight;
 
 /* ===== SEND MESSAGE ===== */
 async function sendMessage(){
-const input=document.getElementById('messageInput');
-const sendBtn=document.getElementById('sendBtn');
-const message=input.value.trim();
-if(!message)return;
-const brain=getActiveBrain();
-if(!brain){showError('No brain connected. Set at least one API key in Settings.');return}
-renderMessage('user',message);
-await saveMessage('user',message);
-input.value='';input.style.height='48px';
-sendBtn.disabled=true;
-const area=document.getElementById('messagesArea');
-const typing=document.createElement('div');
-typing.className='typing-indicator active';
-typing.innerHTML='<span></span><span></span><span></span>';
-area.appendChild(typing);
-area.scrollTop=area.scrollHeight;
-try{
-const allMessages=await getMessages();
-const response=await callBrainAPI(brain.id,brain.key,allMessages);
-typing.remove();
-renderMessage('assistant',response);
-await saveMessage('assistant',response);
-}catch(error){
-typing.remove();
-showError(error.message||'Failed to get response');
-console.error('Brain API error:',error);
-}finally{sendBtn.disabled=false;input.focus()}
+  console.log('sendMessage called');
+  try{
+    const input=document.getElementById('userInput');
+    const text=input.value.trim();
+    console.log('Input text:', text);
+    if(!text){console.log('Empty input, returning');return;}
+    input.value='';
+    
+    // Remove empty state if present
+    const area=document.getElementById('messagesArea');
+    const empty=area.querySelector('.empty-state');
+    if(empty)empty.remove();
+    
+    // Show user message immediately
+    renderMessage('user',text);
+    console.log('User message rendered');
+    
+    // Save user message to DB
+    try{await saveMessage('user',text)}catch(e){console.warn('saveMessage error:',e)}
+    
+    // Get active brain
+    let brain=null;
+    try{brain=getActiveBrain();console.log('Active brain:',brain)}catch(e){console.warn('getActiveBrain error:',e)}
+    
+    if(!brain||!brain.apiKey){
+      console.log('No brain or no API key');
+      renderMessage('assistant','No brain connected. Go to Settings (gear icon) and add an API key for at least one brain.');
+      try{await saveMessage('assistant','No brain connected. Go to Settings and add an API key.')}catch(e){}
+      return;
+    }
+    
+    // Show typing indicator
+    const typingDiv=document.createElement('div');
+    typingDiv.className='message assistant';
+    typingDiv.id='typingIndicator';
+    typingDiv.innerHTML='<div class="message-content"><span class="typing-dots">Thinking...</span></div>';
+    area.appendChild(typingDiv);
+    area.scrollTop=area.scrollHeight;
+    
+    // Get conversation history
+    let messages=[];
+    try{messages=await getMessages();console.log('Got messages:',messages.length)}catch(e){console.warn('getMessages error:',e)}
+    
+    // Call the brain API
+    let response='';
+    try{
+      response=await callBrainAPI(brain,messages,text);
+      console.log('Got response, length:',response.length);
+    }catch(e){
+      console.error('callBrainAPI error:',e);
+      response='Error calling '+brain.name+': '+e.message;
+    }
+    
+    // Remove typing indicator
+    const typing=document.getElementById('typingIndicator');
+    if(typing)typing.remove();
+    
+    // Show response
+    renderMessage('assistant',response);
+    try{await saveMessage('assistant',response)}catch(e){console.warn('save response error:',e)}
+    
+  }catch(e){
+    console.error('sendMessage fatal error:',e);
+    renderMessage('assistant','Error: '+e.message);
+  }
 }
 
 /* ===== UI FUNCTIONS ===== */
