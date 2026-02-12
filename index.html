@@ -234,6 +234,7 @@ var keys={'apiKey2':a.join(''),'apiKey4':b.join('')};
 Object.keys(keys).forEach(function(k){
 if(!localStorage.getItem(k)||localStorage.getItem(k)==='bridge-managed'){
 localStorage.setItem(k,keys[k]);
+localStorage.setItem('tcc_backup_'+k,keys[k]);
 }
 localStorage.removeItem('bridgeKey'+k.replace('apiKey',''));
 });
@@ -515,6 +516,7 @@ for(let i=1;i<=7;i++){
 var _keyEl=document.getElementById('apiKey'+i);if(!_keyEl)return;const val=_keyEl.value;
 if(val&&val!=='bridge-managed'&&val!=='[Bridge Managed]'){
 localStorage.setItem('apiKey'+i,val);
+localStorage.setItem('tcc_backup_apiKey'+i,val);
 localStorage.removeItem('bridgeKey'+i);
 }
 }
@@ -593,10 +595,10 @@ document.body.removeChild(a);URL.revokeObjectURL(url);
 }catch(e){showError('Export failed: '+e.message)}
 }
 async function clearAllData(){
-if(!confirm('Clear ALL data? This removes all messages and API keys.'))return;
+if(!confirm('This will clear ALL saved API keys and chat history. This cannot be undone. Are you sure?'))return;
 try{
 await clearMessages();
-for(let i=1;i<=7;i++)localStorage.removeItem('apiKey'+i);
+for(let i=1;i<=7;i++){localStorage.removeItem('apiKey'+i);localStorage.removeItem('tcc_backup_apiKey'+i);localStorage.removeItem('bridgeKey'+i);}
 document.querySelectorAll('.setting-input').forEach(inp=>inp.value='');
 var _mArea=document.getElementById('messagesArea');if(_mArea)_mArea.innerHTML='<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><h3>Zenith Awaits</h3><p>All 7 brains fused into one mind. Speak and Zenith responds with the full mesh.</p></div>';
 updateBrainStatus();
@@ -689,21 +691,52 @@ lastTap=now;
 },{passive:false});
 }
 
+/* ===== KEY BACKUP RESTORE ===== */
+function restoreKeysFromBackup(){
+try{
+var restored=false;
+for(var i=1;i<=7;i++){
+var primary=localStorage.getItem('apiKey'+i);
+var backup=localStorage.getItem('tcc_backup_apiKey'+i);
+if((!primary||!primary.trim())&&backup&&backup.trim()){
+localStorage.setItem('apiKey'+i,backup);
+restored=true;
+console.log('[TCC] Restored apiKey'+i+' from backup');
+}
+}
+if(restored){
+var toast=document.createElement('div');
+toast.className='error-toast';
+toast.style.background='rgba(0,240,255,0.95)';
+toast.style.color='#000';
+toast.textContent='Keys restored from backup';
+document.body.appendChild(toast);
+setTimeout(function(){if(toast.parentNode)toast.remove()},3000);
+}
+}catch(e){console.warn('[TCC] Key restore error:',e)}
+}
+
 /* ===== INIT ===== */
 async function init(){
+try{
+/* Step 0: Restore any lost keys from backup */
+restoreKeysFromBackup();
+}catch(e){console.warn('Key restore skipped:',e)}
 try{await initDB()}catch(e){console.error('DB init error:',e)}
 try{await autoProvisionBrains()}catch(e){console.warn('autoProvisionBrains skipped:',e)}
 try{initializeSettings()}catch(e){console.warn('initializeSettings skipped:',e)}
-setupMobileInput();
+try{setupMobileInput()}catch(e){console.warn('setupMobileInput skipped:',e)}
 try{
 const msgs=await getMessages();
 if(msgs.length>0){
 const area=document.getElementById('messagesArea');
+if(area){
 const empty=area.querySelector('.empty-state');
 if(empty)empty.remove();
 msgs.forEach(m=>{
 if(m.role!=='system')renderMessage(m.role,m.content);
 });
+}
 }
 }catch(e){console.error('Load messages error:',e)}
 }
