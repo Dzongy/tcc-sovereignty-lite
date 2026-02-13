@@ -40,11 +40,11 @@
 <p class="architect-name">Architect: Dzongy</p>
 </header>
 
-<!-- SOUL CHECK â THE GATE (comes FIRST) -->
+<!-- SOUL CHECK Ã¢ÂÂ THE GATE (comes FIRST) -->
 <section class="section soul-check-section" id="soulSection">
 <h2 class="section-title">Soul Check</h2>
 <div class="soul-check-container">
-<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic â your phrase authenticates against the real /api/soul endpoint.</p>
+<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic Ã¢ÂÂ your phrase authenticates against the real /api/soul endpoint.</p>
 <div class="soul-input-group">
 <input type="text" id="soulInput" class="soul-input" placeholder="Enter sovereign phrase..." autocomplete="off" onkeydown="if(event.key==='Enter')verifySoul()">
 <button class="verify-btn" id="verifyBtn" onclick="verifySoul()">VERIFY IDENTITY</button>
@@ -53,7 +53,7 @@
 </div>
 </section>
 
-<!-- FIVE PILLARS â LIVE FROM BACKEND -->
+<!-- FIVE PILLARS Ã¢ÂÂ LIVE FROM BACKEND -->
 <section class="section" id="pillarsSection">
 <h2 class="section-title">Five Pillars Status Board</h2>
 <div id="pillarsContainer">
@@ -65,7 +65,7 @@
 </div>
 </section>
 
-<!-- ZENITH LIVE CONNECTION â GATED BEHIND SOUL CHECK -->
+<!-- ZENITH LIVE CONNECTION Ã¢ÂÂ GATED BEHIND SOUL CHECK -->
 <section class="section" id="zenithSection">
 <h2 class="section-title">ZENITH Live Connection</h2>
 <div id="zenithContainer">
@@ -151,7 +151,7 @@
 </div>
 </footer><script>
 // ============================================
-// TCC SOVEREIGNTY â LIVING SYSTEM ENGINE
+// TCC SOVEREIGNTY Ã¢ÂÂ LIVING SYSTEM ENGINE
 // ============================================
 const ZENITH_API = 'https://tcc-zenith-brain.onrender.com/api';
 let soulToken = sessionStorage.getItem('soul_token') || null;
@@ -165,7 +165,7 @@ async function zenithFetch(endpoint, options = {}) {
   const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json', ...(options.headers || {}) };
   if (soulToken) headers['X-Soul-Token'] = soulToken;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12000);
+  const timeout = setTimeout(() => controller.abort(), 45000);
   try {
     const res = await fetch(url, { ...options, headers, signal: controller.signal });
     clearTimeout(timeout);
@@ -177,7 +177,7 @@ async function zenithFetch(endpoint, options = {}) {
 }
 
 // ============================================
-// SOUL CHECK â Real /api/soul authentication
+// SOUL CHECK Ã¢ÂÂ Real /api/soul authentication
 // ============================================
 async function verifySoul() {
   const input = document.getElementById('soulInput');
@@ -186,30 +186,50 @@ async function verifySoul() {
   const phrase = input.value.trim();
   if (!phrase) { status.innerHTML = '<span class="soul-failed">Enter the sovereign phrase</span>'; return; }
   btn.disabled = true;
-  status.innerHTML = '<span class="soul-checking">Authenticating against ZENITH backend...</span>';
-  try {
-    const res = await zenithFetch('/soul', { method: 'POST', body: JSON.stringify({ phrase }) });
-    const data = await res.json();
-    if (res.ok && data.verified) {
-      soulToken = data.token;
-      sessionStorage.setItem('soul_token', soulToken);
-      isAuthenticated = true;
-      status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED â Token issued (24h TTL)</span>';
-      input.style.borderColor = 'var(--green)';
-      input.disabled = true;
-      btn.textContent = 'VERIFIED';
-      btn.style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
-      unlockPanels();
-      updateConnectionBar(true);
-    } else {
-      status.innerHTML = '<span class="soul-failed">' + (data.error || 'IDENTITY REJECTED') + ': ' + (data.message || 'Wrong phrase') + '</span>';
-      input.style.borderColor = 'var(--error)';
-      btn.disabled = false;
+  status.innerHTML = '<span class="soul-checking">Connecting to ZENITH backend...</span>';
+  
+  // Retry logic for Render cold starts (free tier can take 30-60s to wake)
+  let lastError = null;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      if (attempt === 2) {
+        status.innerHTML = '<span class="soul-checking">Backend waking up... retrying (attempt 2/2)</span>';
+      }
+      const res = await zenithFetch('/soul', { method: 'POST', body: JSON.stringify({ phrase }) });
+      const data = await res.json();
+      if (res.ok && data.verified) {
+        soulToken = data.token;
+        sessionStorage.setItem('soul_token', soulToken);
+        isAuthenticated = true;
+        status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED â Token issued (24h TTL)</span>';
+        input.style.borderColor = 'var(--green)';
+        input.disabled = true;
+        btn.textContent = 'VERIFIED';
+        btn.style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
+        unlockPanels();
+        updateConnectionBar(true);
+        return;
+      } else {
+        status.innerHTML = '<span class="soul-failed">' + (data.error || 'IDENTITY REJECTED') + ': ' + (data.message || 'Wrong phrase') + '</span>';
+        input.style.borderColor = 'var(--error)';
+        btn.disabled = false;
+        return;
+      }
+    } catch (e) {
+      lastError = e;
+      if (attempt === 1 && e.name === 'AbortError') {
+        status.innerHTML = '<span class="soul-checking">Backend is waking up (free tier cold start)... retrying...</span>';
+        continue;
+      }
     }
-  } catch (e) {
-    status.innerHTML = '<span class="soul-failed">Backend unreachable: ' + e.message + '</span>';
-    btn.disabled = false;
   }
+  // All retries exhausted
+  let errMsg = lastError ? lastError.message : 'Unknown error';
+  if (lastError && lastError.name === 'AbortError') {
+    errMsg = 'Backend did not respond in time. It may be starting up â please try again in 30 seconds.';
+  }
+  status.innerHTML = '<span class="soul-failed">Connection failed: ' + errMsg + '</span>';
+  btn.disabled = false;
 }
 
 // ============================================
@@ -247,7 +267,7 @@ function updateConnectionBar(authenticated) {
 }
 
 // ============================================
-// SYSTEM STATUS â Real /api/system data
+// SYSTEM STATUS Ã¢ÂÂ Real /api/system data
 // ============================================
 async function fetchSystemStatus() {
   const el = document.getElementById('system-content');
@@ -275,7 +295,7 @@ async function fetchSystemStatus() {
 }
 
 // ============================================
-// AUTONOMY STATUS â Real /api/autonomous/status
+// AUTONOMY STATUS Ã¢ÂÂ Real /api/autonomous/status
 // ============================================
 async function fetchAutonomyStatus() {
   const el = document.getElementById('autonomy-content');
@@ -303,7 +323,7 @@ async function fetchAutonomyStatus() {
 }
 
 // ============================================
-// LEARNINGS â Real /api/learnings
+// LEARNINGS Ã¢ÂÂ Real /api/learnings
 // ============================================
 async function fetchLearnings() {
   const el = document.getElementById('learnings-content');
@@ -340,7 +360,7 @@ async function fetchLearnings() {
 }
 
 // ============================================
-// TASK QUEUE â Real /api/autonomy
+// TASK QUEUE Ã¢ÂÂ Real /api/autonomy
 // ============================================
 async function fetchTaskQueue() {
   const el = document.getElementById('tasks-content');
@@ -360,7 +380,7 @@ async function fetchTaskQueue() {
           '<div class="task-status pending">' + (t.status || 'pending') + (t.spawned_by ? ' | spawned by: ' + t.spawned_by : '') + '</div></div>';
       });
     } else {
-      html += '<div style="color:var(--gray);padding:10px;">Queue empty â ZENITH will self-generate tasks</div>';
+      html += '<div style="color:var(--gray);padding:10px;">Queue empty Ã¢ÂÂ ZENITH will self-generate tasks</div>';
     }
     html += '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
     el.innerHTML = html;
@@ -370,7 +390,7 @@ async function fetchTaskQueue() {
 }
 
 // ============================================
-// MEMORY LOG â Combined run history
+// MEMORY LOG Ã¢ÂÂ Combined run history
 // ============================================
 async function fetchMemoryLog() {
   const el = document.getElementById('memory-content');
@@ -402,7 +422,7 @@ async function fetchMemoryLog() {
 }
 
 // ============================================
-// PILLARS â Built from LIVE backend data
+// PILLARS Ã¢ÂÂ Built from LIVE backend data
 // ============================================
 async function buildPillarsFromLiveData() {
   const grid = document.getElementById('pillarsGrid');
@@ -425,7 +445,7 @@ async function buildPillarsFromLiveData() {
     const pillars = [
       { name: 'PILLAR 1: Remember Everything', icon: '&#x1F9E0;', status: p1_memory ? 'PROVEN' : 'PENDING',
         desc: 'Persistent GitHub-backed memory. Every conversation, learning, and directive persists across restarts.',
-        proof: p1_memory ? 'Memory ACTIVE â ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
+        proof: p1_memory ? 'Memory ACTIVE Ã¢ÂÂ ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
       { name: 'PILLAR 2: Always Improve', icon: '&#x1F4C8;', status: p2_learning ? 'PROVEN' : 'IN PROGRESS',
         desc: 'Structured learning engine extracts insights from every completed task and feeds top learnings into AI context.',
         proof: p2_learning ? learn.total_task_learnings + ' task learnings extracted, ' + learn.total_structured_learnings + ' structured learnings stored' : 'Learning engine deployed, awaiting first cycle' },
@@ -433,11 +453,11 @@ async function buildPillarsFromLiveData() {
         desc: 'Autonomous tick engine reads task queue, executes tasks, spawns new tasks, and writes results to memory.',
         proof: p3_autonomous ? auto.completed_tasks + ' tasks completed, ' + auto.pending_tasks + ' pending, last run: ' + new Date(auto.last_run).toLocaleString() : 'Engine deployed, awaiting first tick' },
       { name: 'PILLAR 4: Soul Check Gate', icon: '&#x1F6E1;', status: p4_soulCheck ? 'PROVEN' : 'PENDING',
-        desc: 'Sovereign identity verification. Real cryptographic token authentication â not cosmetic, not client-side.',
-        proof: p4_soulCheck ? 'SOUL VERIFIED â Token active, 10 endpoints gated, 24h TTL' : '' },
+        desc: 'Sovereign identity verification. Real cryptographic token authentication Ã¢ÂÂ not cosmetic, not client-side.',
+        proof: p4_soulCheck ? 'SOUL VERIFIED Ã¢ÂÂ Token active, 10 endpoints gated, 24h TTL' : '' },
       { name: 'PILLAR 5: Distribution & Monetization', icon: '&#x1F680;', status: p5_distribution ? 'PROVEN' : 'PENDING',
         desc: 'Revenue systems, Stripe integration, content distribution across platforms. The final sovereignty layer.',
-        proof: p5_distribution ? 'Active' : 'Planning phase â API discovery needed' }
+        proof: p5_distribution ? 'Active' : 'Planning phase Ã¢ÂÂ API discovery needed' }
     ];
     let html = '';
     pillars.forEach(function(p) {
@@ -485,7 +505,7 @@ async function init() {
         document.getElementById('verifyBtn').textContent = 'VERIFIED';
         document.getElementById('verifyBtn').disabled = true;
         document.getElementById('verifyBtn').style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
-        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored â Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
+        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored Ã¢ÂÂ Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
         unlockPanels();
         updateConnectionBar(true);
       } else {
