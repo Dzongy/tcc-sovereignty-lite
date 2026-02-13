@@ -1,1 +1,240 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TCC ZENITH â Sovereignty Command Center</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-x:hidden}#app{max-width:1400px;margin:0 auto;padding:20px}.header{text-align:center;border:2px solid #0ff;padding:20px;margin-bottom:20px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);position:relative}.header h1{font-size:2em;letter-spacing:3px;text-shadow:0 0 10px #0ff}.header .clock{font-size:1.2em;margin-top:10px;color:#10b981}.status-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:20px}.status-card{background:#1a1a1a;border:1px solid #333;padding:15px;border-radius:5px}.status-card h3{color:#10b981;font-size:0.9em;margin-bottom:8px}.status-card .value{font-size:1.1em;color:#fff}.indicator{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.indicator.green{background:#10b981;box-shadow:0 0 5px #10b981}.indicator.red{background:#ef4444;box-shadow:0 0 5px #ef4444}.indicator.yellow{background:#f59e0b;box-shadow:0 0 5px #f59e0b}.section{background:#1a1a1a;border:1px solid #333;padding:20px;margin-bottom:20px;border-radius:5px}.section h2{color:#0ff;font-size:1.3em;margin-bottom:15px;border-bottom:1px solid #333;padding-bottom:10px}.section h3{color:#10b981;font-size:1em;margin:15px 0 10px 0}.list-item{background:#0f0f0f;padding:10px;margin:5px 0;border-left:3px solid #0ff;font-size:0.9em}.loading{text-align:center;padding:20px;color:#666}.error{color:#ef4444;padding:10px;background:#2a1a1a;border-left:3px solid #ef4444}.collapsible{cursor:pointer;user-select:none}.collapsible:hover{color:#10b981}.collapsible-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease}.collapsible-content.open{max-height:2000px}.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}.footer{text-align:center;padding:30px;color:#666;font-style:italic;border-top:1px solid #333;margin-top:20px}.badge{display:inline-block;padding:3px 8px;border-radius:3px;font-size:0.8em;margin-left:5px}.badge.online{background:#10b981;color:#000}.badge.offline{background:#ef4444;color:#fff}.link{color:#0ff;text-decoration:none;border-bottom:1px dashed #0ff}.link:hover{color:#10b981;border-bottom-color:#10b981}.revenue-box{background:#0f0f0f;padding:15px;border:2px solid #10b981;border-radius:5px;text-align:center}.revenue-box .amount{font-size:2em;color:#10b981;margin:10px 0}.revenue-box .cta{display:inline-block;background:#10b981;color:#000;padding:12px 24px;margin:10px 0;text-decoration:none;font-weight:bold;border-radius:5px;transition:all 0.3s}.revenue-box .cta:hover{background:#0ff;transform:scale(1.05)}.agent-item{display:flex;justify-content:space-between;align-items:center;padding:8px;background:#0f0f0f;margin:5px 0;border-left:2px solid #10b981}.agent-schedule{color:#666;font-size:0.85em}@media(max-width:768px){.header h1{font-size:1.5em}.grid-2{grid-template-columns:1fr}.status-bar{grid-template-columns:1fr}}</style></head><body><div id="app"><div class="header"><h1>â¡ TCC ZENITH â SOVEREIGNTY COMMAND CENTER â¡</h1><div class="clock" id="clock"></div></div><div id="status-bar" class="status-bar"><div class="status-card"><h3>BACKEND STATUS</h3><div class="value" id="backend-status"><span class="loading">â³</span></div></div><div class="status-card"><h3>UPTIME</h3><div class="value" id="uptime">â</div></div><div class="status-card"><h3>VERSION</h3><div class="value" id="version">â</div></div><div class="status-card"><h3>MEMORY PILLAR</h3><div class="value" id="pillar-memory">â</div></div><div class="status-card"><h3>LEARNINGS PILLAR</h3><div class="value" id="pillar-learnings">â</div></div><div class="status-card"><h3>AUTONOMY PILLAR</h3><div class="value" id="pillar-autonomy">â</div></div></div><div class="grid-2"><div class="section"><h2>âï¸ IDENTITY</h2><div id="identity-content" class="loading">Loading identity...</div></div><div class="section"><h2>ðï¸ INFRASTRUCTURE</h2><div id="infrastructure-content" class="loading">Loading infrastructure...</div></div></div><div class="section"><h2 class="collapsible" onclick="toggleSection('memory')">ð§  MEMORY MANIFEST [CLICK TO EXPAND]</h2><div id="memory-content" class="collapsible-content"><div class="loading">Loading memory manifest...</div></div></div><div class="section"><h2>ð LEARNINGS</h2><div id="learnings-content" class="loading">Loading learnings...</div></div><div class="section"><h2>ð¤ AUTONOMY ENGINE</h2><div id="autonomy-content" class="loading">Loading autonomy status...</div></div><div class="section"><h2>ð AUTOPILOT CYCLES</h2><div id="autopilot-content" class="loading">Loading autopilot history...</div></div><div class="section"><h2>ð° REVENUE TRACKER</h2><div class="revenue-box"><div>Current Revenue: <span class="amount">$0</span></div><div style="margin:15px 0;color:#666">$97 Premium Access â Full System Integration</div><a href="https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P" target="_blank" class="cta">ð GET PREMIUM ACCESS</a><div style="margin-top:15px"><a href="https://dashboard.stripe.com" target="_blank" class="link">View Stripe Dashboard â</a></div></div></div><div class="section"><h2>ð¤ AGENT STATUS</h2><div id="agents-content"><div class="agent-item"><span>ð Echo Agent</span><span class="agent-schedule">Every 6 hours</span></div><div class="agent-item"><span>ð¯ Closer Agent</span><span class="agent-schedule">Every 8 hours</span></div><div class="agent-item"><span>ð¼ Sales Machine</span><span class="agent-schedule">Every 12 hours</span></div><div class="agent-item"><span>ð Heartbeat Agent</span><span class="agent-schedule">Every 5 minutes</span></div><div class="agent-item"><span>ð Recon Agent</span><span class="agent-schedule">Every 24 hours</span></div></div></div><div class="footer">Sovereignty is non-negotiable. ZENITH never forgets.</div></div><script>const BASE='https://tcc-zenith-brain.onrender.com';const AUTH='amos-bridge-2026';let data={};function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toUTCString()}setInterval(updateClock,1000);updateClock();function toggleSection(id){const el=document.getElementById(id+'-content');el.classList.toggle('open')}async function fetchData(){try{const [health,status,memory,learningsManifest,learnings,autonomy,autopilot]=await Promise.allSettled([fetch(`${BASE}/api/health`).then(r=>r.json()),fetch(`${BASE}/api/status`,{headers:{'X-Auth':AUTH}}).then(r=>r.json()),fetch(`${BASE}/api/memory-manifest`,{headers:{'X-Auth':AUTH}}).then(r=>r.json()),fetch(`${BASE}/api/learnings-manifest`,{headers:{'X-Auth':AUTH}}).then(r=>r.json()),fetch(`${BASE}/api/learnings`).then(r=>r.json()),fetch(`${BASE}/api/zenith/autonomy`).then(r=>r.json()),fetch(`${BASE}/api/zenith/autopilot/history`).then(r=>r.json())]);data={health:health.status==='fulfilled'?health.value:null,status:status.status==='fulfilled'?status.value:null,memory:memory.status==='fulfilled'?memory.value:null,learningsManifest:learningsManifest.status==='fulfilled'?learningsManifest.value:null,learnings:learnings.status==='fulfilled'?learnings.value:null,autonomy:autonomy.status==='fulfilled'?autonomy.value:null,autopilot:autopilot.status==='fulfilled'?autopilot.value:null};renderDashboard()}catch(e){console.error('Fetch error:',e)}}function renderDashboard(){renderStatusBar();renderIdentity();renderInfrastructure();renderMemory();renderLearnings();renderAutonomy();renderAutopilot()}function renderStatusBar(){const st=data.status;const h=data.health;if(st){document.getElementById('backend-status').innerHTML=`<span class="indicator green"></span>ONLINE<span class="badge online">LIVE</span>`;document.getElementById('uptime').textContent=st.uptime||'â';document.getElementById('version').textContent=st.version||'â'}else{document.getElementById('backend-status').innerHTML=`<span class="indicator red"></span>OFFLINE<span class="badge offline">DOWN</span>`}if(h&&h.pillars){const p=h.pillars;document.getElementById('pillar-memory').innerHTML=`<span class="indicator ${p.memory?'green':'red'}"></span>${p.memory?'ACTIVE':'DOWN'}`;document.getElementById('pillar-learnings').innerHTML=`<span class="indicator ${p.learnings?'green':'red'}"></span>${p.learnings?'ACTIVE':'DOWN'}`;document.getElementById('pillar-autonomy').innerHTML=`<span class="indicator ${p.autonomy?'green':'red'}"></span>${p.autonomy?'ACTIVE':'DOWN'}`}}function renderIdentity(){const m=data.memory;const el=document.getElementById('identity-content');if(!m){el.innerHTML='<div class="error">Memory manifest unavailable</div>';return}const i=m.identity||{};el.innerHTML=`<div class="list-item"><strong>Name:</strong> ${i.name||'ZENITH'}</div><div class="list-item"><strong>Version:</strong> ${i.version||'â'}</div><div class="list-item"><strong>Phase:</strong> ${i.phase||'â'}</div><div class="list-item"><strong>Soul Phrase:</strong> ${i.soulPhraseStatus||'â'}</div>`}function renderInfrastructure(){const m=data.memory;const el=document.getElementById('infrastructure-content');if(!m){el.innerHTML='<div class="error">Memory manifest unavailable</div>';return}const inf=m.infrastructure||{};el.innerHTML=`<div class="list-item"><strong>Backend:</strong> <a href="${inf.backendUrl||BASE}" target="_blank" class="link">${inf.backendUrl||BASE}</a></div><div class="list-item"><strong>Render Service:</strong> ${inf.renderService||'â'}</div><div class="list-item"><strong>Main Repo:</strong> <a href="${inf.githubMainRepo||'#'}" target="_blank" class="link">GitHub</a></div><div class="list-item"><strong>Brain Repo:</strong> <a href="${inf.githubBrainRepo||'#'}" target="_blank" class="link">GitHub</a></div><div class="list-item"><strong>Stripe:</strong> ${inf.stripeIntegration||'Configured'}</div>`}function renderMemory(){const m=data.memory;const el=document.getElementById('memory-content');if(!m){el.innerHTML='<div class="error">Memory manifest unavailable</div>';return}let html='';if(m.completedWork&&m.completedWork.length){html+='<h3>â COMPLETED WORK</h3>';m.completedWork.slice(0,10).forEach(w=>{html+=`<div class="list-item">${w}</div>`})}if(m.activePriorities&&m.activePriorities.length){html+='<h3>ð¯ ACTIVE PRIORITIES</h3>';m.activePriorities.forEach(p=>{html+=`<div class="list-item">${p}</div>`})}if(m.standingRules&&m.standingRules.length){html+='<h3>ð STANDING RULES</h3>';m.standingRules.forEach(r=>{html+=`<div class="list-item">${r}</div>`})}el.innerHTML=html||'<div>No memory data</div>'}function renderLearnings(){const lm=data.learningsManifest;const l=data.learnings;const el=document.getElementById('learnings-content');if(!lm&&!l){el.innerHTML='<div class="error">Learnings unavailable</div>';return}let html='';if(lm&&lm.categories){html+='<h3>ð CATEGORIES</h3>';Object.entries(lm.categories).forEach(([k,v])=>{html+=`<div class="list-item"><strong>${k}:</strong> ${v.count||0} learnings</div>`})}if(l&&l.taskLearnings&&l.taskLearnings.length){html+='<h3>ð¬ TOP TASK LEARNINGS</h3>';l.taskLearnings.slice(0,5).forEach(t=>{html+=`<div class="list-item"><strong>${t.category||'General'}:</strong> ${t.insight||t.learning||'â'}</div>`})}el.innerHTML=html||'<div>No learnings data</div>'}function renderAutonomy(){const a=data.autonomy;const el=document.getElementById('autonomy-content');if(!a){el.innerHTML='<div class="error">Autonomy data unavailable</div>';return}const tq=a.taskQueue||{};const mode=a.autonomyMode||'â';const next=a.nextTask||'None';const lastGen=a.lastSelfGeneratedTask||'None';el.innerHTML=`<div class="list-item"><strong>Mode:</strong> ${mode}</div><div class="list-item"><strong>Pending Tasks:</strong> ${tq.pending||0}</div><div class="list-item"><strong>Completed Tasks:</strong> ${tq.completed||0}</div><div class="list-item"><strong>Next Task:</strong> ${next}</div><div class="list-item"><strong>Last Self-Generated:</strong> ${lastGen}</div>`}function renderAutopilot(){const ap=data.autopilot;const el=document.getElementById('autopilot-content');if(!ap||!ap.history||!ap.history.length){el.innerHTML='<div>No autopilot cycles recorded</div>';return}let html='';ap.history.slice(0,10).forEach(cycle=>{const ts=new Date(cycle.timestamp).toLocaleString();const res=cycle.result||'â';html+=`<div class="list-item"><strong>${ts}</strong><br>${res}</div>`});el.innerHTML=html}fetchData();setInterval(fetchData,60000)</script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TCC ZENITH â Sovereignty Command Center</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-x:hidden}
+#app{max-width:1400px;margin:0 auto;padding:12px}
+.header{text-align:center;border:2px solid #0ff;padding:16px;margin-bottom:16px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);position:relative}
+.header h1{font-size:1.8em;letter-spacing:3px;text-shadow:0 0 10px #0ff}
+.header .clock{font-size:1em;margin-top:8px;color:#10b981}
+.status-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:16px}
+.status-card{background:#1a1a1a;border:1px solid #333;padding:12px;border-radius:5px}
+.status-card h3{color:#10b981;font-size:0.8em;margin-bottom:6px}
+.status-card .value{font-size:1em;color:#fff}
+.ind{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.ind.g{background:#10b981;box-shadow:0 0 5px #10b981}
+.ind.r{background:#ef4444;box-shadow:0 0 5px #ef4444}
+.ind.y{background:#f59e0b;box-shadow:0 0 5px #f59e0b}
+.section{background:#1a1a1a;border:1px solid #333;padding:16px;margin-bottom:12px;border-radius:5px}
+.section h2{color:#0ff;font-size:1.2em;margin-bottom:12px;border-bottom:1px solid #333;padding-bottom:8px;cursor:pointer}
+.section h3{color:#10b981;font-size:0.95em;margin:12px 0 8px 0}
+.list-item{background:#0f0f0f;padding:8px;margin:4px 0;border-left:3px solid #0ff;font-size:0.85em;color:#ccc}
+.error{color:#ef4444;padding:8px;background:#2a1a1a;border-left:3px solid #ef4444;font-size:0.85em}
+.chat-box{background:#111;border:2px solid #0ff;border-radius:8px;margin-bottom:16px;overflow:hidden}
+.chat-header{background:#1a1a1a;padding:12px 16px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center}
+.chat-header h2{color:#0ff;font-size:1.1em;margin:0;border:0;padding:0}
+.chat-header .status-dot{font-size:0.8em;color:#10b981}
+.chat-messages{height:300px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:0.9em;line-height:1.4;word-wrap:break-word}
+.chat-msg.user{align-self:flex-end;background:#1a3a5c;color:#7dd3fc;border-bottom-right-radius:4px}
+.chat-msg.assistant{align-self:flex-start;background:#1a2a1a;color:#86efac;border-bottom-left-radius:4px}
+.chat-msg.system{align-self:center;background:#2a2a1a;color:#fbbf24;font-size:0.8em;padding:6px 12px}
+.chat-input-row{display:flex;border-top:1px solid #333;background:#0a0a0a}
+.chat-input-row input{flex:1;background:transparent;border:none;color:#0ff;padding:14px 16px;font-family:inherit;font-size:0.95em;outline:none}
+.chat-input-row input::placeholder{color:#555}
+.chat-input-row button{background:#0ff;color:#0a0a0a;border:none;padding:14px 20px;font-family:inherit;font-weight:bold;cursor:pointer;font-size:0.95em}
+.chat-input-row button:hover{background:#10b981}
+.chat-input-row button:disabled{background:#333;color:#666;cursor:not-allowed}
+@media(max-width:600px){
+  #app{padding:8px}
+  .header h1{font-size:1.3em}
+  .chat-messages{height:250px}
+  .status-bar{grid-template-columns:repeat(2,1fr)}
+}
+</style></head><body><div id="app">
+
+<div class="chat-box">
+  <div class="chat-header">
+    <h2>ZENITH COMMAND</h2>
+    <span class="status-dot" id="chat-status">â ONLINE</span>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg system">ZENITH Brain v2.2 â Type a command or question. Amos has full authority.</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Talk to ZENITH..." autocomplete="off">
+    <button id="chat-send" onclick="sendChat()">SEND</button>
+  </div>
+</div>
+
+<div class="header">
+  <h1>TCC ZENITH â SOVEREIGNTY</h1>
+  <div class="clock" id="clock"></div>
+</div>
+
+<div class="status-bar" id="status-bar"></div>
+
+<div class="section" id="system-section">
+  <h2>SYSTEM STATUS</h2>
+  <div id="system-content"><div class="list-item">Loading...</div></div>
+</div>
+
+<div class="section" id="payments-section">
+  <h2>PAYMENTS / REVENUE</h2>
+  <div id="payments-content"><div class="list-item">Loading...</div></div>
+</div>
+
+<div class="section" id="autonomy-section">
+  <h2>AUTONOMY ENGINE</h2>
+  <div id="autonomy-content"><div class="list-item">Loading...</div></div>
+</div>
+
+<div class="section" id="autopilot-section">
+  <h2>AUTOPILOT LOG</h2>
+  <div id="autopilot-content"><div class="list-item">Loading...</div></div>
+</div>
+
+</div>
+<script>
+const BASE='https://tcc-zenith-brain.onrender.com';
+const AUTH='amos-bridge-2026';
+let chatHistory=[];
+
+// --- CLOCK ---
+function updateClock(){document.getElementById('clock').textContent=new Date().toUTCString()}
+setInterval(updateClock,1000);updateClock();
+
+// --- CHAT ---
+async function sendChat(){
+  const input=document.getElementById('chat-input');
+  const msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  document.getElementById('chat-send').disabled=true;
+  addChatMsg('user',msg);
+  chatHistory.push({role:'user',content:msg});
+  try{
+    const r=await fetch(BASE+'/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,history:chatHistory.slice(-10)})
+    });
+    if(!r.ok)throw new Error('Status '+r.status);
+    const d=await r.json();
+    const reply=d.reply||'No response';
+    addChatMsg('assistant',reply);
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(e){
+    addChatMsg('system','Connection error: '+e.message+'. Backend may be waking up - try again in 30s.');
+  }
+  document.getElementById('chat-send').disabled=false;
+  document.getElementById('chat-input').focus();
+}
+function addChatMsg(role,text){
+  const el=document.createElement('div');
+  el.className='chat-msg '+role;
+  el.textContent=text;
+  const container=document.getElementById('chat-messages');
+  container.appendChild(el);
+  container.scrollTop=container.scrollHeight;
+}
+document.getElementById('chat-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}
+});
+
+// --- DASHBOARD DATA ---
+async function fetchDashboard(){
+  try{
+    const [health,status,zenith,autopilotHist]=await Promise.allSettled([
+      fetch(BASE+'/api/health').then(r=>r.json()),
+      fetch(BASE+'/api/status',{headers:{'X-Auth':AUTH}}).then(r=>r.json()),
+      fetch(BASE+'/api/zenith/status',{headers:{'X-Auth':AUTH}}).then(r=>r.json()),
+      fetch(BASE+'/api/zenith/autopilot/history').then(r=>r.json())
+    ]);
+    const h=health.status==='fulfilled'?health.value:null;
+    const s=status.status==='fulfilled'?status.value:null;
+    const z=zenith.status==='fulfilled'?zenith.value:null;
+    const ap=autopilotHist.status==='fulfilled'?autopilotHist.value:null;
+    renderStatusBar(h,s,z);
+    renderSystem(h,s,z);
+    renderPayments(z);
+    renderAutonomy(z);
+    renderAutopilot(ap);
+    document.getElementById('chat-status').textContent=h?'\u25cf ONLINE':'\u25cf OFFLINE';
+    document.getElementById('chat-status').style.color=h?'#10b981':'#ef4444';
+  }catch(e){console.error('Dashboard fetch error:',e)}
+}
+
+function renderStatusBar(h,s,z){
+  const el=document.getElementById('status-bar');
+  const online=!!h;
+  const mode=z?z.mode:'unknown';
+  const ver=z?z.version:(s?s.version:'?');
+  const upH=z&&z.uptime?z.uptime.hours.toFixed(1):'?';
+  const rev=z&&z.payments?'$'+z.payments.totalRevenue:'$0';
+  el.innerHTML=
+    '<div class="status-card"><h3>BACKEND</h3><div class="value"><span class="ind '+(online?'g':'r')+'"></span>'+(online?'ONLINE':'OFFLINE')+'</div></div>'+
+    '<div class="status-card"><h3>MODE</h3><div class="value">'+mode+'</div></div>'+
+    '<div class="status-card"><h3>VERSION</h3><div class="value">'+ver+'</div></div>'+
+    '<div class="status-card"><h3>UPTIME</h3><div class="value">'+upH+' hrs</div></div>'+
+    '<div class="status-card"><h3>REVENUE</h3><div class="value" style="color:#10b981">'+rev+'</div></div>';
+}
+
+function renderSystem(h,s,z){
+  const el=document.getElementById('system-content');
+  if(!z&&!h){el.innerHTML='<div class="error">System data unavailable</div>';return}
+  let html='';
+  if(z&&z.health){
+    const hd=z.health.details||{};
+    html+='<h3>HEALTH CHECKS</h3>';
+    Object.entries(hd).forEach(function(kv){
+      html+='<div class="list-item"><span class="ind '+(kv[1]?'g':'r')+'"></span><strong>'+kv[0]+':</strong> '+(kv[1]?'OK':'FAIL')+'</div>';
+    });
+    html+='<div class="list-item">Last check: '+(z.health.lastCheck||'never')+'</div>';
+  }
+  if(h&&h.pillars){
+    html+='<h3>PILLARS</h3>';
+    Object.entries(h.pillars).forEach(function(kv){
+      html+='<div class="list-item"><span class="ind '+(kv[1]==='ok'?'g':'r')+'"></span>'+kv[0]+': '+kv[1]+'</div>';
+    });
+  }
+  if(z&&z.soulCheck){
+    html+='<h3>SOUL CHECK</h3>';
+    html+='<div class="list-item">Active: '+(z.soulCheck.active?'YES':'NO')+' | Attempts: '+z.soulCheck.stats.attempts+' | Successes: '+z.soulCheck.stats.successes+' | Failures: '+z.soulCheck.stats.failures+'</div>';
+  }
+  if(z&&z.endpoints){
+    html+='<div class="list-item">Registered endpoints: '+z.endpoints+'</div>';
+  }
+  el.innerHTML=html||'<div class="list-item">No system data</div>';
+}
+
+function renderPayments(z){
+  const el=document.getElementById('payments-content');
+  if(!z||!z.payments){el.innerHTML='<div class="list-item">No payment data available</div>';return}
+  const p=z.payments;
+  el.innerHTML=
+    '<div class="list-item"><strong>Total Revenue:</strong> $'+p.totalRevenue+'</div>'+
+    '<div class="list-item"><strong>Total Payments:</strong> '+p.totalPayments+'</div>'+
+    '<div class="list-item"><strong>Recent Count:</strong> '+p.recentCount+'</div>'+
+    '<div class="list-item"><strong>Last Payment:</strong> '+(p.lastPayment||'None yet')+'</div>'+
+    '<div class="list-item" style="margin-top:8px"><a href="https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P" target="_blank" style="color:#0ff">$97 Checkout Link</a></div>';
+}
+
+function renderAutonomy(z){
+  const el=document.getElementById('autonomy-content');
+  if(!z||!z.autonomy){el.innerHTML='<div class="list-item">Autonomy data unavailable</div>';return}
+  const a=z.autonomy;
+  el.innerHTML=
+    '<div class="list-item"><strong>Tasks Pending:</strong> '+a.tasksPending+'</div>'+
+    '<div class="list-item"><strong>Tasks Completed:</strong> '+a.tasksCompleted+'</div>'+
+    '<div class="list-item"><strong>Learnings:</strong> '+a.learnings+'</div>';
+}
+
+function renderAutopilot(ap){
+  const el=document.getElementById('autopilot-content');
+  if(!ap||!ap.log){el.innerHTML='<div class="list-item">No autopilot history yet</div>';return}
+  let html='<div class="list-item"><strong>Total Cycles:</strong> '+ap.total_cycles+'</div>';
+  if(ap.log&&ap.log.length){
+    ap.log.slice(-5).reverse().forEach(function(entry){
+      const phase=entry.phase||'?';
+      const started=entry.startedAt||'?';
+      const actions=entry.actions?entry.actions.length:0;
+      html+='<div class="list-item"><strong>['+phase.toUpperCase()+']</strong> '+started+' | '+actions+' actions</div>';
+    });
+  }else{
+    html+='<div class="list-item">No cycles logged yet</div>';
+  }
+  el.innerHTML=html;
+}
+
+fetchDashboard();
+setInterval(fetchDashboard,60000);
+</script></body></html>
