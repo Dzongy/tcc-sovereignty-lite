@@ -61,7 +61,7 @@
 @keyframes typing-bounce{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-8px);opacity:1}}
 @media(max-width:768px){.zenith-chat-container{height:500px;border-radius:16px;margin:0 -10px}.chat-msg{max-width:92%}}
 
-/* Soul-to-Chat Transition â CSS Grid Stack */
+/* Soul-to-Chat Transition Ã¢ÂÂ CSS Grid Stack */
 #soulChatWrapper{display:grid;grid-template-columns:1fr;grid-template-rows:1fr}
 #soulChatWrapper>section{grid-column:1;grid-row:1}
 #soulSection{opacity:1;transform:none;transition:opacity 0.3s ease,transform 0.3s ease;pointer-events:auto;z-index:2}
@@ -86,12 +86,12 @@
 <p class="architect-name">Architect: Dzongy</p>
 </header>
 
-<!-- SOUL CHECK â THE GATE (comes FIRST) -->
+<!-- SOUL CHECK Ã¢ÂÂ THE GATE (comes FIRST) -->
 <div id="soulChatWrapper">
 <section class="section soul-check-section" id="soulSection">
 <h2 class="section-title">Soul Check</h2>
 <div class="soul-check-container">
-<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic â your phrase authenticates against the real /api/soul endpoint.</p>
+<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic Ã¢ÂÂ your phrase authenticates against the real /api/soul endpoint.</p>
 <div class="soul-input-group">
 <input type="text" id="soulInput" class="soul-input" placeholder="Enter sovereign phrase..." autocomplete="off" onkeydown="if(event.key==='Enter')verifySoul()">
 <button class="verify-btn" id="verifyBtn" onclick="verifySoul()">VERIFY IDENTITY</button>
@@ -100,14 +100,14 @@
 </div>
 </section>
 
-<!-- ZENITH CHAT â Grok-style Interface (visible after Soul Check) -->
+<!-- ZENITH CHAT Ã¢ÂÂ Grok-style Interface (visible after Soul Check) -->
 <section class="section zenith-chat-section" id="chatSection">
 <h2 class="section-title">Talk to ZENITH</h2>
 <div class="zenith-chat-container">
 <div class="chat-header">
 <div class="chat-header-dot"></div>
 <div class="chat-header-title">ZENITH</div>
-<div class="chat-header-sub">Sovereign AI â TCC Brain</div>
+<div class="chat-header-sub">Sovereign AI Ã¢ÂÂ TCC Brain</div>
 </div>
 <div class="chat-messages" id="chatMessages">
 <div class="chat-msg system">ZENITH is online. Soul-authenticated session active.</div>
@@ -122,7 +122,7 @@
 </section>
 </div>
 
-<!-- FIVE PILLARS â LIVE FROM BACKEND -->
+<!-- FIVE PILLARS Ã¢ÂÂ LIVE FROM BACKEND -->
 <section class="section" id="pillarsSection">
 <h2 class="section-title">Five Pillars Status Board</h2>
 <div id="pillarsContainer">
@@ -134,7 +134,7 @@
 </div>
 </section>
 
-<!-- ZENITH LIVE CONNECTION â GATED BEHIND SOUL CHECK -->
+<!-- ZENITH LIVE CONNECTION Ã¢ÂÂ GATED BEHIND SOUL CHECK -->
 <section class="section" id="zenithSection">
 <h2 class="section-title">ZENITH Live Connection</h2>
 <div id="zenithContainer">
@@ -223,7 +223,7 @@
 </div>
 </footer><script>
 // ============================================
-// TCC SOVEREIGNTY â LIVING SYSTEM ENGINE
+// TCC SOVEREIGNTY Ã¢ÂÂ LIVING SYSTEM ENGINE
 // ============================================
 const ZENITH_API = 'https://tcc-zenith-brain.onrender.com/api';
 let soulToken = sessionStorage.getItem('soul_token') || null;
@@ -249,7 +249,7 @@ async function zenithFetch(endpoint, options = {}) {
 }
 
 // ============================================
-// SOUL CHECK â Real /api/soul authentication
+// SOUL CHECK Ã¢ÂÂ Real /api/soul authentication
 // ============================================
 async function verifySoul() {
   const input = document.getElementById('soulInput');
@@ -273,7 +273,7 @@ async function verifySoul() {
         soulToken = data.token;
         sessionStorage.setItem('soul_token', soulToken);
         isAuthenticated = true;
-        status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED â Token issued (24h TTL)</span>';
+        status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED Ã¢ÂÂ Token issued (24h TTL)</span>';
         input.style.borderColor = 'var(--green)';
         input.disabled = true;
         btn.textContent = 'VERIFIED';
@@ -299,7 +299,7 @@ async function verifySoul() {
   // All retries exhausted
   let errMsg = lastError ? lastError.message : 'Unknown error';
   if (lastError && lastError.name === 'AbortError') {
-    errMsg = 'Backend did not respond in time. It may be starting up â please try again in 30 seconds.';
+    errMsg = 'Backend did not respond in time. It may be starting up Ã¢ÂÂ please try again in 30 seconds.';
   }
   status.innerHTML = '<span class="soul-failed">Connection failed: ' + errMsg + '</span>';
   btn.disabled = false;
@@ -341,7 +341,7 @@ function updateConnectionBar(authenticated) {
 }
 
 // ============================================
-// SYSTEM STATUS â Real /api/system data
+// SYSTEM STATUS Ã¢ÂÂ Real /api/system data
 // ============================================
 async function fetchSystemStatus() {
   const el = document.getElementById('system-content');
@@ -369,7 +369,7 @@ async function fetchSystemStatus() {
 }
 
 // ============================================
-// AUTONOMY STATUS â Real /api/autonomous/status
+// AUTONOMY STATUS Ã¢ÂÂ Real /api/autonomous/status
 // ============================================
 async function fetchAutonomyStatus() {
   const el = document.getElementById('autonomy-content');
@@ -397,7 +397,7 @@ async function fetchAutonomyStatus() {
 }
 
 // ============================================
-// LEARNINGS â Real /api/learnings
+// LEARNINGS Ã¢ÂÂ Real /api/learnings
 // ============================================
 async function fetchLearnings() {
   const el = document.getElementById('learnings-content');
@@ -410,8 +410,7 @@ async function fetchLearnings() {
     // Active learnings (top 5)
     html += '<div class="data-label" style="margin-bottom:8px">ACTIVE IN PROMPT CONTEXT</div>';
     const active = d.top_5_active || [];
-    if (active.length > 0) {
-      active.forEach(function(l) {
+    if (active && active.length > 0) { active.forEach(function(l) {
         html += '<div class="learning-item"><div class="learning-insight">' + l + '</div></div>';
       });
     } else {
@@ -421,7 +420,7 @@ async function fetchLearnings() {
     const taskLearnings = d.recent_task_learnings || [];
     if (taskLearnings.length > 0) {
       html += '<div class="data-label" style="margin:15px 0 8px">RECENT TASK LEARNINGS</div>';
-      taskLearnings.slice(0, 5).forEach(function(tl) {
+      (taskLearnings || []).slice(0, 5).forEach(function(tl) {
         html += '<div class="learning-item"><div class="learning-insight">' + (tl.learning || 'N/A') + '</div>' +
           '<div class="learning-source">' + (tl.task_type || 'unknown') + ' | ' + new Date(tl.completed_at).toLocaleString() + '</div></div>';
       });
@@ -434,7 +433,7 @@ async function fetchLearnings() {
 }
 
 // ============================================
-// TASK QUEUE â Real /api/autonomy
+// TASK QUEUE Ã¢ÂÂ Real /api/autonomy
 // ============================================
 async function fetchTaskQueue() {
   const el = document.getElementById('tasks-content');
@@ -447,14 +446,13 @@ async function fetchTaskQueue() {
       '<div class="data-item"><div class="data-label">Pending</div><div class="data-value" style="color:var(--gold)">' + (queue.pending || 0) + '</div></div>' +
       '<div class="data-item"><div class="data-label">Completed</div><div class="data-value" style="color:var(--green)">' + (queue.completed || 0) + '</div></div></div>';
     html += '<div class="data-label" style="margin-bottom:8px">PENDING TASKS</div>';
-    if (tasks.length > 0) {
-      tasks.forEach(function(t) {
+    if (tasks && tasks.length > 0) { tasks.forEach(function(t) {
         html += '<div class="task-item"><div class="task-type">' + (t.type || 'unknown') + ' [P' + (t.priority || '?') + ']</div>' +
           '<div class="task-desc">' + (t.description || 'No description') + '</div>' +
           '<div class="task-status pending">' + (t.status || 'pending') + (t.spawned_by ? ' | spawned by: ' + t.spawned_by : '') + '</div></div>';
       });
     } else {
-      html += '<div style="color:var(--gray);padding:10px;">Queue empty â ZENITH will self-generate tasks</div>';
+      html += '<div style="color:var(--gray);padding:10px;">Queue empty Ã¢ÂÂ ZENITH will self-generate tasks</div>';
     }
     html += '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
     el.innerHTML = html;
@@ -464,7 +462,7 @@ async function fetchTaskQueue() {
 }
 
 // ============================================
-// MEMORY LOG â Combined run history
+// MEMORY LOG Ã¢ÂÂ Combined run history
 // ============================================
 async function fetchMemoryLog() {
   const el = document.getElementById('memory-content');
@@ -481,8 +479,7 @@ async function fetchMemoryLog() {
       '<div class="data-item"><div class="data-label">Run Log Entries</div><div class="data-value">' + (statusData.run_log_entries || 0) + '</div></div>' +
       '<div class="data-item"><div class="data-label">Last Run</div><div class="data-value" style="font-size:0.9rem">' + (lastRun ? new Date(lastRun).toLocaleString() : 'Never') + '</div></div></div>';
     html += '<div class="data-label" style="margin-bottom:8px">RECENT MEMORY ACTIVITY</div><div class="memory-log">';
-    if (recentLearnings.length > 0) {
-      recentLearnings.forEach(function(l) {
+    if (recentLearnings && recentLearnings.length > 0) { recentLearnings.forEach(function(l) {
         html += '<div class="learning-item"><div class="learning-insight">' + l + '</div></div>';
       });
     } else {
@@ -496,7 +493,7 @@ async function fetchMemoryLog() {
 }
 
 // ============================================
-// PILLARS â Built from LIVE backend data
+// PILLARS Ã¢ÂÂ Built from LIVE backend data
 // ============================================
 async function buildPillarsFromLiveData() {
   const grid = document.getElementById('pillarsGrid');
@@ -519,7 +516,7 @@ async function buildPillarsFromLiveData() {
     const pillars = [
       { name: 'PILLAR 1: Remember Everything', icon: '&#x1F9E0;', status: p1_memory ? 'PROVEN' : 'PENDING',
         desc: 'Persistent GitHub-backed memory. Every conversation, learning, and directive persists across restarts.',
-        proof: p1_memory ? 'Memory ACTIVE â ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
+        proof: p1_memory ? 'Memory ACTIVE Ã¢ÂÂ ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
       { name: 'PILLAR 2: Always Improve', icon: '&#x1F4C8;', status: p2_learning ? 'PROVEN' : 'IN PROGRESS',
         desc: 'Structured learning engine extracts insights from every completed task and feeds top learnings into AI context.',
         proof: p2_learning ? learn.total_task_learnings + ' task learnings extracted, ' + learn.total_structured_learnings + ' structured learnings stored' : 'Learning engine deployed, awaiting first cycle' },
@@ -527,14 +524,14 @@ async function buildPillarsFromLiveData() {
         desc: 'Autonomous tick engine reads task queue, executes tasks, spawns new tasks, and writes results to memory.',
         proof: p3_autonomous ? auto.completed_tasks + ' tasks completed, ' + auto.pending_tasks + ' pending, last run: ' + new Date(auto.last_run).toLocaleString() : 'Engine deployed, awaiting first tick' },
       { name: 'PILLAR 4: Soul Check Gate', icon: '&#x1F6E1;', status: p4_soulCheck ? 'PROVEN' : 'PENDING',
-        desc: 'Sovereign identity verification. Real cryptographic token authentication â not cosmetic, not client-side.',
-        proof: p4_soulCheck ? 'SOUL VERIFIED â Token active, 10 endpoints gated, 24h TTL' : '' },
+        desc: 'Sovereign identity verification. Real cryptographic token authentication Ã¢ÂÂ not cosmetic, not client-side.',
+        proof: p4_soulCheck ? 'SOUL VERIFIED Ã¢ÂÂ Token active, 10 endpoints gated, 24h TTL' : '' },
       { name: 'PILLAR 5: Distribution & Monetization', icon: '&#x1F680;', status: p5_distribution ? 'PROVEN' : 'PENDING',
         desc: 'Revenue systems, Stripe integration, content distribution across platforms. The final sovereignty layer.',
-        proof: p5_distribution ? 'Active' : 'Planning phase â API discovery needed' }
+        proof: p5_distribution ? 'Active' : 'Planning phase Ã¢ÂÂ API discovery needed' }
     ];
     let html = '';
-    pillars.forEach(function(p) {
+    (pillars || []).forEach(function(p) {
       const cardClass = p.status === 'PROVEN' ? 'proven' : (p.status === 'IN PROGRESS' ? 'in-progress' : '');
       const badgeClass = p.status === 'PROVEN' ? 'status-proven' : (p.status === 'IN PROGRESS' ? 'status-progress' : 'status-pending');
       html += '<div class="pillar-card ' + cardClass + '">' +
@@ -579,9 +576,9 @@ async function init() {
         document.getElementById('verifyBtn').textContent = 'VERIFIED';
         document.getElementById('verifyBtn').disabled = true;
         document.getElementById('verifyBtn').style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
-        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored â Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
+        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored Ã¢ÂÂ Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
         unlockPanels();
-        // Instant soulâchat swap on session restore (no animation)
+        // Instant soulÃ¢ÂÂchat swap on session restore (no animation)
         // Instant swap: add instant-swap to disable transitions, then toggle classes
         var wrapper = document.getElementById('soulChatWrapper');
         var soulEl = document.getElementById('soulSection');
@@ -604,7 +601,7 @@ async function init() {
 init();
 
 // ============================================
-// ZENITH CHAT â Grok-style Chat Interface
+// ZENITH CHAT Ã¢ÂÂ Grok-style Chat Interface
 // ============================================
 let chatHistory = [];
 
@@ -694,7 +691,7 @@ async function sendChatMessage() {
   } catch (e) {
     removeTypingIndicator();
     if (e.name === 'TypeError' && e.message.includes('fetch')) {
-      appendChatMessage('system', 'Backend is waking up â try again in 30 seconds.');
+      appendChatMessage('system', 'Backend is waking up Ã¢ÂÂ try again in 30 seconds.');
     } else {
       appendChatMessage('system', 'Connection error: ' + e.message);
     }
