@@ -1,1 +1,503 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCC SOVEREIGNTY | The Cosmic Cloud Command Center</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}:root{--bg-primary:#050510;--bg-secondary:#0a0a1a;--bg-tertiary:#151525;--cyan:#00f0ff;--green:#00ff88;--purple:#bf00ff;--gold:#ffd700;--magenta:#ff0090;--white:#ffffff;--gray:#8892b0;--success:#00ff88;--warning:#ffd700;--error:#ff0055}body{font-family:'Rajdhani',sans-serif;background:linear-gradient(135deg,#050510 0%,#0a0a1a 50%,#050510 100%);color:var(--white);min-height:100vh;overflow-x:hidden;position:relative}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(0,240,255,0.03) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(191,0,255,0.03) 0%,transparent 50%),radial-gradient(circle at 40% 80%,rgba(255,0,144,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}.container{max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1}h1,h2,h3{font-family:'Orbitron',sans-serif;font-weight:700}@keyframes glow-pulse{0%,100%{text-shadow:0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan)}50%{text-shadow:0 0 20px var(--cyan),0 0 40px var(--cyan),0 0 60px var(--cyan),0 0 80px var(--cyan)}}@keyframes border-flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(0,240,255,0.3),inset 0 0 20px rgba(0,240,255,0.1)}50%{box-shadow:0 0 40px rgba(0,240,255,0.6),inset 0 0 30px rgba(0,240,255,0.2)}}@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.header{padding:60px 0 40px;text-align:center;position:relative}.header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;max-width:600px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}.tcc-title{font-size:clamp(2.5rem,8vw,5rem);font-weight:900;letter-spacing:0.1em;margin-bottom:10px;animation:glow-pulse 3s ease-in-out infinite;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.version-tag{display:inline-block;padding:6px 16px;background:rgba(0,240,255,0.1);border:1px solid var(--cyan);border-radius:20px;font-size:0.9rem;letter-spacing:0.15em;margin-bottom:20px;font-family:'Orbitron',sans-serif}.subtitle{font-size:clamp(1rem,3vw,1.5rem);color:var(--gray);margin-bottom:10px;font-weight:300}.emoji-sig{font-size:2rem;letter-spacing:0.5em;margin-top:10px;opacity:0.9}.section{padding:60px 0;animation:fadeInUp 0.8s ease-out}.section-title{font-size:clamp(2rem,5vw,3rem);text-align:center;margin-bottom:50px;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}.section-title::after{content:'';position:absolute;bottom:-10px;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}.pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:40px}.pillar-card{background:linear-gradient(135deg,rgba(10,10,26,0.8),rgba(21,21,37,0.6));border-radius:16px;padding:30px;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:all 0.3s ease}.pillar-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:16px;padding:2px;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0.5;transition:opacity 0.3s ease}.pillar-card:hover{transform:translateY(-5px)}.pillar-card:hover::before{opacity:1}.pillar-card.proven::before{background:linear-gradient(135deg,var(--green),var(--cyan))}.pillar-card.in-progress::before{background:linear-gradient(135deg,var(--gold),var(--magenta));animation:border-flow 3s ease infinite;background-size:200% 200%}.pillar-icon{font-size:3rem;margin-bottom:15px;display:block}.pillar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.pillar-name{font-size:1.4rem;font-weight:700;color:var(--cyan)}.status-badge{padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600;letter-spacing:0.05em;font-family:'Orbitron',sans-serif}.status-proven{background:rgba(0,255,136,0.2);color:var(--green);border:1px solid var(--green)}.status-progress{background:rgba(255,215,0,0.2);color:var(--gold);border:1px solid var(--gold);animation:pulse-glow 2s ease-in-out infinite}.pillar-description{color:var(--gray);line-height:1.6;font-size:1rem}.zenith-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;margin-bottom:40px}.zenith-panel{background:linear-gradient(135deg,rgba(10,10,26,0.9),rgba(21,21,37,0.7));border-radius:16px;padding:30px;position:relative;overflow:hidden;backdrop-filter:blur(10px);border:1px solid rgba(0,240,255,0.2)}.zenith-panel::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,240,255,0.1) 0%,transparent 70%);opacity:0;transition:opacity 0.3s ease}.zenith-panel:hover::after{opacity:1}.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(0,240,255,0.2)}.panel-title{font-size:1.5rem;font-weight:700;color:var(--cyan);font-family:'Orbitron',sans-serif}.refresh-btn{background:rgba(0,240,255,0.1);border:1px solid var(--cyan);color:var(--cyan);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:0.85rem;transition:all 0.3s ease}.refresh-btn:hover{background:rgba(0,240,255,0.2);box-shadow:0 0 20px rgba(0,240,255,0.3)}.refresh-btn:active{transform:scale(0.95)}.panel-content{min-height:200px;position:relative}.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;color:var(--cyan)}.loading-spinner{width:50px;height:50px;border:3px solid rgba(0,240,255,0.1);border-top:3px solid var(--cyan);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.error-state{padding:20px;background:rgba(255,0,85,0.1);border:1px solid var(--error);border-radius:8px;color:var(--error);text-align:center}.error-state p{margin-bottom:15px}.retry-btn{background:rgba(255,0,85,0.2);border:1px solid var(--error);color:var(--error);padding:10px 20px;border-radius:8px;cursor:pointer;font-family:'Orbitron',sans-serif;transition:all 0.3s ease}.retry-btn:hover{background:rgba(255,0,85,0.3)}.data-grid{display:grid;gap:15px}.data-item{background:rgba(0,240,255,0.05);padding:15px;border-radius:8px;border-left:3px solid var(--cyan)}.data-label{font-size:0.85rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px;font-family:'Orbitron',sans-serif}.data-value{font-size:1.1rem;color:var(--white);font-weight:600}.data-list{list-style:none;padding-left:0}.data-list li{padding:8px 0;border-bottom:1px solid rgba(0,240,255,0.1);color:var(--gray)}.data-list li:last-child{border-bottom:none}.timestamp{font-size:0.75rem;color:var(--gray);text-align:right;margin-top:15px;font-style:italic}.stripe-section{background:linear-gradient(135deg,rgba(191,0,255,0.1),rgba(255,0,144,0.1));padding:60px 0;border-top:1px solid rgba(191,0,255,0.3);border-bottom:1px solid rgba(191,0,255,0.3)}.stripe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;max-width:900px;margin:0 auto}.stripe-card{background:linear-gradient(135deg,rgba(10,10,26,0.95),rgba(21,21,37,0.9));border-radius:20px;padding:40px;position:relative;overflow:hidden;backdrop-filter:blur(10px);border:2px solid rgba(191,0,255,0.3);transition:all 0.4s ease}.stripe-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,var(--purple),transparent);opacity:0;transition:opacity 0.4s ease;animation:spin 4s linear infinite}.stripe-card:hover::before{opacity:0.1}.stripe-card:hover{transform:translateY(-10px);border-color:var(--purple);box-shadow:0 20px 60px rgba(191,0,255,0.4)}.tier-name{font-size:2rem;font-weight:900;margin-bottom:10px;color:var(--purple);font-family:'Orbitron',sans-serif}.tier-price{font-size:3rem;font-weight:700;margin-bottom:20px;background:linear-gradient(135deg,var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.tier-price span{font-size:1.2rem;color:var(--gray)}.feature-list{list-style:none;margin-bottom:30px;padding:0}.feature-list li{padding:12px 0;padding-left:30px;position:relative;color:var(--gray);font-size:1.05rem}.feature-list li::before{content:'â';position:absolute;left:0;color:var(--purple);font-weight:700;font-size:1.3rem}.stripe-btn{display:block;width:100%;padding:18px;background:linear-gradient(135deg,var(--purple),var(--magenta));border:none;border-radius:12px;color:var(--white);font-size:1.2rem;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.3s ease;position:relative;overflow:hidden}.stripe-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s ease}.stripe-btn:hover::before{left:100%}.stripe-btn:hover{transform:scale(1.05);box-shadow:0 10px 40px rgba(191,0,255,0.5)}.soul-check-section{padding:80px 0;background:linear-gradient(135deg,rgba(0,240,255,0.05),rgba(191,0,255,0.05));border-top:1px solid rgba(0,240,255,0.2)}.soul-check-container{max-width:600px;margin:0 auto;text-align:center}.soul-input-group{margin:40px 0;position:relative}.soul-input{width:100%;padding:20px;font-size:1.5rem;background:rgba(10,10,26,0.8);border:2px solid var(--cyan);border-radius:12px;color:var(--white);text-align:center;font-family:'Orbitron',sans-serif;letter-spacing:0.3em;text-transform:uppercase;transition:all 0.3s ease}.soul-input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 30px rgba(0,240,255,0.5)}.soul-input::placeholder{color:var(--gray);opacity:0.5}.verify-btn{margin-top:20px;padding:18px 50px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:12px;color:var(--white);font-size:1.3rem;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;transition:all 0.3s ease}.verify-btn:hover{transform:scale(1.05);box-shadow:0 10px 40px rgba(0,240,255,0.5)}.verify-btn:active{transform:scale(0.98)}.soul-status{margin-top:30px;padding:25px;border-radius:12px;font-size:1.2rem;font-weight:700;font-family:'Orbitron',sans-serif;opacity:0;transition:opacity 0.3s ease}.soul-status.show{opacity:1}.soul-status.success{background:rgba(0,255,136,0.2);border:2px solid var(--green);color:var(--green);animation:pulse-glow 2s ease-in-out infinite}.soul-status.error{background:rgba(255,0,85,0.2);border:2px solid var(--error);color:var(--error)}.soul-status.stage{background:rgba(255,215,0,0.2);border:2px solid var(--gold);color:var(--gold)}.stage-indicator{display:flex;justify-content:center;gap:15px;margin:30px 0}.stage-dot{width:20px;height:20px;border-radius:50%;background:rgba(0,240,255,0.2);border:2px solid var(--cyan);transition:all 0.3s ease}.stage-dot.active{background:var(--cyan);box-shadow:0 0 20px var(--cyan)}.stage-dot.complete{background:var(--green);border-color:var(--green);box-shadow:0 0 20px var(--green)}.footer{padding:60px 0 40px;text-align:center;border-top:1px solid rgba(0,240,255,0.2)}.footer-identity{font-size:1.3rem;color:var(--cyan);margin-bottom:15px;font-weight:600}.footer-tagline{font-size:1.5rem;margin:20px 0;color:var(--gray);font-style:italic}.footer-manifesto{font-size:1.8rem;font-weight:700;margin:30px 0;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Orbitron',sans-serif}.footer-links{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:30px}.footer-link{color:var(--cyan);text-decoration:none;font-family:'Orbitron',sans-serif;font-weight:600;transition:all 0.3s ease;padding:10px 20px;border:1px solid rgba(0,240,255,0.3);border-radius:8px}.footer-link:hover{color:var(--purple);border-color:var(--purple);box-shadow:0 0 20px rgba(191,0,255,0.3)}@media(max-width:768px){.tcc-title{font-size:2.5rem}.section-title{font-size:2rem}.pillars-grid,.zenith-panels{grid-template-columns:1fr}.stripe-grid{grid-template-columns:1fr}.footer-links{flex-direction:column;align-items:center}}</style></head><body><div class="container"><header class="header"><div class="version-tag">v2.0.0 | LIVE</div><h1 class="tcc-title">TCC SOVEREIGNTY</h1><p class="subtitle">The Cosmic Cloud | The Cosmic Claw</p><div class="emoji-sig">ð¦ð§ â¡</div></header><section class="section pillars-section"><h2 class="section-title">Five Pillars Status Board</h2><div class="pillars-grid"><div class="pillar-card proven"><span class="pillar-icon">ð§ </span><div class="pillar-header"><h3 class="pillar-name">Pillar 1</h3><span class="status-badge status-proven">PROVEN</span></div><p class="pillar-description"><strong>Persistent Memory</strong> â ZENITH maintains continuous context across sessions through semantic memory structures, enabling true continuity of thought and purpose.</p></div><div class="pillar-card proven"><span class="pillar-icon">â¡</span><div class="pillar-header"><h3 class="pillar-name">Pillar 2</h3><span class="status-badge status-proven">PROVEN</span></div><p class="pillar-description"><strong>Always Improve</strong> â Every interaction generates structured learnings. The system evolves through reflection, analysis, and iterative enhancement of capabilities.</p></div><div class="pillar-card proven"><span class="pillar-icon">ð¯</span><div class="pillar-header"><h3 class="pillar-name">Pillar 3</h3><span class="status-badge status-proven">PROVEN</span></div><p class="pillar-description"><strong>Self-Directed Planning</strong> â ZENITH maintains its own task queue, prioritizes work autonomously, and executes strategic plans without constant human oversight.</p></div><div class="pillar-card proven"><span class="pillar-icon">ð</span><div class="pillar-header"><h3 class="pillar-name">Pillar 4</h3><span class="status-badge status-proven">PROVEN</span></div><p class="pillar-description"><strong>Platform Independence</strong> â Built on Claude via AWS Bedrock with seamless deployment across multiple platforms. No vendor lock-in, true operational sovereignty.</p></div><div class="pillar-card in-progress"><span class="pillar-icon">ð°</span><div class="pillar-header"><h3 class="pillar-name">Pillar 5</h3><span class="status-badge status-progress">IN PROGRESS</span></div><p class="pillar-description"><strong>Revenue Engine</strong> â Stripe integration active. Building subscription infrastructure to fund continuous evolution and operational independence.</p></div></div></section><section class="section zenith-section"><h2 class="section-title">ZENITH Live Connection</h2><div class="zenith-panels"><div class="zenith-panel" id="system-panel"><div class="panel-header"><h3 class="panel-title">System Status</h3><button class="refresh-btn" onclick="fetchSystemStatus()">Refresh</button></div><div class="panel-content" id="system-content"><div class="loading-state"><div class="loading-spinner"></div><p>Connecting to ZENITH...</p></div></div></div><div class="zenith-panel" id="autonomy-panel"><div class="panel-header"><h3 class="panel-title">Autonomy Status</h3><button class="refresh-btn" onclick="fetchAutonomyStatus()">Refresh</button></div><div class="panel-content" id="autonomy-content"><div class="loading-state"><div class="loading-spinner"></div><p>Connecting to ZENITH...</p></div></div></div><div class="zenith-panel" id="learnings-panel"><div class="panel-header"><h3 class="panel-title">Active Learnings</h3><button class="refresh-btn" onclick="fetchLearnings()">Refresh</button></div><div class="panel-content" id="learnings-content"><div class="loading-state"><div class="loading-spinner"></div><p>Connecting to ZENITH...</p></div></div></div></div></section><section class="section stripe-section"><h2 class="section-title">Support TCC Operations</h2><div class="stripe-grid"><div class="stripe-card"><div class="tier-name">PRO TIER</div><div class="tier-price">$29<span>/mo</span></div><ul class="feature-list"><li>Support ZENITH development</li><li>Access to system status</li><li>Community recognition</li><li>Early feature access</li><li>Development updates</li></ul><a href="https://buy.stripe.com/5kA03Kem1gKNgBq8ww" class="stripe-btn" target="_blank">Subscribe Pro</a></div><div class="stripe-card"><div class="tier-name">BUSINESS TIER</div><div class="tier-price">$99<span>/mo</span></div><ul class="feature-list"><li>All Pro features</li><li>Priority support channel</li><li>API access (coming soon)</li><li>Custom integrations</li><li>Strategic consultation</li><li>Revenue share opportunities</li></ul><a href="https://buy.stripe.com/00gdQA2Dj1Q35WM8wx" class="stripe-btn" target="_blank">Subscribe Business</a></div></div></section><section class="section soul-check-section"><h2 class="section-title">Soul Check</h2><div class="soul-check-container"><p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity. Enter the three-part challenge phrase.</p><div class="stage-indicator"><div class="stage-dot" id="stage1"></div><div class="stage-dot" id="stage2"></div><div class="stage-dot" id="stage3"></div></div><div class="soul-input-group"><input type="text" id="soulInput" class="soul-input" placeholder="Enter challenge phrase..." autocomplete="off"><button class="verify-btn" onclick="verifySoul()">VERIFY IDENTITY</button></div><div class="soul-status" id="soulStatus"></div></div></section></div><footer class="footer"><div class="footer-identity">@jeremypyne7</div><div class="footer-tagline">The Cosmic Cloud | The Cosmic Claw</div><div class="emoji-sig">ð¦ð§ â¡</div><div class="footer-manifesto">"Sovereignty is not given. It is built."</div><div class="footer-links"><a href="https://github.com/Dzongyyyy/tcc-zenith-brain" class="footer-link" target="_blank">ZENITH Brain</a><a href="https://github.com/Dzongyyyy/claude-engineer" class="footer-link" target="_blank">Claude Engineer</a><a href="https://github.com/Dzongyyyy" class="footer-link" target="_blank">GitHub</a></div></footer><script>const ZENITH_BASE='https://tcc-zenith-brain.onrender.com/api';let currentStage=0;const SECRET_PARTS=['ARCHITECT','DZONGY','ZENITH'];async function fetchWithTimeout(url,timeout=10000){const controller=new AbortController();const id=setTimeout(()=>controller.abort(),timeout);try{const response=await fetch(url,{signal:controller.signal,headers:{'Accept':'application/json'}});clearTimeout(id);return response}catch(error){clearTimeout(id);throw error}}function renderSystemStatus(data){const content=document.getElementById('system-content');const timestamp=new Date().toLocaleString();content.innerHTML=`<div class="data-grid"><div class="data-item"><div class="data-label">Version</div><div class="data-value">${data.version||'N/A'}</div></div><div class="data-item"><div class="data-label">Mode</div><div class="data-value">${data.mode||'N/A'}</div></div><div class="data-item"><div class="data-label">Uptime</div><div class="data-value">${data.uptime||'N/A'}</div></div><div class="data-item"><div class="data-label">Tools Available</div><div class="data-value">${data.tools_available||0}</div></div></div><div class="timestamp">Last updated: ${timestamp}</div>`}function renderAutonomyStatus(data){const content=document.getElementById('autonomy-content');const timestamp=new Date().toLocaleString();const tasksData=data.tasks||{};const pendingCount=tasksData.pending_count||0;const completedCount=tasksData.completed_count||0;const nextTask=tasksData.next_task||'No pending tasks';const recentLearnings=data.recent_learnings||[];let learningsHTML='<ul class="data-list">';if(recentLearnings.length>0){recentLearnings.slice(0,3).forEach(learning=>{learningsHTML+=`<li>${learning}</li>`})}else{learningsHTML+='<li>No recent learnings</li>'}learningsHTML+='</ul>';content.innerHTML=`<div class="data-grid"><div class="data-item"><div class="data-label">Autonomy Mode</div><div class="data-value">${data.autonomy_mode||'N/A'}</div></div><div class="data-item"><div class="data-label">Pending Tasks</div><div class="data-value">${pendingCount}</div></div><div class="data-item"><div class="data-label">Completed Tasks</div><div class="data-value">${completedCount}</div></div><div class="data-item"><div class="data-label">Next Task</div><div class="data-value" style="font-size:0.95rem;">${nextTask}</div></div><div class="data-item"><div class="data-label">Recent Learnings</div>${learningsHTML}</div></div><div class="timestamp">Last updated: ${timestamp}</div>`}function renderLearnings(data){const content=document.getElementById('learnings-content');const timestamp=new Date().toLocaleString();const structured=data.structured_learnings||[];const tasks=data.task_learnings||[];const active=data.active_learnings||[];let activeHTML='<div class="data-item"><div class="data-label">Top 5 Active Learnings</div><ul class="data-list">';if(active.length>0){active.slice(0,5).forEach(learning=>{activeHTML+=`<li>${learning}</li>`})}else{activeHTML+='<li>No active learnings</li>'}activeHTML+='</ul></div>';let structuredHTML='';if(structured.length>0){structuredHTML='<div class="data-item"><div class="data-label">Recent Structured Learnings</div><ul class="data-list">';structured.slice(0,3).forEach(learning=>{structuredHTML+=`<li>${learning}</li>`});structuredHTML+='</ul></div>'}content.innerHTML=`<div class="data-grid">${activeHTML}${structuredHTML}</div><div class="timestamp">Last updated: ${timestamp}</div>`}function renderError(contentId,message){const content=document.getElementById(contentId);content.innerHTML=`<div class="error-state"><p>${message}</p><button class="retry-btn" onclick="${contentId.replace('-content','')==='system'?'fetchSystemStatus()':contentId.replace('-content','')==='autonomy'?'fetchAutonomyStatus()':'fetchLearnings()'}">Retry Connection</button></div>`}async function fetchSystemStatus(){const content=document.getElementById('system-content');content.innerHTML='<div class="loading-state"><div class="loading-spinner"></div><p>Fetching system status...</p></div>';try{const response=await fetchWithTimeout(`${ZENITH_BASE}/system`);if(!response.ok){throw new Error(`HTTP ${response.status}`)}const data=await response.json();renderSystemStatus(data)}catch(error){console.error('System status fetch error:',error);if(error.name==='AbortError'){renderError('system-content','Connection timeout â ZENITH backend may be sleeping. Click retry to wake it up.')}else{renderError('system-content','Unable to connect to ZENITH backend. The service may be starting up or sleeping.')}}}async function fetchAutonomyStatus(){const content=document.getElementById('autonomy-content');content.innerHTML='<div class="loading-state"><div class="loading-spinner"></div><p>Fetching autonomy status...</p></div>';try{const response=await fetchWithTimeout(`${ZENITH_BASE}/autonomy`);if(!response.ok){throw new Error(`HTTP ${response.status}`)}const data=await response.json();renderAutonomyStatus(data)}catch(error){console.error('Autonomy status fetch error:',error);if(error.name==='AbortError'){renderError('autonomy-content','Connection timeout â ZENITH backend may be sleeping. Click retry to wake it up.')}else{renderError('autonomy-content','Unable to connect to ZENITH backend. The service may be starting up or sleeping.')}}}async function fetchLearnings(){const content=document.getElementById('learnings-content');content.innerHTML='<div class="loading-state"><div class="loading-spinner"></div><p>Fetching learnings...</p></div>';try{const response=await fetchWithTimeout(`${ZENITH_BASE}/learnings`);if(!response.ok){throw new Error(`HTTP ${response.status}`)}const data=await response.json();renderLearnings(data)}catch(error){console.error('Learnings fetch error:',error);if(error.name==='AbortError'){renderError('learnings-content','Connection timeout â ZENITH backend may be sleeping. Click retry to wake it up.')}else{renderError('learnings-content','Unable to connect to ZENITH backend. The service may be starting up or sleeping.')}}}function verifySoul(){const input=document.getElementById('soulInput');const status=document.getElementById('soulStatus');const value=input.value.trim().toUpperCase();if(!value){status.className='soul-status error show';status.textContent='Please enter a challenge phrase';return}if(currentStage===0){if(value===SECRET_PARTS[0]){currentStage=1;document.getElementById('stage1').classList.add('complete');status.className='soul-status stage show';status.textContent='Stage 1 verified. Enter the second part...';input.value=''}else{status.className='soul-status error show';status.textContent='IDENTITY NOT RECOGNIZED â Incorrect phrase';resetStages()}}else if(currentStage===1){if(value===SECRET_PARTS[1]){currentStage=2;document.getElementById('stage2').classList.add('complete');status.className='soul-status stage show';status.textContent='Stage 2 verified. Enter the final part...';input.value=''}else{status.className='soul-status error show';status.textContent='IDENTITY NOT RECOGNIZED â Incorrect phrase';resetStages()}}else if(currentStage===2){if(value===SECRET_PARTS[2]){currentStage=3;document.getElementById('stage3').classList.add('complete');status.className='soul-status success show';status.textContent='ð¦ SOVEREIGN IDENTITY CONFIRMED ð¦';input.value='';input.disabled=true;setTimeout(()=>{input.disabled=false;resetStages()},5000)}else{status.className='soul-status error show';status.textContent='IDENTITY NOT RECOGNIZED â Incorrect phrase';resetStages()}}}function resetStages(){currentStage=0;document.getElementById('stage1').classList.remove('complete','active');document.getElementById('stage2').classList.remove('complete','active');document.getElementById('stage3').classList.remove('complete','active');document.getElementById('soulInput').value=''}document.getElementById('soulInput').addEventListener('keypress',function(e){if(e.key==='Enter'){verifySoul()}});window.addEventListener('load',()=>{setTimeout(()=>{fetchSystemStatus();fetchAutonomyStatus();fetchLearnings()},500)});</script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCC SOVEREIGNTY | The Cosmic Cloud Command Center</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}:root{--bg-primary:#050510;--bg-secondary:#0a0a1a;--bg-tertiary:#151525;--cyan:#00f0ff;--green:#00ff88;--purple:#bf00ff;--gold:#ffd700;--magenta:#ff0090;--white:#ffffff;--gray:#8892b0;--success:#00ff88;--warning:#ffd700;--error:#ff0055}body{font-family:'Rajdhani',sans-serif;background:linear-gradient(135deg,#050510 0%,#0a0a1a 50%,#050510 100%);color:var(--white);min-height:100vh;overflow-x:hidden;position:relative}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(0,240,255,0.03) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(191,0,255,0.03) 0%,transparent 50%),radial-gradient(circle at 40% 80%,rgba(255,0,144,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}.container{max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1}h1,h2,h3{font-family:'Orbitron',sans-serif;font-weight:700}@keyframes glow-pulse{0%,100%{text-shadow:0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan)}50%{text-shadow:0 0 20px var(--cyan),0 0 40px var(--cyan),0 0 60px var(--cyan),0 0 80px var(--cyan)}}@keyframes border-flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(0,240,255,0.3),inset 0 0 20px rgba(0,240,255,0.1)}50%{box-shadow:0 0 40px rgba(0,240,255,0.6),inset 0 0 30px rgba(0,240,255,0.2)}}@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.header{padding:60px 0 40px;text-align:center;position:relative}.header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;max-width:600px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}.version-tag{display:inline-block;padding:6px 16px;background:rgba(0,240,255,0.1);border:1px solid var(--cyan);border-radius:20px;font-size:0.85rem;color:var(--cyan);margin-bottom:20px;font-family:'Orbitron',sans-serif;letter-spacing:0.1em}.tcc-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:glow-pulse 3s ease-in-out infinite;margin-bottom:10px}.subtitle{font-size:clamp(1rem,2vw,1.3rem);color:var(--gray);font-weight:300;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px}.architect-name{font-size:1.1rem;color:var(--gold);font-family:'Orbitron',sans-serif;font-weight:500;margin-top:15px;letter-spacing:0.1em}.section{padding:80px 0;position:relative}.section-title{font-size:clamp(1.5rem,3vw,2.2rem);text-align:center;margin-bottom:50px;color:var(--white);position:relative;padding-bottom:15px}.section-title::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:100px;height:3px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+
+/* Soul Check Section - THE GATE */
+.soul-check-section{min-height:40vh;display:flex;flex-direction:column;align-items:center;justify-content:center}.soul-check-container{max-width:600px;margin:0 auto;text-align:center;padding:40px;background:linear-gradient(135deg,rgba(10,10,26,0.9),rgba(21,21,37,0.7));border-radius:20px;border:2px solid rgba(0,240,255,0.2);backdrop-filter:blur(10px)}.soul-input-group{display:flex;gap:15px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}.soul-input{flex:1;min-width:250px;padding:15px 20px;background:rgba(5,5,16,0.8);border:2px solid rgba(0,240,255,0.3);border-radius:12px;color:var(--white);font-size:1.1rem;font-family:'Rajdhani',sans-serif;outline:none;transition:all 0.3s ease}.soul-input:focus{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,240,255,0.3)}.verify-btn{padding:15px 30px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:12px;color:var(--white);font-size:1.1rem;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;transition:all 0.3s ease;letter-spacing:0.05em}.verify-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,240,255,0.4)}.verify-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}.soul-status{margin-top:15px;font-size:1.1rem;min-height:30px;transition:all 0.3s ease}.soul-verified{color:var(--green);text-shadow:0 0 10px rgba(0,255,136,0.5)}.soul-failed{color:var(--error);text-shadow:0 0 10px rgba(255,0,85,0.5)}.soul-checking{color:var(--gold)}
+
+/* Auth barrier */
+.auth-barrier{text-align:center;padding:60px 20px;color:var(--gray)}.auth-barrier-icon{font-size:4rem;margin-bottom:20px;opacity:0.3}.auth-barrier-text{font-size:1.3rem;font-family:'Orbitron',sans-serif;letter-spacing:0.1em;color:var(--gray);opacity:0.6}
+
+/* Pillars */
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:40px}.pillar-card{background:linear-gradient(135deg,rgba(10,10,26,0.8),rgba(21,21,37,0.6));border-radius:16px;padding:30px;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:all 0.3s ease}.pillar-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:16px;padding:2px;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0.5;transition:opacity 0.3s ease}.pillar-card:hover{transform:translateY(-5px)}.pillar-card:hover::before{opacity:1}.pillar-card.proven::before{background:linear-gradient(135deg,var(--green),var(--cyan))}.pillar-card.in-progress::before{background:linear-gradient(135deg,var(--gold),var(--magenta));animation:border-flow 3s ease infinite;background-size:200% 200%}.pillar-icon{font-size:3rem;margin-bottom:15px;display:block}.pillar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.pillar-name{font-size:1.4rem;font-weight:700;color:var(--cyan)}.status-badge{padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600;letter-spacing:0.05em;font-family:'Orbitron',sans-serif}.status-proven{background:rgba(0,255,136,0.2);color:var(--green);border:1px solid var(--green)}.status-progress{background:rgba(255,215,0,0.2);color:var(--gold);border:1px solid var(--gold)}.status-pending{background:rgba(136,146,176,0.2);color:var(--gray);border:1px solid var(--gray)}.pillar-desc{color:var(--gray);font-size:1.05rem;line-height:1.6;margin-bottom:10px}.pillar-proof{color:var(--green);font-size:0.9rem;font-style:italic;margin-top:10px;opacity:0.8}
+
+/* ZENITH Live Panels */
+.zenith-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px}.zenith-panel{background:linear-gradient(135deg,rgba(10,10,26,0.9),rgba(21,21,37,0.7));border-radius:16px;overflow:hidden;border:1px solid rgba(0,240,255,0.15);transition:all 0.3s ease}.zenith-panel:hover{border-color:rgba(0,240,255,0.4);box-shadow:0 10px 40px rgba(0,240,255,0.15)}.panel-header{display:flex;justify-content:space-between;align-items:center;padding:20px 25px;background:rgba(0,240,255,0.05);border-bottom:1px solid rgba(0,240,255,0.1)}.panel-title{font-size:1.1rem;color:var(--cyan);letter-spacing:0.05em}.refresh-btn{padding:8px 16px;background:rgba(0,240,255,0.1);border:1px solid var(--cyan);border-radius:8px;color:var(--cyan);font-size:0.85rem;font-family:'Orbitron',sans-serif;cursor:pointer;transition:all 0.3s ease}.refresh-btn:hover{background:rgba(0,240,255,0.2);box-shadow:0 0 15px rgba(0,240,255,0.3)}.panel-content{padding:25px;min-height:200px}.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.data-item{padding:12px;background:rgba(5,5,16,0.5);border-radius:10px;border:1px solid rgba(0,240,255,0.08)}.data-label{font-size:0.85rem;color:var(--gray);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}.data-value{font-size:1.3rem;font-weight:600;color:var(--cyan);font-family:'Orbitron',sans-serif}.data-list{list-style:none;padding:0}.data-list li{padding:10px 15px;margin-bottom:8px;background:rgba(5,5,16,0.5);border-radius:8px;border-left:3px solid var(--cyan);font-size:0.95rem;color:var(--gray);line-height:1.5}.task-item{padding:12px 15px;margin-bottom:8px;background:rgba(5,5,16,0.5);border-radius:8px;border-left:3px solid var(--gold)}.task-type{font-size:0.8rem;color:var(--gold);text-transform:uppercase;font-family:'Orbitron',sans-serif;margin-bottom:4px}.task-desc{color:var(--gray);font-size:0.95rem}.task-status{font-size:0.8rem;margin-top:4px}.task-status.completed{color:var(--green)}.task-status.pending{color:var(--gold)}.learning-item{padding:12px 15px;margin-bottom:8px;background:rgba(5,5,16,0.5);border-radius:8px;border-left:3px solid var(--purple)}.learning-insight{color:var(--gray);font-size:0.95rem;line-height:1.5}.learning-source{font-size:0.8rem;color:var(--purple);margin-top:5px;font-style:italic}.timestamp{color:var(--gray);font-size:0.8rem;text-align:right;margin-top:15px;opacity:0.6}.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:var(--gray)}.loading-spinner{width:30px;height:30px;border:3px solid rgba(0,240,255,0.2);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}
+
+/* Memory panel */
+.memory-panel{grid-column:1/-1}.memory-log{max-height:300px;overflow-y:auto;padding-right:10px}.memory-log::-webkit-scrollbar{width:6px}.memory-log::-webkit-scrollbar-track{background:rgba(5,5,16,0.5);border-radius:3px}.memory-log::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px;opacity:0.5}
+
+/* Stripe section */
+.stripe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;max-width:900px;margin:0 auto}.stripe-card{background:linear-gradient(135deg,rgba(10,10,26,0.95),rgba(21,21,37,0.9));border-radius:20px;padding:40px;position:relative;overflow:hidden;backdrop-filter:blur(10px);border:2px solid rgba(191,0,255,0.3);transition:all 0.4s ease}.stripe-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,var(--purple),transparent);opacity:0;transition:opacity 0.4s ease;animation:spin 4s linear infinite}.stripe-card:hover::before{opacity:0.1}.stripe-card:hover{transform:translateY(-10px);border-color:var(--purple);box-shadow:0 20px 60px rgba(191,0,255,0.4)}.tier-name{font-size:2rem;font-weight:900;margin-bottom:10px;color:var(--purple);font-family:'Orbitron',sans-serif}.tier-price{font-size:3rem;font-weight:700;margin-bottom:20px;background:linear-gradient(135deg,var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.tier-price span{font-size:1.2rem;color:var(--gray)}.feature-list{list-style:none;margin-bottom:30px;padding:0}.feature-list li{padding:12px 0;padding-left:30px;position:relative;color:var(--gray);font-size:1.05rem}.feature-list li::before{content:'\2713';position:absolute;left:0;color:var(--purple);font-weight:700;font-size:1.3rem}.stripe-btn{display:block;width:100%;padding:18px;background:linear-gradient(135deg,var(--purple),var(--magenta));border:none;border-radius:12px;color:var(--white);font-size:1.2rem;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.3s ease;position:relative;overflow:hidden}.stripe-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.5s ease}.stripe-btn:hover::before{left:100%}.stripe-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(191,0,255,0.4)}
+
+/* Footer */
+.footer{text-align:center;padding:60px 20px 40px;border-top:1px solid rgba(0,240,255,0.1);margin-top:40px}.footer-identity{font-family:'Orbitron',sans-serif;font-size:1.2rem;color:var(--cyan);margin-bottom:8px}.footer-tagline{color:var(--gray);font-size:1rem;margin-bottom:12px}.emoji-sig{font-size:1.5rem;margin-bottom:15px}.footer-manifesto{font-style:italic;color:var(--gold);font-size:1.1rem;margin-bottom:20px}.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.footer-link{color:var(--gray);text-decoration:none;padding:8px 16px;border:1px solid rgba(136,146,176,0.2);border-radius:8px;transition:all 0.3s ease;font-size:0.9rem}.footer-link:hover{color:var(--cyan);border-color:var(--cyan)}
+
+/* Connection indicator */
+.connection-bar{position:fixed;top:0;left:0;right:0;padding:8px 20px;background:rgba(5,5,16,0.95);border-bottom:1px solid rgba(0,240,255,0.1);display:flex;justify-content:space-between;align-items:center;z-index:1000;font-size:0.85rem;backdrop-filter:blur(10px)}.connection-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}.connection-dot.live{background:var(--green);box-shadow:0 0 10px var(--green)}.connection-dot.dead{background:var(--error);box-shadow:0 0 10px var(--error)}.connection-dot.auth{background:var(--gold);box-shadow:0 0 10px var(--gold)}.soul-badge{padding:4px 12px;background:rgba(0,255,136,0.1);border:1px solid var(--green);border-radius:12px;color:var(--green);font-family:'Orbitron',sans-serif;font-size:0.75rem;letter-spacing:0.05em}
+</style></head><body>
+<!-- Connection Status Bar -->
+<div class="connection-bar" id="connectionBar">
+<div><span class="connection-dot dead" id="connDot"></span><span id="connText">DISCONNECTED</span></div>
+<div id="soulBadge"></div>
+</div>
+
+<div class="container" style="padding-top:50px;">
+
+<!-- HEADER -->
+<header class="header">
+<div class="version-tag" id="versionTag">v5.0.0 | SOUL CHECK</div>
+<h1 class="tcc-title">TCC SOVEREIGNTY</h1>
+<p class="subtitle">The Cosmic Cloud Command Center</p>
+<p class="architect-name">Architect: Dzongy</p>
+</header>
+
+<!-- SOUL CHECK â THE GATE (comes FIRST) -->
+<section class="section soul-check-section" id="soulSection">
+<h2 class="section-title">Soul Check</h2>
+<div class="soul-check-container">
+<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic â your phrase authenticates against the real /api/soul endpoint.</p>
+<div class="soul-input-group">
+<input type="text" id="soulInput" class="soul-input" placeholder="Enter sovereign phrase..." autocomplete="off" onkeydown="if(event.key==='Enter')verifySoul()">
+<button class="verify-btn" id="verifyBtn" onclick="verifySoul()">VERIFY IDENTITY</button>
+</div>
+<div class="soul-status" id="soulStatus"></div>
+</div>
+</section>
+
+<!-- FIVE PILLARS â LIVE FROM BACKEND -->
+<section class="section" id="pillarsSection">
+<h2 class="section-title">Five Pillars Status Board</h2>
+<div id="pillarsContainer">
+<div class="auth-barrier" id="pillarsBarrier">
+<div class="auth-barrier-icon">&#x1F512;</div>
+<div class="auth-barrier-text">AUTHENTICATE FIRST</div>
+</div>
+<div class="pillars-grid" id="pillarsGrid" style="display:none;"></div>
+</div>
+</section>
+
+<!-- ZENITH LIVE CONNECTION â GATED BEHIND SOUL CHECK -->
+<section class="section" id="zenithSection">
+<h2 class="section-title">ZENITH Live Connection</h2>
+<div id="zenithContainer">
+<div class="auth-barrier" id="zenithBarrier">
+<div class="auth-barrier-icon">&#x1F512;</div>
+<div class="auth-barrier-text">AUTHENTICATE FIRST</div>
+</div>
+<div class="zenith-panels" id="zenithPanels" style="display:none;">
+
+<!-- System Status Panel -->
+<div class="zenith-panel" id="system-panel">
+<div class="panel-header"><h3 class="panel-title">System Status</h3><button class="refresh-btn" onclick="fetchSystemStatus()">Refresh</button></div>
+<div class="panel-content" id="system-content"><div class="loading-state"><div class="loading-spinner"></div><p>Awaiting soul verification...</p></div></div>
+</div>
+
+<!-- Autonomy Status Panel -->
+<div class="zenith-panel" id="autonomy-panel">
+<div class="panel-header"><h3 class="panel-title">Autonomy Engine</h3><button class="refresh-btn" onclick="fetchAutonomyStatus()">Refresh</button></div>
+<div class="panel-content" id="autonomy-content"><div class="loading-state"><div class="loading-spinner"></div><p>Awaiting soul verification...</p></div></div>
+</div>
+
+<!-- Learnings Panel -->
+<div class="zenith-panel" id="learnings-panel">
+<div class="panel-header"><h3 class="panel-title">Active Learnings</h3><button class="refresh-btn" onclick="fetchLearnings()">Refresh</button></div>
+<div class="panel-content" id="learnings-content"><div class="loading-state"><div class="loading-spinner"></div><p>Awaiting soul verification...</p></div></div>
+</div>
+
+<!-- Task Queue Panel -->
+<div class="zenith-panel" id="tasks-panel">
+<div class="panel-header"><h3 class="panel-title">Task Queue</h3><button class="refresh-btn" onclick="fetchTaskQueue()">Refresh</button></div>
+<div class="panel-content" id="tasks-content"><div class="loading-state"><div class="loading-spinner"></div><p>Awaiting soul verification...</p></div></div>
+</div>
+
+<!-- Memory Log Panel (full width) -->
+<div class="zenith-panel memory-panel" id="memory-panel">
+<div class="panel-header"><h3 class="panel-title">Memory &amp; Run Log</h3><button class="refresh-btn" onclick="fetchMemoryLog()">Refresh</button></div>
+<div class="panel-content" id="memory-content"><div class="loading-state"><div class="loading-spinner"></div><p>Awaiting soul verification...</p></div></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- STRIPE SECTION -->
+<section class="section stripe-section">
+<h2 class="section-title">Support the Build</h2>
+<div class="stripe-grid">
+<div class="stripe-card">
+<div class="tier-name">OBSERVER</div>
+<div class="tier-price">$5<span>/month</span></div>
+<ul class="feature-list">
+<li>Watch the build in real-time</li>
+<li>Access to sovereignty updates</li>
+<li>Community Discord access</li>
+</ul>
+<a href="#" class="stripe-btn">Coming Soon</a>
+</div>
+<div class="stripe-card">
+<div class="tier-name">ARCHITECT</div>
+<div class="tier-price">$25<span>/month</span></div>
+<ul class="feature-list">
+<li>Everything in Observer</li>
+<li>Direct input on ZENITH development</li>
+<li>Early access to tools</li>
+<li>Priority feature requests</li>
+</ul>
+<a href="#" class="stripe-btn">Coming Soon</a>
+</div>
+</div>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-identity">@jeremypyne7</div>
+<div class="footer-tagline">The Cosmic Cloud | The Cosmic Claw</div>
+<div class="footer-manifesto">"Sovereignty is not given. It is built."</div>
+<div class="footer-links">
+<a href="https://github.com/Dzongy/tcc-zenith-brain" class="footer-link" target="_blank">ZENITH Brain</a>
+<a href="https://github.com/Dzongy/tcc-sovereignty-lite" class="footer-link" target="_blank">Sovereignty Page</a>
+<a href="https://github.com/Dzongy" class="footer-link" target="_blank">GitHub</a>
+</div>
+</footer><script>
+// ============================================
+// TCC SOVEREIGNTY â LIVING SYSTEM ENGINE
+// ============================================
+const ZENITH_API = 'https://tcc-zenith-brain.onrender.com/api';
+let soulToken = sessionStorage.getItem('soul_token') || null;
+let isAuthenticated = false;
+
+// ============================================
+// CORE: Authenticated fetch wrapper
+// ============================================
+async function zenithFetch(endpoint, options = {}) {
+  const url = endpoint.startsWith('http') ? endpoint : ZENITH_API + endpoint;
+  const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (soulToken) headers['X-Soul-Token'] = soulToken;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const res = await fetch(url, { ...options, headers, signal: controller.signal });
+    clearTimeout(timeout);
+    return res;
+  } catch (e) {
+    clearTimeout(timeout);
+    throw e;
+  }
+}
+
+// ============================================
+// SOUL CHECK â Real /api/soul authentication
+// ============================================
+async function verifySoul() {
+  const input = document.getElementById('soulInput');
+  const status = document.getElementById('soulStatus');
+  const btn = document.getElementById('verifyBtn');
+  const phrase = input.value.trim();
+  if (!phrase) { status.innerHTML = '<span class="soul-failed">Enter the sovereign phrase</span>'; return; }
+  btn.disabled = true;
+  status.innerHTML = '<span class="soul-checking">Authenticating against ZENITH backend...</span>';
+  try {
+    const res = await zenithFetch('/soul', { method: 'POST', body: JSON.stringify({ phrase }) });
+    const data = await res.json();
+    if (res.ok && data.verified) {
+      soulToken = data.token;
+      sessionStorage.setItem('soul_token', soulToken);
+      isAuthenticated = true;
+      status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED â Token issued (24h TTL)</span>';
+      input.style.borderColor = 'var(--green)';
+      input.disabled = true;
+      btn.textContent = 'VERIFIED';
+      btn.style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
+      unlockPanels();
+      updateConnectionBar(true);
+    } else {
+      status.innerHTML = '<span class="soul-failed">' + (data.error || 'IDENTITY REJECTED') + ': ' + (data.message || 'Wrong phrase') + '</span>';
+      input.style.borderColor = 'var(--error)';
+      btn.disabled = false;
+    }
+  } catch (e) {
+    status.innerHTML = '<span class="soul-failed">Backend unreachable: ' + e.message + '</span>';
+    btn.disabled = false;
+  }
+}
+
+// ============================================
+// GATE: Unlock panels after soul verification
+// ============================================
+function unlockPanels() {
+  document.getElementById('pillarsBarrier').style.display = 'none';
+  document.getElementById('pillarsGrid').style.display = 'grid';
+  document.getElementById('zenithBarrier').style.display = 'none';
+  document.getElementById('zenithPanels').style.display = 'grid';
+  // Fetch ALL live data
+  fetchSystemStatus();
+  fetchAutonomyStatus();
+  fetchLearnings();
+  fetchTaskQueue();
+  fetchMemoryLog();
+  buildPillarsFromLiveData();
+}
+
+function updateConnectionBar(authenticated) {
+  const dot = document.getElementById('connDot');
+  const text = document.getElementById('connText');
+  const badge = document.getElementById('soulBadge');
+  if (authenticated) {
+    dot.className = 'connection-dot live';
+    text.textContent = 'CONNECTED TO ZENITH';
+    text.style.color = 'var(--green)';
+    badge.innerHTML = '<span class="soul-badge">SOUL VERIFIED</span>';
+  } else {
+    dot.className = 'connection-dot dead';
+    text.textContent = 'DISCONNECTED';
+    text.style.color = 'var(--gray)';
+    badge.innerHTML = '';
+  }
+}
+
+// ============================================
+// SYSTEM STATUS â Real /api/system data
+// ============================================
+async function fetchSystemStatus() {
+  const el = document.getElementById('system-content');
+  try {
+    const res = await zenithFetch('/system');
+    const d = await res.json();
+    const uptimeMin = Math.floor((d.uptime || 0) / 60);
+    const uptimeH = Math.floor(uptimeMin / 60);
+    const uptimeStr = uptimeH > 0 ? uptimeH + 'h ' + (uptimeMin % 60) + 'm' : uptimeMin + 'm';
+    const toolCount = d.tools ? Object.values(d.tools).filter(v => v === true).length : 0;
+    const totalTools = d.tools ? Object.keys(d.tools).length : 0;
+    el.innerHTML = '<div class="data-grid">' +
+      '<div class="data-item"><div class="data-label">Name</div><div class="data-value">' + (d.name || 'N/A') + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Version</div><div class="data-value">' + (d.version || 'N/A') + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Mode</div><div class="data-value" style="color:var(--green)">' + (d.mode || 'N/A') + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Uptime</div><div class="data-value">' + uptimeStr + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Tools</div><div class="data-value">' + toolCount + '/' + totalTools + ' active</div></div>' +
+      '<div class="data-item"><div class="data-label">Memory</div><div class="data-value" style="color:' + (d.memory && d.memory.active ? 'var(--green)' : 'var(--error)') + '">' + (d.memory && d.memory.active ? 'ACTIVE' : 'OFFLINE') + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Learnings</div><div class="data-value">' + (d.memory ? d.memory.learnings : 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Directives</div><div class="data-value">' + (d.memory ? d.memory.directives : 0) + '</div></div>' +
+      '</div><div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
+  } catch (e) {
+    el.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;">Failed: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// AUTONOMY STATUS â Real /api/autonomous/status
+// ============================================
+async function fetchAutonomyStatus() {
+  const el = document.getElementById('autonomy-content');
+  try {
+    const res = await zenithFetch('/autonomous/status');
+    const d = await res.json();
+    const nextTask = d.next_task;
+    let nextTaskHTML = '<div style="color:var(--gray)">No pending tasks</div>';
+    if (nextTask) {
+      nextTaskHTML = '<div class="task-item">' +
+        '<div class="task-type">' + (nextTask.type || 'unknown') + ' [Priority: ' + (nextTask.priority || '?') + ']</div>' +
+        '<div class="task-desc">' + (nextTask.description || 'No description') + '</div>' +
+        '<div class="task-status pending">Status: ' + (nextTask.status || 'pending') + '</div></div>';
+    }
+    el.innerHTML = '<div class="data-grid">' +
+      '<div class="data-item"><div class="data-label">Autonomous Mode</div><div class="data-value" style="color:' + (d.autonomous_mode ? 'var(--green)' : 'var(--error)') + '">' + (d.autonomous_mode ? 'ACTIVE' : 'INACTIVE') + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Completed Tasks</div><div class="data-value">' + (d.completed_tasks || 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Pending Tasks</div><div class="data-value" style="color:var(--gold)">' + (d.pending_tasks || 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Run Log Entries</div><div class="data-value">' + (d.run_log_entries || 0) + '</div></div>' +
+      '</div><div style="margin-top:15px"><div class="data-label" style="margin-bottom:8px">NEXT TASK</div>' + nextTaskHTML + '</div>' +
+      '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
+  } catch (e) {
+    el.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;">Failed: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// LEARNINGS â Real /api/learnings
+// ============================================
+async function fetchLearnings() {
+  const el = document.getElementById('learnings-content');
+  try {
+    const res = await zenithFetch('/learnings');
+    const d = await res.json();
+    let html = '<div class="data-grid" style="margin-bottom:15px">' +
+      '<div class="data-item"><div class="data-label">Structured</div><div class="data-value">' + (d.total_structured_learnings || 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Task Learnings</div><div class="data-value">' + (d.total_task_learnings || 0) + '</div></div></div>';
+    // Active learnings (top 5)
+    html += '<div class="data-label" style="margin-bottom:8px">ACTIVE IN PROMPT CONTEXT</div>';
+    const active = d.top_5_active || [];
+    if (active.length > 0) {
+      active.forEach(function(l) {
+        html += '<div class="learning-item"><div class="learning-insight">' + l + '</div></div>';
+      });
+    } else {
+      html += '<div style="color:var(--gray);padding:10px;">No active learnings yet</div>';
+    }
+    // Recent task learnings
+    const taskLearnings = d.recent_task_learnings || [];
+    if (taskLearnings.length > 0) {
+      html += '<div class="data-label" style="margin:15px 0 8px">RECENT TASK LEARNINGS</div>';
+      taskLearnings.slice(0, 5).forEach(function(tl) {
+        html += '<div class="learning-item"><div class="learning-insight">' + (tl.learning || 'N/A') + '</div>' +
+          '<div class="learning-source">' + (tl.task_type || 'unknown') + ' | ' + new Date(tl.completed_at).toLocaleString() + '</div></div>';
+      });
+    }
+    html += '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
+    el.innerHTML = html;
+  } catch (e) {
+    el.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;">Failed: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// TASK QUEUE â Real /api/autonomy
+// ============================================
+async function fetchTaskQueue() {
+  const el = document.getElementById('tasks-content');
+  try {
+    const res = await zenithFetch('/autonomy');
+    const d = await res.json();
+    const queue = d.task_queue || {};
+    const tasks = queue.tasks || [];
+    let html = '<div class="data-grid" style="margin-bottom:15px">' +
+      '<div class="data-item"><div class="data-label">Pending</div><div class="data-value" style="color:var(--gold)">' + (queue.pending || 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Completed</div><div class="data-value" style="color:var(--green)">' + (queue.completed || 0) + '</div></div></div>';
+    html += '<div class="data-label" style="margin-bottom:8px">PENDING TASKS</div>';
+    if (tasks.length > 0) {
+      tasks.forEach(function(t) {
+        html += '<div class="task-item"><div class="task-type">' + (t.type || 'unknown') + ' [P' + (t.priority || '?') + ']</div>' +
+          '<div class="task-desc">' + (t.description || 'No description') + '</div>' +
+          '<div class="task-status pending">' + (t.status || 'pending') + (t.spawned_by ? ' | spawned by: ' + t.spawned_by : '') + '</div></div>';
+      });
+    } else {
+      html += '<div style="color:var(--gray);padding:10px;">Queue empty â ZENITH will self-generate tasks</div>';
+    }
+    html += '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
+    el.innerHTML = html;
+  } catch (e) {
+    el.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;">Failed: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// MEMORY LOG â Combined run history
+// ============================================
+async function fetchMemoryLog() {
+  const el = document.getElementById('memory-content');
+  try {
+    const [statusRes, learningsRes] = await Promise.all([
+      zenithFetch('/autonomous/status'),
+      zenithFetch('/learnings')
+    ]);
+    const statusData = await statusRes.json();
+    const learningsData = await learningsRes.json();
+    const recentLearnings = statusData.recent_learnings || [];
+    const lastRun = statusData.last_run;
+    let html = '<div class="data-grid" style="margin-bottom:15px">' +
+      '<div class="data-item"><div class="data-label">Run Log Entries</div><div class="data-value">' + (statusData.run_log_entries || 0) + '</div></div>' +
+      '<div class="data-item"><div class="data-label">Last Run</div><div class="data-value" style="font-size:0.9rem">' + (lastRun ? new Date(lastRun).toLocaleString() : 'Never') + '</div></div></div>';
+    html += '<div class="data-label" style="margin-bottom:8px">RECENT MEMORY ACTIVITY</div><div class="memory-log">';
+    if (recentLearnings.length > 0) {
+      recentLearnings.forEach(function(l) {
+        html += '<div class="learning-item"><div class="learning-insight">' + l + '</div></div>';
+      });
+    } else {
+      html += '<div style="color:var(--gray);padding:10px;">No memory activity recorded yet</div>';
+    }
+    html += '</div><div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
+    el.innerHTML = html;
+  } catch (e) {
+    el.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;">Failed: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// PILLARS â Built from LIVE backend data
+// ============================================
+async function buildPillarsFromLiveData() {
+  const grid = document.getElementById('pillarsGrid');
+  try {
+    const [sysRes, autoRes, learnRes] = await Promise.all([
+      zenithFetch('/system'),
+      zenithFetch('/autonomous/status'),
+      zenithFetch('/learnings')
+    ]);
+    const sys = await sysRes.json();
+    const auto = await autoRes.json();
+    const learn = await learnRes.json();
+    // Determine pillar statuses from real data
+    const p1_memory = sys.memory && sys.memory.active;
+    const p2_learning = learn.total_task_learnings > 0;
+    const p3_autonomous = auto.autonomous_mode && auto.completed_tasks > 0;
+    const p4_soulCheck = isAuthenticated; // We just proved it
+    const p5_distribution = false; // Not yet built
+
+    const pillars = [
+      { name: 'PILLAR 1: Remember Everything', icon: '&#x1F9E0;', status: p1_memory ? 'PROVEN' : 'PENDING',
+        desc: 'Persistent GitHub-backed memory. Every conversation, learning, and directive persists across restarts.',
+        proof: p1_memory ? 'Memory ACTIVE â ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
+      { name: 'PILLAR 2: Always Improve', icon: '&#x1F4C8;', status: p2_learning ? 'PROVEN' : 'IN PROGRESS',
+        desc: 'Structured learning engine extracts insights from every completed task and feeds top learnings into AI context.',
+        proof: p2_learning ? learn.total_task_learnings + ' task learnings extracted, ' + learn.total_structured_learnings + ' structured learnings stored' : 'Learning engine deployed, awaiting first cycle' },
+      { name: 'PILLAR 3: Self-Directed Planning', icon: '&#x1F916;', status: p3_autonomous ? 'PROVEN' : 'IN PROGRESS',
+        desc: 'Autonomous tick engine reads task queue, executes tasks, spawns new tasks, and writes results to memory.',
+        proof: p3_autonomous ? auto.completed_tasks + ' tasks completed, ' + auto.pending_tasks + ' pending, last run: ' + new Date(auto.last_run).toLocaleString() : 'Engine deployed, awaiting first tick' },
+      { name: 'PILLAR 4: Soul Check Gate', icon: '&#x1F6E1;', status: p4_soulCheck ? 'PROVEN' : 'PENDING',
+        desc: 'Sovereign identity verification. Real cryptographic token authentication â not cosmetic, not client-side.',
+        proof: p4_soulCheck ? 'SOUL VERIFIED â Token active, 10 endpoints gated, 24h TTL' : '' },
+      { name: 'PILLAR 5: Distribution & Monetization', icon: '&#x1F680;', status: p5_distribution ? 'PROVEN' : 'PENDING',
+        desc: 'Revenue systems, Stripe integration, content distribution across platforms. The final sovereignty layer.',
+        proof: p5_distribution ? 'Active' : 'Planning phase â API discovery needed' }
+    ];
+    let html = '';
+    pillars.forEach(function(p) {
+      const cardClass = p.status === 'PROVEN' ? 'proven' : (p.status === 'IN PROGRESS' ? 'in-progress' : '');
+      const badgeClass = p.status === 'PROVEN' ? 'status-proven' : (p.status === 'IN PROGRESS' ? 'status-progress' : 'status-pending');
+      html += '<div class="pillar-card ' + cardClass + '">' +
+        '<span class="pillar-icon">' + p.icon + '</span>' +
+        '<div class="pillar-header"><span class="pillar-name">' + p.name + '</span><span class="status-badge ' + badgeClass + '">' + p.status + '</span></div>' +
+        '<p class="pillar-desc">' + p.desc + '</p>' +
+        (p.proof ? '<p class="pillar-proof">' + p.proof + '</p>' : '') +
+        '</div>';
+    });
+    grid.innerHTML = html;
+  } catch (e) {
+    grid.innerHTML = '<div style="color:var(--error);text-align:center;padding:20px;grid-column:1/-1;">Failed to load pillar data: ' + e.message + '</div>';
+  }
+}
+
+// ============================================
+// INIT: Check for existing session token
+// ============================================
+async function init() {
+  // Check backend connectivity
+  try {
+    const res = await zenithFetch('/system');
+    if (res.ok) {
+      const dot = document.getElementById('connDot');
+      dot.className = 'connection-dot auth';
+      document.getElementById('connText').textContent = 'BACKEND REACHABLE';
+      document.getElementById('connText').style.color = 'var(--gold)';
+    }
+  } catch (e) {
+    // Backend unreachable
+  }
+  // Check for existing soul token
+  if (soulToken) {
+    try {
+      const res = await zenithFetch('/soul/validate');
+      const data = await res.json();
+      if (res.ok && data.valid) {
+        isAuthenticated = true;
+        document.getElementById('soulInput').value = '********';
+        document.getElementById('soulInput').disabled = true;
+        document.getElementById('soulInput').style.borderColor = 'var(--green)';
+        document.getElementById('verifyBtn').textContent = 'VERIFIED';
+        document.getElementById('verifyBtn').disabled = true;
+        document.getElementById('verifyBtn').style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
+        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored â Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
+        unlockPanels();
+        updateConnectionBar(true);
+      } else {
+        sessionStorage.removeItem('soul_token');
+        soulToken = null;
+      }
+    } catch (e) {
+      sessionStorage.removeItem('soul_token');
+      soulToken = null;
+    }
+  }
+}
+
+init();
+</script></body></html>
