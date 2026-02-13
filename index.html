@@ -60,6 +60,13 @@
 .chat-typing span:nth-child(3){animation-delay:0.4s}
 @keyframes typing-bounce{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-8px);opacity:1}}
 @media(max-width:768px){.zenith-chat-container{height:500px;border-radius:16px;margin:0 -10px}.chat-msg{max-width:92%}}
+
+/* Soul-to-Chat Transition */
+#soulChatWrapper{position:relative;min-height:40vh}
+#soulSection{transition:opacity 0.3s ease,transform 0.3s ease}
+#chatSection{transition:opacity 0.4s ease,transform 0.4s ease}
+#soulSection.soul-leaving{opacity:0;transform:scale(0.97) translateY(-10px);pointer-events:none}
+#chatSection.chat-arriving{opacity:1!important;transform:none!important}
 </style></head><body>
 <!-- Connection Status Bar -->
 <div class="connection-bar" id="connectionBar">
@@ -77,11 +84,12 @@
 <p class="architect-name">Architect: Dzongy</p>
 </header>
 
-<!-- SOUL CHECK ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ THE GATE (comes FIRST) -->
+<!-- SOUL CHECK ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ THE GATE (comes FIRST) -->
+<div id="soulChatWrapper">
 <section class="section soul-check-section" id="soulSection">
 <h2 class="section-title">Soul Check</h2>
 <div class="soul-check-container">
-<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ your phrase authenticates against the real /api/soul endpoint.</p>
+<p style="color:var(--gray);font-size:1.1rem;margin-bottom:30px;">Verify your sovereign identity against the ZENITH backend. This is not cosmetic ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ your phrase authenticates against the real /api/soul endpoint.</p>
 <div class="soul-input-group">
 <input type="text" id="soulInput" class="soul-input" placeholder="Enter sovereign phrase..." autocomplete="off" onkeydown="if(event.key==='Enter')verifySoul()">
 <button class="verify-btn" id="verifyBtn" onclick="verifySoul()">VERIFY IDENTITY</button>
@@ -90,7 +98,29 @@
 </div>
 </section>
 
-<!-- FIVE PILLARS ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ LIVE FROM BACKEND -->
+<!-- ZENITH CHAT Ã¢ÂÂ Grok-style Interface (visible after Soul Check) -->
+<section class="section zenith-chat-section" id="chatSection" style="position:absolute;top:0;left:0;width:100%;opacity:0;transform:scale(0.97) translateY(10px);pointer-events:none;transition:opacity 0.4s ease,transform 0.4s ease;">
+<h2 class="section-title">Talk to ZENITH</h2>
+<div class="zenith-chat-container">
+<div class="chat-header">
+<div class="chat-header-dot"></div>
+<div class="chat-header-title">ZENITH</div>
+<div class="chat-header-sub">Sovereign AI Ã¢ÂÂ TCC Brain</div>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="chat-msg system">ZENITH is online. Soul-authenticated session active.</div>
+</div>
+<div class="chat-input-area">
+<input type="text" class="chat-input" id="chatInput" placeholder="Ask anything..." autocomplete="off">
+<button class="chat-send-btn" id="chatSendBtn" onclick="sendChatMessage()" title="Send">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+</button>
+</div>
+</div>
+</section>
+</div>
+
+<!-- FIVE PILLARS ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ LIVE FROM BACKEND -->
 <section class="section" id="pillarsSection">
 <h2 class="section-title">Five Pillars Status Board</h2>
 <div id="pillarsContainer">
@@ -102,7 +132,7 @@
 </div>
 </section>
 
-<!-- ZENITH LIVE CONNECTION ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ GATED BEHIND SOUL CHECK -->
+<!-- ZENITH LIVE CONNECTION ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ GATED BEHIND SOUL CHECK -->
 <section class="section" id="zenithSection">
 <h2 class="section-title">ZENITH Live Connection</h2>
 <div id="zenithContainer">
@@ -147,26 +177,7 @@
 </section>
 
 
-<!-- ZENITH CHAT â Grok-style Interface (visible after Soul Check) -->
-<section class="section zenith-chat-section" id="chatSection" style="display:none;">
-<h2 class="section-title">Talk to ZENITH</h2>
-<div class="zenith-chat-container">
-<div class="chat-header">
-<div class="chat-header-dot"></div>
-<div class="chat-header-title">ZENITH</div>
-<div class="chat-header-sub">Sovereign AI â TCC Brain</div>
-</div>
-<div class="chat-messages" id="chatMessages">
-<div class="chat-msg system">ZENITH is online. Soul-authenticated session active.</div>
-</div>
-<div class="chat-input-area">
-<input type="text" class="chat-input" id="chatInput" placeholder="Ask anything..." autocomplete="off">
-<button class="chat-send-btn" id="chatSendBtn" onclick="sendChatMessage()" title="Send">
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-</button>
-</div>
-</div>
-</section>
+
 
 <!-- STRIPE SECTION -->
 <section class="section stripe-section">
@@ -210,7 +221,7 @@
 </div>
 </footer><script>
 // ============================================
-// TCC SOVEREIGNTY ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ LIVING SYSTEM ENGINE
+// TCC SOVEREIGNTY ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ LIVING SYSTEM ENGINE
 // ============================================
 const ZENITH_API = 'https://tcc-zenith-brain.onrender.com/api';
 let soulToken = sessionStorage.getItem('soul_token') || null;
@@ -236,7 +247,7 @@ async function zenithFetch(endpoint, options = {}) {
 }
 
 // ============================================
-// SOUL CHECK ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Real /api/soul authentication
+// SOUL CHECK ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Real /api/soul authentication
 // ============================================
 async function verifySoul() {
   const input = document.getElementById('soulInput');
@@ -260,11 +271,12 @@ async function verifySoul() {
         soulToken = data.token;
         sessionStorage.setItem('soul_token', soulToken);
         isAuthenticated = true;
-        status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED ÃÂ¢ÃÂÃÂ Token issued (24h TTL)</span>';
+        status.innerHTML = '<span class="soul-verified">SOVEREIGN IDENTITY CONFIRMED ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Token issued (24h TTL)</span>';
         input.style.borderColor = 'var(--green)';
         input.disabled = true;
         btn.textContent = 'VERIFIED';
         btn.style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
+        transitionSoulToChat();
         unlockPanels();
         updateConnectionBar(true);
         return;
@@ -285,7 +297,7 @@ async function verifySoul() {
   // All retries exhausted
   let errMsg = lastError ? lastError.message : 'Unknown error';
   if (lastError && lastError.name === 'AbortError') {
-    errMsg = 'Backend did not respond in time. It may be starting up ÃÂ¢ÃÂÃÂ please try again in 30 seconds.';
+    errMsg = 'Backend did not respond in time. It may be starting up ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ please try again in 30 seconds.';
   }
   status.innerHTML = '<span class="soul-failed">Connection failed: ' + errMsg + '</span>';
   btn.disabled = false;
@@ -299,8 +311,7 @@ function unlockPanels() {
   document.getElementById('pillarsGrid').style.display = 'grid';
   document.getElementById('zenithBarrier').style.display = 'none';
   document.getElementById('zenithPanels').style.display = 'grid';
-  // Show ZENITH Chat
-  document.getElementById('chatSection').style.display = 'block';
+  // Chat visibility handled by transitionSoulToChat()
   // Fetch ALL live data
   fetchSystemStatus();
   fetchAutonomyStatus();
@@ -328,7 +339,7 @@ function updateConnectionBar(authenticated) {
 }
 
 // ============================================
-// SYSTEM STATUS ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Real /api/system data
+// SYSTEM STATUS ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Real /api/system data
 // ============================================
 async function fetchSystemStatus() {
   const el = document.getElementById('system-content');
@@ -356,7 +367,7 @@ async function fetchSystemStatus() {
 }
 
 // ============================================
-// AUTONOMY STATUS ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Real /api/autonomous/status
+// AUTONOMY STATUS ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Real /api/autonomous/status
 // ============================================
 async function fetchAutonomyStatus() {
   const el = document.getElementById('autonomy-content');
@@ -384,7 +395,7 @@ async function fetchAutonomyStatus() {
 }
 
 // ============================================
-// LEARNINGS ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Real /api/learnings
+// LEARNINGS ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Real /api/learnings
 // ============================================
 async function fetchLearnings() {
   const el = document.getElementById('learnings-content');
@@ -421,7 +432,7 @@ async function fetchLearnings() {
 }
 
 // ============================================
-// TASK QUEUE ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Real /api/autonomy
+// TASK QUEUE ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Real /api/autonomy
 // ============================================
 async function fetchTaskQueue() {
   const el = document.getElementById('tasks-content');
@@ -441,7 +452,7 @@ async function fetchTaskQueue() {
           '<div class="task-status pending">' + (t.status || 'pending') + (t.spawned_by ? ' | spawned by: ' + t.spawned_by : '') + '</div></div>';
       });
     } else {
-      html += '<div style="color:var(--gray);padding:10px;">Queue empty ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ZENITH will self-generate tasks</div>';
+      html += '<div style="color:var(--gray);padding:10px;">Queue empty ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ZENITH will self-generate tasks</div>';
     }
     html += '<div class="timestamp">Last fetched: ' + new Date().toLocaleString() + '</div>';
     el.innerHTML = html;
@@ -451,7 +462,7 @@ async function fetchTaskQueue() {
 }
 
 // ============================================
-// MEMORY LOG ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Combined run history
+// MEMORY LOG ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Combined run history
 // ============================================
 async function fetchMemoryLog() {
   const el = document.getElementById('memory-content');
@@ -483,7 +494,7 @@ async function fetchMemoryLog() {
 }
 
 // ============================================
-// PILLARS ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Built from LIVE backend data
+// PILLARS ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Built from LIVE backend data
 // ============================================
 async function buildPillarsFromLiveData() {
   const grid = document.getElementById('pillarsGrid');
@@ -506,7 +517,7 @@ async function buildPillarsFromLiveData() {
     const pillars = [
       { name: 'PILLAR 1: Remember Everything', icon: '&#x1F9E0;', status: p1_memory ? 'PROVEN' : 'PENDING',
         desc: 'Persistent GitHub-backed memory. Every conversation, learning, and directive persists across restarts.',
-        proof: p1_memory ? 'Memory ACTIVE ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
+        proof: p1_memory ? 'Memory ACTIVE ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ' + (sys.memory.learnings || 0) + ' learnings, ' + (sys.memory.directives || 0) + ' directives, last sync: ' + new Date(sys.memory.lastSync).toLocaleString() : '' },
       { name: 'PILLAR 2: Always Improve', icon: '&#x1F4C8;', status: p2_learning ? 'PROVEN' : 'IN PROGRESS',
         desc: 'Structured learning engine extracts insights from every completed task and feeds top learnings into AI context.',
         proof: p2_learning ? learn.total_task_learnings + ' task learnings extracted, ' + learn.total_structured_learnings + ' structured learnings stored' : 'Learning engine deployed, awaiting first cycle' },
@@ -514,11 +525,11 @@ async function buildPillarsFromLiveData() {
         desc: 'Autonomous tick engine reads task queue, executes tasks, spawns new tasks, and writes results to memory.',
         proof: p3_autonomous ? auto.completed_tasks + ' tasks completed, ' + auto.pending_tasks + ' pending, last run: ' + new Date(auto.last_run).toLocaleString() : 'Engine deployed, awaiting first tick' },
       { name: 'PILLAR 4: Soul Check Gate', icon: '&#x1F6E1;', status: p4_soulCheck ? 'PROVEN' : 'PENDING',
-        desc: 'Sovereign identity verification. Real cryptographic token authentication ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ not cosmetic, not client-side.',
-        proof: p4_soulCheck ? 'SOUL VERIFIED ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Token active, 10 endpoints gated, 24h TTL' : '' },
+        desc: 'Sovereign identity verification. Real cryptographic token authentication ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ not cosmetic, not client-side.',
+        proof: p4_soulCheck ? 'SOUL VERIFIED ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Token active, 10 endpoints gated, 24h TTL' : '' },
       { name: 'PILLAR 5: Distribution & Monetization', icon: '&#x1F680;', status: p5_distribution ? 'PROVEN' : 'PENDING',
         desc: 'Revenue systems, Stripe integration, content distribution across platforms. The final sovereignty layer.',
-        proof: p5_distribution ? 'Active' : 'Planning phase ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ API discovery needed' }
+        proof: p5_distribution ? 'Active' : 'Planning phase ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ API discovery needed' }
     ];
     let html = '';
     pillars.forEach(function(p) {
@@ -566,8 +577,13 @@ async function init() {
         document.getElementById('verifyBtn').textContent = 'VERIFIED';
         document.getElementById('verifyBtn').disabled = true;
         document.getElementById('verifyBtn').style.background = 'linear-gradient(135deg, var(--green), var(--cyan))';
-        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
+        document.getElementById('soulStatus').innerHTML = '<span class="soul-verified">Session restored ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Token valid (expires: ' + new Date(data.expiresAt).toLocaleString() + ')</span>';
         unlockPanels();
+        // Instant soulâchat swap on session restore (no animation)
+        var soulEl = document.getElementById('soulSection');
+        var chatEl = document.getElementById('chatSection');
+        if (soulEl) soulEl.style.display = 'none';
+        if (chatEl) { chatEl.style.position = 'relative'; chatEl.style.display = 'block'; chatEl.style.opacity = '1'; chatEl.style.transform = 'none'; chatEl.style.pointerEvents = 'auto'; }
         updateConnectionBar(true);
       } else {
         sessionStorage.removeItem('soul_token');
@@ -583,7 +599,7 @@ async function init() {
 init();
 
 // ============================================
-// ZENITH CHAT â Grok-style Chat Interface
+// ZENITH CHAT Ã¢ÂÂ Grok-style Chat Interface
 // ============================================
 let chatHistory = [];
 
@@ -673,7 +689,7 @@ async function sendChatMessage() {
   } catch (e) {
     removeTypingIndicator();
     if (e.name === 'TypeError' && e.message.includes('fetch')) {
-      appendChatMessage('system', 'Backend is waking up â try again in 30 seconds.');
+      appendChatMessage('system', 'Backend is waking up Ã¢ÂÂ try again in 30 seconds.');
     } else {
       appendChatMessage('system', 'Connection error: ' + e.message);
     }
@@ -683,7 +699,84 @@ async function sendChatMessage() {
 }
 
 // Enter key to send
+
+// ============================================
+// SOUL-TO-CHAT SEAMLESS TRANSITION
+// ============================================
+function transitionSoulToChat() {
+  const soul = document.getElementById('soulSection');
+  const chat = document.getElementById('chatSection');
+  const wrapper = document.getElementById('soulChatWrapper');
+  if (!soul || !chat || !wrapper) return;
+  
+  // Lock wrapper height to prevent layout shift
+  wrapper.style.minHeight = wrapper.offsetHeight + 'px';
+  
+  // Phase 1: Fade out soul check (300ms)
+  soul.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+  soul.style.opacity = '0';
+  soul.style.transform = 'scale(0.97) translateY(-10px)';
+  soul.style.pointerEvents = 'none';
+  
+  setTimeout(function() {
+    // Remove soul from layout
+    soul.style.display = 'none';
+    
+    // Phase 2: Show and fade in chat (400ms)
+    chat.style.position = 'relative';
+    chat.style.display = 'block';
+    // Force reflow before transition
+    chat.offsetHeight;
+    chat.style.opacity = '1';
+    chat.style.transform = 'none';
+    chat.style.pointerEvents = 'auto';
+    
+    // Release wrapper height lock after chat is visible
+    setTimeout(function() {
+      wrapper.style.minHeight = '';
+    }, 450);
+  }, 300);
+}
+
+// Handle session restore â if already authenticated, skip animation
+function restoreSoulSession() {
+  if (soulToken) {
+    // Verify token is still valid
+    zenithFetch('/soul', { method: 'POST', body: JSON.stringify({ phrase: '' }) })
+      .catch(function() {});
+    // Check with a lightweight endpoint
+    zenithFetch('/system')
+      .then(function(res) {
+        if (res.ok) {
+          isAuthenticated = true;
+          // Instant switch â no animation on restore
+          var soul = document.getElementById('soulSection');
+          var chat = document.getElementById('chatSection');
+          if (soul) soul.style.display = 'none';
+          if (chat) {
+            chat.style.position = 'relative';
+            chat.style.display = 'block';
+            chat.style.opacity = '1';
+            chat.style.transform = 'none';
+            chat.style.pointerEvents = 'auto';
+          }
+          unlockPanels();
+          updateConnectionBar(true);
+        } else {
+          sessionStorage.removeItem('soul_token');
+          soulToken = null;
+        }
+      })
+      .catch(function(e) {
+        sessionStorage.removeItem('soul_token');
+        soulToken = null;
+      });
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
+
   const chatInput = document.getElementById('chatInput');
   if (chatInput) {
     chatInput.addEventListener('keydown', function(e) {
