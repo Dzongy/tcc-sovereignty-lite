@@ -1,7 +1,7 @@
 name: Zenith Thinking Loop (Groq)
 on:
   schedule:
-    - cron: '0,30 * * * *'
+    - cron: '*/40 * * * *'
   workflow_dispatch:
 jobs:
   think:
