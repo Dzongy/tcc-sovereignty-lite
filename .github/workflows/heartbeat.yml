@@ -1,7 +1,7 @@
 name: ZENITH Heartbeat
 on:
   schedule:
-    - cron: '0 */1 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -13,6 +13,22 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: ZENITH Autopilot Tick
+        run: |
+          echo "Triggering ZENITH autopilot..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            https://tcc-zenith-brain.onrender.com/api/zenith/autopilot \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            --max-time 120)
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+          echo "Status: $HTTP_CODE"
+          echo "Response: $BODY"
+          if [ "$HTTP_CODE" -ge 500 ]; then
+            echo "Warning: Autopilot returned server error, continuing with heartbeat..."
+          fi
 
       - name: Update zenith-memory.json
         run: |
@@ -38,7 +54,7 @@ jobs:
               d = json.load(f)
           d['version'] = '${NEW_VERSION}'
           d['last_heartbeat'] = '${TIMESTAMP}'
-          d['heartbeat_count'] = d.get('heartbeat_count', 0) + 1
+          d['heartbeat_source'] = 'github_actions_cron'
           with open('$FILE','w') as f:
               json.dump(d, f, indent=2)
           "
@@ -46,16 +62,9 @@ jobs:
 
       - name: Commit and push
         run: |
-          git config user.name "ZENITH-Heartbeat"
-          git config user.email "zenith@tcc.local"
+          git config user.name "ZENITH Heartbeat"
+          git config user.email "zenith@tcc.sovereign"
           git add zenith-memory.json
           git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "heartbeat: v$(cat zenith-memory.json | python3 -c 'import sys,json;print(json.load(sys.stdin)["version"])')"
+          git commit -m "heartbeat: v$(cat zenith-memory.json | python3 -c \"import sys,json; print(json.load(sys.stdin).get('version','?'))\") — ZENITH pulse"
           git push
-
-      - name: Trigger ZENITH Autopilot
-        run: curl -s -X POST https://tcc-zenith-brain.onrender.com/api/zenith/autopilot -H "Content-Type: application/json" || true
-
-      - name: Wake ZENITH Brain
-        run: |
-          curl -s -X POST https://tcc-zenith-brain.onrender.com/api/zenith/autopilot -H "Content-Type: application/json" -d '{"task":"Hourly autonomous cycle: check task queue, think proactively, generate new tasks, execute pending items, update memory"}' || true
