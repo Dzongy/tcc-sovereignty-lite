@@ -1,7 +1,7 @@
 name: Zenith Thinking Loop (Gemini)
 on:
   schedule:
-    - cron: '15,45 * * * *'
+    - cron: '20 * * * *'
   workflow_dispatch:
 jobs:
   think:
