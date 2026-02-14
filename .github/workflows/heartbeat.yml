@@ -52,3 +52,6 @@ jobs:
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "heartbeat: v$(cat zenith-memory.json | python3 -c 'import sys,json;print(json.load(sys.stdin)["version"])')"
           git push
+
+      - name: Trigger ZENITH Autopilot
+        run: curl -s -X POST https://tcc-zenith-brain.onrender.com/api/zenith/autopilot -H "Content-Type: application/json" || true
