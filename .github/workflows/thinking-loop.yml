@@ -2,45 +2,33 @@ name: "ZENITH Thinking Loop"
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 jobs:
   thinking-loop:
     runs-on: ubuntu-latest
     steps:
-      - name: ZENITH 30-Second Thinking Loop
+      - name: ZENITH Autopilot Pulse
         run: |
-          echo "=== ZENITH THINKING LOOP STARTED ==="
+          echo "=== ZENITH AUTOPILOT PULSE ==="
           echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           
           ENDPOINT="https://tcc-zenith-brain.onrender.com/api/zenith/autopilot"
           
-          for i in $(seq 1 9); do
-            echo ""
-            echo "--- Iteration $i/9 ---"
-            echo "Time: $(date -u +%H:%M:%S)"
-            
-            HTTP_STATUS=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
-              -X POST "$ENDPOINT" \
-              -H "Content-Type: application/json" \
-              -d '{"trigger":"thinking_loop","source":"github_actions","iteration":'"$i"'}' \
-              --max-time 30 2>/dev/null) || true
-            
-            if [ -n "$HTTP_STATUS" ] && [ "$HTTP_STATUS" != "000" ]; then
-              echo "Status: $HTTP_STATUS"
-              BODY=$(cat /tmp/response.txt 2>/dev/null | head -c 500)
-              echo "Response: $BODY"
-            else
-              echo "Status: TIMEOUT or CONNECTION ERROR"
-            fi
-            
-            if [ "$i" -lt 9 ]; then
-              echo "Sleeping 30s..."
-              sleep 30
-            fi
-          done
+          HTTP_STATUS=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
+            -X POST "$ENDPOINT" \
+            -H "Content-Type: application/json" \
+            -d '{"trigger":"thinking_loop","source":"github_actions"}' \
+            --max-time 60 2>/dev/null) || true
+          
+          if [ -n "$HTTP_STATUS" ] && [ "$HTTP_STATUS" != "000" ]; then
+            echo "Status: $HTTP_STATUS"
+            BODY=$(cat /tmp/response.txt 2>/dev/null | head -c 500)
+            echo "Response: $BODY"
+          else
+            echo "Status: TIMEOUT or CONNECTION FAILED"
+          fi
           
           echo ""
-          echo "=== ZENITH THINKING LOOP COMPLETE ==="
-          echo "End: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "=== ZENITH AUTOPILOT PULSE COMPLETE ==="
