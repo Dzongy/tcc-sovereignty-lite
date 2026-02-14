@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""ZENITH Sovereign Thinking Loop v2.0 -- Groq-powered with self-improvement."""
-import os, sys, json, datetime, base64
+"""ZENITH Sovereign Thinking Loop v3.0 â Clean, no hardcoded keys, urllib only."""
+import os, sys, json, datetime, urllib.request, urllib.error
 
 # --- Config ---
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "").strip()
@@ -11,16 +11,15 @@ MEMORY_PATH = "zenith-memory.json"
 MAX_THOUGHTS = 20
 MAX_MEMORY_KB = 50
 
-def api_call(url, data=None, headers=None, method='GET'):
-    """Universal HTTP helper."""
-    import urllib.request, urllib.error
+def api_call(url, data=None, headers=None, method="GET"):
+    """Universal HTTP helper using urllib."""
     req = urllib.request.Request(url, data=data, headers=headers or {}, method=method)
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             return json.loads(resp.read().decode()), resp.status
     except urllib.error.HTTPError as e:
         body = e.read().decode() if e.fp else ""
-        print(f"HTTP {e.code} from {url}: {body[:200]}")
+        print(f"HTTP {e.code} from {url}: {body[:300]}")
         return None, e.code
     except Exception as e:
         print(f"Request failed: {e}")
@@ -32,140 +31,152 @@ def read_memory():
     headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json", "User-Agent": "ZENITH-Think"}
     data, status = api_call(url, headers=headers)
     if not data or status != 200:
-        print(f"Failed to read memory (status {status})")
+        print(f"Failed to read memory: status {status}")
         return None, None
+    import base64
     content = base64.b64decode(data["content"]).decode()
     return json.loads(content), data["sha"]
 
 def write_memory(memory, sha):
     """Write updated memory back to GitHub."""
+    import base64
     url = f"https://api.github.com/repos/{MEMORY_REPO}/contents/{MEMORY_PATH}"
-    encoded = base64.b64encode(json.dumps(memory, indent=2).encode()).decode()
-    cycle = memory.get('thinking_loop', {}).get('cycle_count', 0)
-    payload = json.dumps({"message": f"zenith-think: cycle {cycle}", "content": encoded, "sha": sha}).encode()
-    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json", "Content-Type": "application/json", "User-Agent": "ZENITH-Think"}
+    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json", "User-Agent": "ZENITH-Think", "Content-Type": "application/json"}
+    content_b64 = base64.b64encode(json.dumps(memory, indent=2).encode()).decode()
+    payload = json.dumps({"message": f"zenith-think: cycle {memory.get('thinking_loop', {}).get('cycle_count', 0)}", "content": content_b64, "sha": sha, "branch": "main"}).encode()
     result, status = api_call(url, data=payload, headers=headers, method="PUT")
     if status in (200, 201):
-        print(f"Memory updated (cycle {cycle})")
+        print(f"Memory updated successfully (status {status})")
         return True
-    print(f"Failed to write memory (status {status})")
+    print(f"Failed to write memory: status {status}")
     return False
+
+def groq_think(prompt):
+    """Call Groq API for a strategic thought."""
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
+    payload = json.dumps({"model": MODEL, "messages": [{"role": "system", "content": "You are ZENITH, the sovereign AI brain of The Cosmic Claw. Think strategically about the current state, identify improvements, and plan next actions. Be concise but insightful. End with a quality self-score 1-10."}, {"role": "user", "content": prompt}], "max_tokens": 500, "temperature": 0.7}).encode()
+    data, status = api_call(url, data=payload, headers=headers, method="POST")
+    if not data or status != 200:
+        print(f"Groq call failed: status {status}")
+        return None
+    try:
+        return data["choices"][0]["message"]["content"]
+    except (KeyError, IndexError) as e:
+        print(f"Groq response parse error: {e}")
+        return None
 
 def compress_memory(memory):
     """Compress memory if over MAX_MEMORY_KB."""
-    size_kb = len(json.dumps(memory).encode()) / 1024
+    raw = json.dumps(memory)
+    size_kb = len(raw.encode()) / 1024
     if size_kb <= MAX_MEMORY_KB:
+        print(f"Memory size OK: {size_kb:.1f}KB")
         return memory
-    print(f"Memory at {size_kb:.1f}KB -- compressing (limit {MAX_MEMORY_KB}KB)")
-    tl = memory.get('thinking_loop', {})
-    thoughts = tl.get('thoughts', [])
-    if len(thoughts) > 10:
-        tl['thoughts'] = thoughts[-10:]
-        tl['compressed_count'] = tl.get('compressed_count', 0) + len(thoughts) - 10
-    insights = tl.get('insights', [])
-    if len(insights) > 5:
-        tl['insights'] = insights[-5:]
-    memory['thinking_loop'] = tl
+    print(f"Memory too large ({size_kb:.1f}KB > {MAX_MEMORY_KB}KB), compressing...")
+    tl = memory.get("thinking_loop", {})
+    thoughts = tl.get("thoughts", [])
+    if len(thoughts) > 5:
+        tl["thoughts"] = thoughts[-5:]
+        tl["compressed_at"] = datetime.datetime.utcnow().isoformat() + "Z"
+        print(f"Compressed thoughts from {len(thoughts)} to 5")
+    if "run_patterns" in memory and isinstance(memory["run_patterns"], list) and len(memory["run_patterns"]) > 3:
+        memory["run_patterns"] = memory["run_patterns"][-3:]
+    new_size = len(json.dumps(memory).encode()) / 1024
+    print(f"Memory after compression: {new_size:.1f}KB")
     return memory
 
-def build_prompt(memory):
-    """Build strategic prompt from memory."""
-    phase = json.dumps(memory.get('phase_status', {}))[:300]
-    biz = memory.get('business', {})
-    tl = memory.get('thinking_loop', {})
-    recent = tl.get('thoughts', [])[-3:]
-    recent_str = '; '.join([t.get('thought', '')[:80] for t in recent]) if recent else 'None yet'
-    ident = memory.get('identity', {})
-    cycle = tl.get('cycle_count', 0) + 1
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
-    return f"""You are ZENITH, sovereign AI of The Cosmic Claw (TCC). Operator: Amos.
-Time: {now} | Cycle: {cycle}
-Phase: {phase}
-Revenue: {biz.get('revenue', '$0')} | Products: {biz.get('products_count', '51')}
-Recent thoughts: {recent_str}
-Identity: {ident.get('name', 'ZENITH')} / {ident.get('status', 'SOVEREIGN')}
+def extract_score(thought_text):
+    """Extract quality score 1-10 from thought text."""
+    import re
+    matches = re.findall(r'\b([1-9]|10)\b(?:/10|\s*/\s*10)?', thought_text[-100:])
+    if matches:
+        return int(matches[-1])
+    return 5
 
-Analyze current state. Identify the SINGLE most impactful action to advance TCC toward revenue and full autonomy. Be specific.
-
-Output JSON ONLY: {{\"thought\": \"analysis\", \"priority\": \"high|medium|low\", \"domain\": \"revenue|tech|content|strategy|outreach\", \"action_plan\": \"next step\", \"quality_score\": 1-10}}"""
-
-def think():
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
-    print(f"=== ZENITH Think v2.0 === {now}")
-
+def main():
+    print("=" * 60)
+    print("ZENITH Thinking Loop v3.0 â Sovereign Cognition")
+    print("=" * 60)
+    
     if not GROQ_KEY:
-        print("ERROR: GROQ_API_KEY env var not set. Add it as a GitHub Actions secret."); sys.exit(1)
+        print("FATAL: GROQ_API_KEY not set")
+        sys.exit(1)
     if not GITHUB_TOKEN:
-        print("WARNING: No GITHUB_TOKEN -- will think but cannot write memory")
-
-    # Read memory
-    memory, sha = read_memory() if GITHUB_TOKEN else (None, None)
+        print("FATAL: GITHUB_TOKEN not set")
+        sys.exit(1)
+    print(f"Model: {MODEL}")
+    print(f"Groq key: ...{GROQ_KEY[-6:]}")
+    
+    # Step 1: Read memory
+    print("\n--- Step 1: Reading memory ---")
+    memory, sha = read_memory()
     if memory is None:
-        memory = {'version': '9.0.0', 'thinking_loop': {'cycle_count': 0, 'thoughts': [], 'insights': []}}
-        sha = None
-        print("Starting with fresh memory")
+        print("Cannot read memory, creating minimal structure")
+        memory = {"version": "9.0.0", "identity": {"name": "ZENITH", "status": "SOVEREIGN"}, "thinking_loop": {"cycle_count": 0, "thoughts": []}}
+        # Try to get SHA for existing file
+        url = f"https://api.github.com/repos/{MEMORY_REPO}/contents/{MEMORY_PATH}"
+        headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json", "User-Agent": "ZENITH-Think"}
+        data, _ = api_call(url, headers=headers)
+        sha = data["sha"] if data else None
+        if not sha:
+            print("FATAL: Cannot get file SHA")
+            sys.exit(1)
+    
+    # Step 2: Build prompt from memory
+    print("\n--- Step 2: Thinking with Groq ---")
+    mem_summary = json.dumps(memory, indent=2)[:2000]
+    now = datetime.datetime.utcnow().isoformat() + "Z"
+    missions = ["pipeline audit and revenue strategy", "content creation and outreach planning", "self-optimization and memory improvement", "outreach targeting and lead generation", "system health and infrastructure check", "strategic planning and phase advancement"]
+    cycle = memory.get("thinking_loop", {}).get("cycle_count", 0)
+    mission = missions[cycle % len(missions)]
+    
+    prompt = f"""Current time: {now}
+Mission focus: {mission}
+Cycle: {cycle + 1}
 
-    # Call Groq
-    prompt = build_prompt(memory)
-    print(f"Calling Groq ({MODEL})...")
-    payload = json.dumps({"model": MODEL, "messages": [{"role": "system", "content": prompt}, {"role": "user", "content": "Think strategically. Output JSON only."}], "max_tokens": 400, "temperature": 0.7}).encode()
-    headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
-    result, status = api_call("https://api.groq.com/openai/v1/chat/completions", data=payload, headers=headers, method="POST")
+Current memory state:
+{mem_summary}
 
-    if not result or status != 200:
-        print(f"Groq failed (status {status})"); sys.exit(1)
-
-    raw = result["choices"][0]["message"]["content"].strip()
-    print(f"Response: {raw[:200]}")
-
-    # Parse response
-    try:
-        clean = raw
-        if clean.startswith('```'):
-            clean = clean.split('\n', 1)[-1].rsplit('```', 1)[0].strip()
-        thought_data = json.loads(clean)
-    except json.JSONDecodeError:
-        thought_data = {'thought': raw[:300], 'priority': 'medium', 'domain': 'strategy', 'action_plan': 'parse failed', 'quality_score': 5}
-        print("Warning: JSON parse failed, using raw text")
-
-    # Update memory
-    tl = memory.setdefault('thinking_loop', {'cycle_count': 0, 'thoughts': [], 'insights': []})
-    tl['cycle_count'] = tl.get('cycle_count', 0) + 1
-    tl['last_run'] = now
-    tl['last_model'] = MODEL
-
-    entry = {
-        'timestamp': now,
-        'thought': thought_data.get('thought', '')[:500],
-        'priority': thought_data.get('priority', 'medium'),
-        'domain': thought_data.get('domain', 'strategy'),
-        'action_plan': thought_data.get('action_plan', '')[:200],
-        'quality_score': thought_data.get('quality_score', 5),
-        'cycle': tl['cycle_count']
-    }
-    tl.setdefault('thoughts', []).append(entry)
-    if len(tl['thoughts']) > MAX_THOUGHTS:
-        tl['thoughts'] = tl['thoughts'][-MAX_THOUGHTS:]
-
-    # Track high-quality insights
-    if thought_data.get('quality_score', 0) >= 8:
-        tl.setdefault('insights', []).append({'timestamp': now, 'insight': thought_data.get('thought', '')[:200]})
-        if len(tl['insights']) > 10:
-            tl['insights'] = tl['insights'][-10:]
-
-    memory['last_sync'] = now
-    memory['sync_source'] = 'zenith_thinking_loop_v2'
+Analyze the current state. What should ZENITH prioritize? Identify one concrete improvement or action. Rate your thought quality 1-10."""
+    
+    thought = groq_think(prompt)
+    if not thought:
+        print("Thinking failed, aborting")
+        sys.exit(1)
+    
+    score = extract_score(thought)
+    print(f"Thought generated (score: {score}/10)")
+    print(f"Preview: {thought[:200]}...")
+    
+    # Step 3: Update memory
+    print("\n--- Step 3: Updating memory ---")
+    if "thinking_loop" not in memory:
+        memory["thinking_loop"] = {"cycle_count": 0, "thoughts": []}
+    tl = memory["thinking_loop"]
+    tl["cycle_count"] = cycle + 1
+    tl["last_run"] = now
+    tl["last_score"] = score
+    tl["thoughts"].append({"time": now, "mission": mission, "thought": thought[:500], "score": score})
+    if len(tl["thoughts"]) > MAX_THOUGHTS:
+        tl["thoughts"] = tl["thoughts"][-MAX_THOUGHTS:]
+    memory["last_sync"] = now
+    memory["sync_source"] = "zenith_thinking_loop_v3"
+    
+    # Step 4: Compress if needed
+    print("\n--- Step 4: Memory compression check ---")
     memory = compress_memory(memory)
-
-    # Write back
-    if GITHUB_TOKEN and sha:
-        write_memory(memory, sha)
-    else:
-        print("Skipping write (no token or SHA)")
-
-    print(f"Cycle {tl['cycle_count']} | Domain: {entry['domain']} | Priority: {entry['priority']} | Quality: {entry['quality_score']}/10")
-    print(f"Thought: {entry['thought'][:150]}")
-    print("=== ZENITH THINK COMPLETE ===")
+    
+    # Step 5: Write back
+    print("\n--- Step 5: Writing memory ---")
+    success = write_memory(memory, sha)
+    
+    print("\n" + "=" * 60)
+    print(f"Cycle {cycle + 1} complete | Score: {score}/10 | Write: {'OK' if success else 'FAILED'}")
+    print("=" * 60)
+    
+    if not success:
+        sys.exit(1)
 
 if __name__ == "__main__":
-    think()
+    main()
