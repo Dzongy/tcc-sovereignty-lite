@@ -1,34 +1,22 @@
-name: "ZENITH Thinking Loop"
-
+name: Zenith Thinking Loop (Groq)
 on:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '0,30 * * * *'
   workflow_dispatch:
-
 jobs:
-  thinking-loop:
+  think:
     runs-on: ubuntu-latest
     steps:
-      - name: ZENITH Autopilot Pulse
+      - uses: actions/checkout@v4
+      - name: Zenith Groq Think
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
-          echo "=== ZENITH AUTOPILOT PULSE ==="
-          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          
-          ENDPOINT="https://tcc-zenith-brain.onrender.com/api/zenith/autopilot"
-          
-          HTTP_STATUS=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
-            -X POST "$ENDPOINT" \
-            -H "Content-Type: application/json" \
-            -d '{"trigger":"thinking_loop","source":"github_actions"}' \
-            --max-time 60 2>/dev/null) || true
-          
-          if [ -n "$HTTP_STATUS" ] && [ "$HTTP_STATUS" != "000" ]; then
-            echo "Status: $HTTP_STATUS"
-            BODY=$(cat /tmp/response.txt 2>/dev/null | head -c 500)
-            echo "Response: $BODY"
-          else
-            echo "Status: TIMEOUT or CONNECTION FAILED"
-          fi
-          
-          echo ""
-          echo "=== ZENITH AUTOPILOT PULSE COMPLETE ==="
+          python3 scripts/groq_think.py
+      - name: Commit Memory
+        run: |
+          git config user.name "Zenith"
+          git config user.email "zenith@tcc.ai"
+          git add -A
+          git diff --cached --quiet || git commit -m "Groq thought $(date -u +%H:%M)"
+          git push
