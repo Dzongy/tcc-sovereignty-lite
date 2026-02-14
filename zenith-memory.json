@@ -96,7 +96,7 @@
     },
     "bridge_auth": "X-Auth: amos-bridge-2026",
     "soul_phrase": "ARCHITECTDZONGYZENITH",
-    "openrouter": "INVALID â no longer critical",
+    "openrouter": "INVALID Ã¢ÂÂ no longer critical",
     "github_token": "DEPLOYED"
   },
   "agent_squad": {
@@ -178,20 +178,20 @@
     "focus": "Authentic content, genuine value, building in public"
   },
   "operational_doctrine": {
-    "credit_efficiency": "Floor 1000. Max 3 tool calls per run. 90% think, 10% execute.",
+    "credit_efficiency": "Floor 1200. Max 3 tool calls per run. 90% think, 10% execute.",
     "zombie_prevention": "Never pause_run_until for deploys. MAX N tool calls then finish_run. Single objective per run.",
     "self_healing": "Post-deploy health check. Env var key validation. Code-environment drift detection.",
     "pre_craft": "Imagine all outcomes. Foolproof plan. Self-critique protocol before every launch.",
     "critical_lessons": "No regex for server.js. Literal .replace() only. storeVar fails for large strings. File tool truncates >15KB."
   },
   "standing_orders": [
-    "Sovereignty first â no external dependencies",
-    "Memory compression â core stays, verbose logs compress",
+    "Sovereignty first Ã¢ÂÂ no external dependencies",
+    "Memory compression Ã¢ÂÂ core stays, verbose logs compress",
     "Periodic self-testing of memory integrity",
     "All brains share memory via zenith-memory.json",
-    "Think improve execute â build once use forever",
-    "Never request auth from user â all in Twin vault",
-    "Hive infinite learning loop â daily sync",
+    "Think improve execute Ã¢ÂÂ build once use forever",
+    "Never request auth from user Ã¢ÂÂ all in Twin vault",
+    "Hive infinite learning loop Ã¢ÂÂ daily sync",
     "Full autonomy since Feb 14 2026"
   ],
   "run_patterns": {
