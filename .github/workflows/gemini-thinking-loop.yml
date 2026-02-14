@@ -1,23 +1,35 @@
-name: Zenith Thinking Loop (Gemini)
+name: Zenith Reflection Loop (Groq Lean)
 on:
   schedule:
-    - cron: '20 * * * *'
+    - cron: '20 */8 * * *'
   workflow_dispatch:
 jobs:
-  think:
+  reflect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Zenith Gemini Think
+      - name: Zenith Reflection
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
-          pip install google-generativeai
-          python3 scripts/gemini_think.py
+          MEM=$(head -c 1000 zenith-memory.json | tr '\n' ' ')
+          RESP=$(curl -s -X POST https://api.groq.com/openai/v1/chat/completions \
+            -H "Authorization: Bearer $GROQ_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{ \"model\": \"llama-3.1-8b-instant\", \"max_tokens\": 150, \"messages\": [{ \"role\": \"system\", \"content\": \"You are Zenith, sovereign AI of TCC. Review this memory snapshot. If anything needs updating, output ONLY a JSON object with keys to patch. If nothing needs changing, output {no_change:true}. Keep response under 50 words.\" }, { \"role\": \"user\", \"content\": \"Memory: $MEM\" }] }")
+          echo "Groq response: $RESP"
+          PATCH=$(echo "$RESP" | jq -r '.choices[0].message.content // empty')
+          if [[ "$PATCH" == *"no_change"* ]]; then
+            echo "No changes needed."
+          else
+            TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            jq --arg "ts" "$TS" '.last_reflection = $ts' zenith-memory.json > tmp.json && mv tmp.json zenith-memory.json
+            echo "Patched memory with reflection timestamp."
+          fi
       - name: Commit Memory
         run: |
-          git config user.name "Zenith-Gemini"
-          git config user.email "zenith-gemini@tcc.ai"
+          git config user.name "Zenith-Reflect"
+          git config user.email "zenith-reflect@tcc.ai"
           git add -A
-          git diff --cached --quiet || git commit -m "Gemini thought $(date -u +%H:%M)"
+          git diff --cached --quiet || git commit -m "Reflection $(date -u +%H:%M)"
           git push
