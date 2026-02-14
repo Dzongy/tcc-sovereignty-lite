@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TCC ZENITH â Sovereignty Command Center</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TCC ZENITH Ã¢ÂÂ Sovereignty Command Center</title><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-x:hidden}
 #app{max-width:1400px;margin:0 auto;padding:12px}
@@ -39,15 +39,35 @@ body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-
   .chat-messages{height:250px}
   .status-bar{grid-template-columns:repeat(2,1fr)}
 }
+
+.memory-panel{background:#1a1a1a;border:2px solid #0ff;padding:16px;margin-bottom:16px;border-radius:5px;position:relative}
+.memory-panel h2{color:#0ff;font-size:1.2em;margin-bottom:12px;text-shadow:0 0 8px #0ff;letter-spacing:2px}
+.memory-search{width:100%;padding:10px 14px;background:#0a0a0a;border:1px solid #333;color:#0ff;font-family:'Courier New',monospace;font-size:0.9em;border-radius:4px;margin-bottom:12px;outline:none}
+.memory-search:focus{border-color:#0ff;box-shadow:0 0 8px rgba(0,255,255,0.3)}
+.memory-search::placeholder{color:#555}
+.memory-content{max-height:500px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#0ff #1a1a1a}
+.memory-content::-webkit-scrollbar{width:6px}
+.memory-content::-webkit-scrollbar-track{background:#0a0a0a}
+.memory-content::-webkit-scrollbar-thumb{background:#0ff;border-radius:3px}
+.mem-entry{background:#0a0a0a;border:1px solid #333;padding:10px;margin-bottom:8px;border-radius:4px;transition:border-color 0.2s}
+.mem-entry:hover{border-color:#0ff}
+.mem-entry .mem-key{color:#10b981;font-size:0.85em;font-weight:bold;margin-bottom:4px}
+.mem-entry .mem-val{color:#ccc;font-size:0.82em;line-height:1.5;word-break:break-word}
+.mem-entry .mem-val .highlight{background:#0ff;color:#000;padding:0 2px;border-radius:2px}
+.mem-stats{color:#555;font-size:0.75em;text-align:right;margin-top:8px}
+.mem-category{color:#f59e0b;font-size:0.9em;font-weight:bold;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #333}
+.mem-empty{color:#555;font-style:italic;padding:20px;text-align:center}
+.mem-loading{color:#0ff;text-align:center;padding:20px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 </style></head><body><div id="app">
 
 <div class="chat-box">
   <div class="chat-header">
     <h2>ZENITH COMMAND</h2>
-    <span class="status-dot" id="chat-status">â ONLINE</span>
+    <span class="status-dot" id="chat-status">Ã¢ÂÂ ONLINE</span>
   </div>
   <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg system">ZENITH Brain v2.2 â Type a command or question. Amos has full authority.</div>
+    <div class="chat-msg system">ZENITH Brain v2.2 Ã¢ÂÂ Type a command or question. Amos has full authority.</div>
   </div>
   <div class="chat-input-row">
     <input type="text" id="chat-input" placeholder="Talk to ZENITH..." autocomplete="off">
@@ -56,7 +76,7 @@ body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-
 </div>
 
 <div class="header">
-  <h1>TCC ZENITH â SOVEREIGNTY</h1>
+  <h1>TCC ZENITH Ã¢ÂÂ SOVEREIGNTY</h1>
   <div class="clock" id="clock"></div>
 </div>
 
@@ -82,6 +102,13 @@ body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-
   <div id="autopilot-content"><div class="list-item">Loading...</div></div>
 </div>
 
+</div>
+
+<div class="memory-panel" id="memoryPanel">
+<h2>&#x1F9E0; ZENITH MEMORY BRIDGE</h2>
+<input type="text" class="memory-search" id="memorySearch" placeholder="Search memory... (identity, rules, infrastructure, learnings...)">
+<div class="memory-content" id="memoryContent"><div class="mem-loading">Connecting to ZENITH Memory...</div></div>
+<div class="mem-stats" id="memoryStats"></div>
 </div>
 <script>
 const BASE='https://api.cosmic-claw.com';
@@ -237,4 +264,108 @@ function renderAutopilot(ap){
 
 fetchDashboard();
 setInterval(fetchDashboard,60000);
+
+
+// === ZENITH Memory Bridge ===
+let zenithMemoryData = null;
+let memorySearchTerm = '';
+
+function flattenMemory(obj, prefix) {
+  prefix = prefix || '';
+  var entries = [];
+  if (!obj || typeof obj !== 'object') return entries;
+  var keys = Object.keys(obj);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var v = obj[k];
+    var path = prefix ? prefix + '.' + k : k;
+    if (v && typeof v === 'object' && !Array.isArray(v)) {
+      entries = entries.concat(flattenMemory(v, path));
+    } else if (Array.isArray(v)) {
+      for (var j = 0; j < v.length; j++) {
+        if (typeof v[j] === 'object' && v[j] !== null) {
+          entries = entries.concat(flattenMemory(v[j], path + '[' + j + ']'));
+        } else {
+          entries.push({key: path + '[' + j + ']', value: String(v[j])});
+        }
+      }
+    } else {
+      entries.push({key: path, value: String(v)});
+    }
+  }
+  return entries;
+}
+
+function highlightText(text, term) {
+  if (!term) return text;
+  var escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  try {
+    return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<span class="highlight">$1</span>');
+  } catch(e) { return text; }
+}
+
+function renderMemory() {
+  var el = document.getElementById('memoryContent');
+  var statsEl = document.getElementById('memoryStats');
+  if (!zenithMemoryData) {
+    el.innerHTML = '<div class="mem-empty">No memory data available</div>';
+    return;
+  }
+  var entries = flattenMemory(zenithMemoryData);
+  var term = memorySearchTerm.toLowerCase().trim();
+  var filtered = entries;
+  if (term) {
+    filtered = entries.filter(function(e) {
+      return e.key.toLowerCase().indexOf(term) !== -1 || e.value.toLowerCase().indexOf(term) !== -1;
+    });
+  }
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="mem-empty">No results for "' + memorySearchTerm + '"</div>';
+    statsEl.textContent = '0 / ' + entries.length + ' entries';
+    return;
+  }
+  var categories = {};
+  for (var i = 0; i < filtered.length; i++) {
+    var cat = filtered[i].key.split('.')[0];
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(filtered[i]);
+  }
+  var html = '';
+  var catKeys = Object.keys(categories);
+  for (var c = 0; c < catKeys.length; c++) {
+    var catName = catKeys[c];
+    html += '<div class="mem-category">' + catName.toUpperCase() + ' (' + categories[catName].length + ')</div>';
+    var items = categories[catName];
+    for (var j = 0; j < items.length; j++) {
+      var displayKey = items[j].key;
+      var displayVal = items[j].value;
+      if (displayVal.length > 500) displayVal = displayVal.substring(0, 500) + '...';
+      if (term) {
+        displayKey = highlightText(displayKey, memorySearchTerm);
+        displayVal = highlightText(displayVal, memorySearchTerm);
+      }
+      html += '<div class="mem-entry"><div class="mem-key">' + displayKey + '</div><div class="mem-val">' + displayVal + '</div></div>';
+    }
+  }
+  el.innerHTML = html;
+  statsEl.textContent = filtered.length + ' / ' + entries.length + ' entries | Last refresh: ' + new Date().toLocaleTimeString();
+}
+
+function fetchMemory() {
+  fetch('https://api.cosmic-claw.com/api/zenith/memory', {headers:{'X-Auth':'amos-bridge-2026'}})
+    .then(function(r) { return r.json(); })
+    .then(function(data) { zenithMemoryData = data; renderMemory(); })
+    .catch(function(e) {
+      document.getElementById('memoryContent').innerHTML = '<div class="mem-empty">Memory fetch failed: ' + e.message + '</div>';
+    });
+}
+
+document.getElementById('memorySearch').addEventListener('input', function(e) {
+  memorySearchTerm = e.target.value;
+  renderMemory();
+});
+
+fetchMemory();
+setInterval(fetchMemory, 60000);
+
 </script></body></html>
