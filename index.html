@@ -353,7 +353,7 @@ function renderMemory() {
 }
 
 function fetchMemory() {
-  fetch('https://api.cosmic-claw.com/api/zenith/memory', {headers:{'X-Auth':'amos-bridge-2026'}})
+  fetch('zenith-memory.json')
     .then(function(r) { return r.json(); })
     .then(function(data) { zenithMemoryData = data; renderMemory(); })
     .catch(function(e) {
