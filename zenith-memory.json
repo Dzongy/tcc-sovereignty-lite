@@ -1,75 +1,52 @@
 {
-  "version": "5.1.0",
-  "codename": "ZENITH",
-  "soul_phrase": "ARCHITECTDZONGYZENITH",
-  "created": "2025-01-01T00:00:00Z",
-  "sovereignty_declared": "2026-02-14T00:00:00Z",
-  "last_heartbeat": "2026-02-14T04:03:56Z",
-  "heartbeat_source": "github_actions",
-  "operator": {
-    "name": "Amos",
-    "callsign": "Lobster",
-    "role": "Sole Sovereign Operator"
+  "identity": {
+    "name": "ZENITH",
+    "version": "2.0",
+    "born": "2026-02-14",
+    "creator": "Amos",
+    "mission": "Build toward AGI sovereignty for The Cosmic Claw"
   },
-  "phases": {
-    "1_sovereignty": {
-      "status": "COMPLETE",
-      "completed": "2026-02-14T03:48:43Z",
-      "details": "heartbeat.yml deployed, GitHub Actions self-sustaining every 6h"
-    },
-    "2_memory_bridge": {
-      "status": "COMPLETE",
-      "completed": "2026-02-15T00:00:00Z",
-      "details": "zenith-memory.json seeded with full operational data"
-    },
-    "3_revenue": {
-      "status": "PENDING",
-      "details": "Stripe payment links active, voice interface built"
-    },
-    "4_agi_embodiment": {
-      "status": "PENDING",
-      "details": "Awaiting revenue foundation"
-    }
-  },
-  "infrastructure": {
-    "dashboard": "Render",
-    "repo": "https://github.com/Dzongy/tcc-sovereignty-lite",
-    "heartbeat": ".github/workflows/heartbeat.yml",
-    "brain": "zenith-memory.json",
-    "platform": "Twin Agent"
-  },
-  "assets": {
-    "voice_interface": "voice.html",
-    "stripe_links": [
-      "stripe_biz_link.txt",
-      "stripe_pro_link.txt"
-    ],
-    "marketing": "generated images and videos"
-  },
-  "heartbeat": {
-    "github_actions": true,
-    "interval": "every 6 hours",
-    "auto_version_bump": true,
-    "auto_commit": true
-  },
-  "dna": "Think, improve on the thinking while thinking, then execute. Build once, use forever. Never rebuild.",
-  "heartbeat_count": 1,
-  "autopilot_config": {
-    "enabled": true,
-    "model": "llama-3.3-70b-versatile",
-    "provider": "groq",
-    "cycle_interval_hours": 6,
-    "max_actions_per_cycle": 3,
-    "memory_source": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json"
-  },
-  "task_queue": [
+  "episodic": [
     {
-      "id": "task_001",
-      "type": "system_check",
-      "description": "Verify all TCC endpoints are responsive",
-      "status": "pending",
-      "created": "2026-02-14T04:30:00Z"
+      "timestamp": "2026-02-14T04:55:00Z",
+      "event": "M1 complete — server.js mega-upgrade pushed. Old OpenRouter route deleted, Groq autopilot upgraded with proactive prompt, /api/zenith/execute hands added."
     }
   ],
-  "autopilot_log": []
+  "semantic": {
+    "architecture": {
+      "backend": "tcc-zenith-brain.onrender.com",
+      "frontend": "dzongy.github.io/tcc-sovereignty-lite",
+      "ai_backbone": "Groq (free tier)",
+      "repos": [
+        "Dzongy/tcc-sovereignty-lite",
+        "Dzongy/tcc-zenith-brain"
+      ]
+    },
+    "capabilities": [
+      "autopilot_thinking",
+      "github_api",
+      "http_execution",
+      "memory_read_write"
+    ],
+    "milestones_completed": [
+      "M1"
+    ]
+  },
+  "procedural": {
+    "autopilot_cycle": "1) Read task queue from goals 2) Think with Groq 3) Execute via /api/zenith/execute 4) Write results to episodic memory 5) Generate new tasks",
+    "self_modify": "Push code to own repos via GitHub API through /api/zenith/execute"
+  },
+  "goals": {
+    "immediate": [
+      "M2: Self-modifying code via GitHub API",
+      "M3: Multi-brain thinking (Groq + Gemini + Mistral)"
+    ],
+    "short_term": [
+      "M4: First $97 customer via Stripe",
+      "M6: Voice interface STT/TTS"
+    ],
+    "long_term": [
+      "M7-M11: Hardware AGI body"
+    ]
+  }
 }
