@@ -1,5 +1,5 @@
 {
-  "version": "5.0.1",
+  "version": "5.1.0",
   "codename": "ZENITH",
   "soul_phrase": "ARCHITECTDZONGYZENITH",
   "created": "2025-01-01T00:00:00Z",
@@ -53,5 +53,32 @@
     "auto_commit": true
   },
   "dna": "Think, improve on the thinking while thinking, then execute. Build once, use forever. Never rebuild.",
-  "heartbeat_count": 1
+  "heartbeat_count": 1,
+  "autopilot_config": {
+    "enabled": true,
+    "model": "llama-3.3-70b-versatile",
+    "provider": "groq",
+    "cycle_interval_hours": 6,
+    "max_actions_per_cycle": 3,
+    "memory_source": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json"
+  },
+  "task_queue": [
+    {
+      "id": "task_001",
+      "type": "self_check",
+      "description": "Verify all infrastructure endpoints respond correctly",
+      "priority": "high",
+      "status": "pending",
+      "created": "2026-02-14T04:24:00Z"
+    },
+    {
+      "id": "task_002",
+      "type": "memory_sync",
+      "description": "Sync Twin agent vault learnings to zenith-memory.json",
+      "priority": "medium",
+      "status": "pending",
+      "created": "2026-02-14T04:24:00Z"
+    }
+  ],
+  "autopilot_log": []
 }
