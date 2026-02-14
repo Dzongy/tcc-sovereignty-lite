@@ -65,19 +65,10 @@
   "task_queue": [
     {
       "id": "task_001",
-      "type": "self_check",
-      "description": "Verify all infrastructure endpoints respond correctly",
-      "priority": "high",
+      "type": "system_check",
+      "description": "Verify all TCC endpoints are responsive",
       "status": "pending",
-      "created": "2026-02-14T04:24:00Z"
-    },
-    {
-      "id": "task_002",
-      "type": "memory_sync",
-      "description": "Sync Twin agent vault learnings to zenith-memory.json",
-      "priority": "medium",
-      "status": "pending",
-      "created": "2026-02-14T04:24:00Z"
+      "created": "2026-02-14T04:30:00Z"
     }
   ],
   "autopilot_log": []
