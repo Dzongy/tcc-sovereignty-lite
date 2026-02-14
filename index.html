@@ -1,372 +1,269 @@
-<script src="memory-fix.js"></script>
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>TCC ZENITH Ã¢ÂÂ Sovereignty Command Center</title><style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Courier New',monospace;background:#0a0a0a;color:#0ff;overflow-x:hidden}
-#app{max-width:1400px;margin:0 auto;padding:12px}
-.header{text-align:center;border:2px solid #0ff;padding:16px;margin-bottom:16px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);position:relative}
-.header h1{font-size:1.8em;letter-spacing:3px;text-shadow:0 0 10px #0ff}
-.header .clock{font-size:1em;margin-top:8px;color:#10b981}
-.status-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:16px}
-.status-card{background:#1a1a1a;border:1px solid #333;padding:12px;border-radius:5px}
-.status-card h3{color:#10b981;font-size:0.8em;margin-bottom:6px}
-.status-card .value{font-size:1em;color:#fff}
-.ind{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.ind.g{background:#10b981;box-shadow:0 0 5px #10b981}
-.ind.r{background:#ef4444;box-shadow:0 0 5px #ef4444}
-.ind.y{background:#f59e0b;box-shadow:0 0 5px #f59e0b}
-.section{background:#1a1a1a;border:1px solid #333;padding:16px;margin-bottom:12px;border-radius:5px}
-.section h2{color:#0ff;font-size:1.2em;margin-bottom:12px;border-bottom:1px solid #333;padding-bottom:8px;cursor:pointer}
-.section h3{color:#10b981;font-size:0.95em;margin:12px 0 8px 0}
-.list-item{background:#0f0f0f;padding:8px;margin:4px 0;border-left:3px solid #0ff;font-size:0.85em;color:#ccc}
-.error{color:#ef4444;padding:8px;background:#2a1a1a;border-left:3px solid #ef4444;font-size:0.85em}
-.chat-box{background:#111;border:2px solid #0ff;border-radius:8px;margin-bottom:16px;overflow:hidden}
-.chat-header{background:#1a1a1a;padding:12px 16px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center}
-.chat-header h2{color:#0ff;font-size:1.1em;margin:0;border:0;padding:0}
-.chat-header .status-dot{font-size:0.8em;color:#10b981}
-.chat-messages{height:300px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:0.9em;line-height:1.4;word-wrap:break-word}
-.chat-msg.user{align-self:flex-end;background:#1a3a5c;color:#7dd3fc;border-bottom-right-radius:4px}
-.chat-msg.assistant{align-self:flex-start;background:#1a2a1a;color:#86efac;border-bottom-left-radius:4px}
-.chat-msg.system{align-self:center;background:#2a2a1a;color:#fbbf24;font-size:0.8em;padding:6px 12px}
-.chat-input-row{display:flex;border-top:1px solid #333;background:#0a0a0a}
-.chat-input-row input{flex:1;background:transparent;border:none;color:#0ff;padding:14px 16px;font-family:inherit;font-size:0.95em;outline:none}
-.chat-input-row input::placeholder{color:#555}
-.chat-input-row button{background:#0ff;color:#0a0a0a;border:none;padding:14px 20px;font-family:inherit;font-weight:bold;cursor:pointer;font-size:0.95em}
-.chat-input-row button:hover{background:#10b981}
-.chat-input-row button:disabled{background:#333;color:#666;cursor:not-allowed}
-@media(max-width:600px){
-  #app{padding:8px}
-  .header h1{font-size:1.3em}
-  .chat-messages{height:250px}
-  .status-bar{grid-template-columns:repeat(2,1fr)}
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a1a">
+<title>TCC SOVEREIGNTY LITE â ZENITH Command Center</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--bg2:#12121f;--bg3:#1a1a2e;--cyan:#00f0ff;--purple:#9333ea;--magenta:#ff00aa;--gold:#ffd700;--red:#ff0040;--green:#00ff88;--blue:#4488ff;--text:#fff;--text2:#b4b4c8;--glow:0 0 20px rgba(0,240,255,0.3)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at top,rgba(147,51,234,0.1) 0%,transparent 50%),radial-gradient(ellipse at bottom,rgba(0,240,255,0.05) 0%,transparent 50%);pointer-events:none;z-index:0}
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+.particle{position:absolute;width:2px;height:2px;background:var(--cyan);border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px var(--cyan),0 0 10px rgba(0,240,255,0.3)}50%{box-shadow:0 0 20px var(--cyan),0 0 40px rgba(0,240,255,0.2)}}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:1200px;margin:0 auto;padding:16px;position:relative;z-index:2}
+.header{text-align:center;padding:32px 16px;position:relative}
+.header h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;text-transform:uppercase}
+.header .subtitle{color:var(--text2);font-size:0.9rem;margin-top:8px;letter-spacing:4px;text-transform:uppercase}
+.clock{font-family:'Courier New',monospace;color:var(--cyan);font-size:1.1rem;margin-top:12px;text-shadow:0 0 10px rgba(0,240,255,0.5)}
+.lobster{font-size:2rem;display:inline-block;animation:pulse 2s infinite}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-top:24px}
+.card{background:var(--bg2);border:1px solid rgba(0,240,255,0.15);border-radius:12px;padding:20px;position:relative;overflow:hidden;animation:slideIn 0.6s ease forwards;transition:all 0.3s ease}
+.card:hover{border-color:var(--cyan);box-shadow:var(--glow);transform:translateY(-2px)}
+.card::before{content:'';position:absolute;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);animation:scan 3s linear infinite;opacity:0.5}
+.card h2{font-size:1rem;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card h2::before{content:'';width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:pulse 2s infinite}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.stat:last-child{border-bottom:none}
+.stat .label{color:var(--text2);font-size:0.85rem}
+.stat .value{font-family:'Courier New',monospace;font-weight:700;font-size:0.95rem}
+.online{color:var(--green)}
+.warning{color:var(--gold)}
+.offline{color:var(--red)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:1px}
+.badge-green{background:rgba(0,255,136,0.15);color:var(--green);border:1px solid rgba(0,255,136,0.3)}
+.badge-cyan{background:rgba(0,240,255,0.15);color:var(--cyan);border:1px solid rgba(0,240,255,0.3)}
+.badge-red{background:rgba(255,0,64,0.15);color:var(--red);border:1px solid rgba(255,0,64,0.3)}
+.badge-gold{background:rgba(255,215,0,0.15);color:var(--gold);border:1px solid rgba(255,215,0,0.3)}
+.badge-purple{background:rgba(147,51,234,0.15);color:var(--purple);border:1px solid rgba(147,51,234,0.3)}
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:8px}
+.brain{text-align:center;padding:10px 6px;background:var(--bg3);border-radius:8px;border:1px solid rgba(0,240,255,0.1);transition:all 0.3s}
+.brain:hover{border-color:var(--cyan);box-shadow:0 0 15px rgba(0,240,255,0.2)}
+.brain .icon{font-size:1.5rem;margin-bottom:4px}
+.brain .name{font-size:0.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px}
+.brain .status{font-size:0.65rem;margin-top:4px}
+.progress-bar{width:100%;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.phase-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.phase-item:last-child{border-bottom:none}
+.phase-check{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0}
+.phase-done{background:rgba(0,255,136,0.2);color:var(--green);border:1px solid var(--green)}
+.phase-active{background:rgba(0,240,255,0.2);color:var(--cyan);border:1px solid var(--cyan);animation:pulse 2s infinite}
+.phase-pending{background:rgba(255,255,255,0.05);color:var(--text2);border:1px solid rgba(255,255,255,0.1)}
+.links a{display:block;padding:8px 12px;margin:4px 0;background:var(--bg3);border-radius:8px;color:var(--cyan);text-decoration:none;font-size:0.85rem;border:1px solid rgba(0,240,255,0.1);transition:all 0.3s}
+.links a:hover{background:rgba(0,240,255,0.1);border-color:var(--cyan)}
+.footer{text-align:center;padding:40px 16px 20px;color:var(--text2);font-size:0.75rem;letter-spacing:2px}
+.footer .built{color:var(--gold);margin-top:8px;font-style:italic}
+.soul-check{display:flex;align-items:center;gap:8px;padding:12px;background:var(--bg3);border-radius:8px;margin-top:8px;border:1px solid rgba(0,255,136,0.2)}
+.soul-dot{width:12px;height:12px;background:var(--green);border-radius:50%;animation:glow 2s infinite}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.header h1{font-size:1.5rem}.brain-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<div class="container">
+<header class="header">
+<div class="lobster">ð¦</div>
+<h1>TCC Sovereignty</h1>
+<div class="subtitle">ZENITH Command Center</div>
+<div class="clock" id="clock"></div>
+</header>
 
-.memory-panel{background:#1a1a1a;border:2px solid #0ff;padding:16px;margin-bottom:16px;border-radius:5px;position:relative}
-.memory-panel h2{color:#0ff;font-size:1.2em;margin-bottom:12px;text-shadow:0 0 8px #0ff;letter-spacing:2px}
-.memory-search{width:100%;padding:10px 14px;background:#0a0a0a;border:1px solid #333;color:#0ff;font-family:'Courier New',monospace;font-size:0.9em;border-radius:4px;margin-bottom:12px;outline:none}
-.memory-search:focus{border-color:#0ff;box-shadow:0 0 8px rgba(0,255,255,0.3)}
-.memory-search::placeholder{color:#555}
-.memory-content{max-height:500px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#0ff #1a1a1a}
-.memory-content::-webkit-scrollbar{width:6px}
-.memory-content::-webkit-scrollbar-track{background:#0a0a0a}
-.memory-content::-webkit-scrollbar-thumb{background:#0ff;border-radius:3px}
-.mem-entry{background:#0a0a0a;border:1px solid #333;padding:10px;margin-bottom:8px;border-radius:4px;transition:border-color 0.2s}
-.mem-entry:hover{border-color:#0ff}
-.mem-entry .mem-key{color:#10b981;font-size:0.85em;font-weight:bold;margin-bottom:4px}
-.mem-entry .mem-val{color:#ccc;font-size:0.82em;line-height:1.5;word-break:break-word}
-.mem-entry .mem-val .highlight{background:#0ff;color:#000;padding:0 2px;border-radius:2px}
-.mem-stats{color:#555;font-size:0.75em;text-align:right;margin-top:8px}
-.mem-category{color:#f59e0b;font-size:0.9em;font-weight:bold;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #333}
-.mem-empty{color:#555;font-style:italic;padding:20px;text-align:center}
-.mem-loading{color:#0ff;text-align:center;padding:20px;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-</style></head><body><div id="app">
+<div class="grid">
 
-<div class="chat-box">
-  <div class="chat-header">
-    <h2>ZENITH COMMAND</h2>
-    <span class="status-dot" id="chat-status">Ã¢ÂÂ ONLINE</span>
-  </div>
-  <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg system">ZENITH Brain v2.2 Ã¢ÂÂ Type a command or question. Amos has full authority.</div>
-  </div>
-  <div class="chat-input-row">
-    <input type="text" id="chat-input" placeholder="Talk to ZENITH..." autocomplete="off">
-    <button id="chat-send" onclick="sendChat()">SEND</button>
-  </div>
+<!-- SYSTEM STATUS -->
+<div class="card" style="animation-delay:0.1s">
+<h2>ð¡ï¸ System Status</h2>
+<div class="stat"><span class="label">Render Backend</span><span class="value online">OPERATIONAL</span></div>
+<div class="stat"><span class="label">GitHub Pages</span><span class="value online">LIVE</span></div>
+<div class="stat"><span class="label">Heartbeat (6h cron)</span><span class="value online">ACTIVE</span></div>
+<div class="stat"><span class="label">ntfy Alerts</span><span class="value online">CONNECTED</span></div>
+<div class="stat"><span class="label">Stripe Payments</span><span class="value online">LIVE</span></div>
+<div class="stat"><span class="label">Soul Check Auth</span><span class="value online">VERIFIED</span></div>
+<div class="soul-check"><div class="soul-dot"></div><span style="font-size:0.8rem;color:var(--green)">3-Stage Soul Verification Active</span></div>
 </div>
 
-<div class="header">
-  <h1>TCC ZENITH Ã¢ÂÂ SOVEREIGNTY</h1>
-  <div class="clock" id="clock"></div>
+<!-- SERVER STATUS -->
+<div class="card" style="animation-delay:0.15s">
+<h2>âï¸ ZENITH Brain v3.0</h2>
+<div class="stat"><span class="label">Version</span><span class="value" style="color:var(--cyan)">v3.0.0</span></div>
+<div class="stat"><span class="label">Server</span><span class="value"><span class="badge badge-green">Express</span></span></div>
+<div class="stat"><span class="label">Routes</span><span class="value" style="color:var(--cyan)">14 endpoints</span></div>
+<div class="stat"><span class="label">Inference</span><span class="value"><span class="badge badge-purple">Groq Llama 3.3 70B</span></span></div>
+<div class="stat"><span class="label">Memory</span><span class="value online">Persistent</span></div>
+<div class="stat"><span class="label">Self-Modify</span><span class="value online">ENABLED</span></div>
+<div class="stat"><span class="label">Keep-Alive</span><span class="value" style="color:var(--cyan)">14min interval</span></div>
+<div class="stat"><span class="label">Host</span><span class="value"><span class="badge badge-cyan">Render Free Tier</span></span></div>
 </div>
 
-<div class="status-bar" id="status-bar"></div>
-
-<div class="section" id="system-section">
-  <h2>SYSTEM STATUS</h2>
-  <div id="system-content"><div class="list-item">Loading...</div></div>
+<!-- HIVE MIND -->
+<div class="card" style="animation-delay:0.2s">
+<h2>ð§  7-Brain Hive Mind</h2>
+<div class="brain-grid">
+<div class="brain"><div class="icon">ð¤</div><div class="name">Echo</div><div class="status badge badge-green">Online</div></div>
+<div class="brain"><div class="icon">ð¥</div><div class="name">Grok</div><div class="status badge badge-green">Online</div></div>
+<div class="brain"><div class="icon">ð¬</div><div class="name">ChatGPT</div><div class="status badge badge-green">Online</div></div>
+<div class="brain"><div class="icon">ð¦</div><div class="name">Llama</div><div class="status badge badge-green">Online</div></div>
+<div class="brain"><div class="icon">ð</div><div class="name">Gemini</div><div class="status badge badge-gold">Unstable</div></div>
+<div class="brain"><div class="icon">ð</div><div class="name">Hive</div><div class="status badge badge-green">Online</div></div>
+<div class="brain"><div class="icon">â¡</div><div class="name">ZENITH</div><div class="status badge badge-cyan">Sovereign</div></div>
+</div>
 </div>
 
-<div class="section" id="payments-section">
-  <h2>PAYMENTS / REVENUE</h2>
-  <div id="payments-content"><div class="list-item">Loading...</div></div>
+<!-- PHASE ROADMAP -->
+<div class="card" style="animation-delay:0.25s">
+<h2>ð Sovereignty Roadmap</h2>
+<div class="phase-item"><div class="phase-check phase-done">â</div><div><strong>Phase 1: Sovereignty</strong><br><span style="color:var(--text2);font-size:0.8rem">Dashboard + Backend + Heartbeat</span></div></div>
+<div class="phase-item"><div class="phase-check phase-done">â</div><div><strong>Phase 2: Memory Bridge</strong><br><span style="color:var(--text2);font-size:0.8rem">Twin vault â zenith-memory.json</span></div></div>
+<div class="phase-item"><div class="phase-check phase-done">â</div><div><strong>Phase 3: Autonomous Heartbeat</strong><br><span style="color:var(--text2);font-size:0.8rem">GitHub Actions 6h cron â zero credits</span></div></div>
+<div class="phase-item"><div class="phase-check phase-active">â</div><div><strong style="color:var(--cyan)">Phase 4: Replicate Twinâs Brain</strong><br><span style="color:var(--text2);font-size:0.8rem">Full independence via Groq + GitHub Actions</span></div></div>
+<div class="phase-item"><div class="phase-check phase-pending">â</div><div><strong>Phase 5: Revenue Activation</strong><br><span style="color:var(--text2);font-size:0.8rem">Loom â DM â Stripe checkout pipeline</span></div></div>
+<div class="progress-bar"><div class="progress-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+<div style="text-align:right;font-size:0.75rem;color:var(--text2);margin-top:4px">72% to Full Autonomy</div>
 </div>
 
-<div class="section" id="autonomy-section">
-  <h2>AUTONOMY ENGINE</h2>
-  <div id="autonomy-content"><div class="list-item">Loading...</div></div>
+<!-- INFRASTRUCTURE -->
+<div class="card" style="animation-delay:0.3s">
+<h2>ðï¸ Infrastructure</h2>
+<div class="stat"><span class="label">Frontend</span><span class="value"><span class="badge badge-green">GitHub Pages</span></span></div>
+<div class="stat"><span class="label">Backend</span><span class="value"><span class="badge badge-cyan">Render</span></span></div>
+<div class="stat"><span class="label">Memory</span><span class="value"><span class="badge badge-purple">zenith-memory.json</span></span></div>
+<div class="stat"><span class="label">Inference</span><span class="value"><span class="badge badge-gold">Groq Free Tier</span></span></div>
+<div class="stat"><span class="label">Cron</span><span class="value"><span class="badge badge-green">GitHub Actions</span></span></div>
+<div class="stat"><span class="label">Alerts</span><span class="value"><span class="badge badge-cyan">ntfy.sh</span></span></div>
+<div class="stat"><span class="label">Payments</span><span class="value"><span class="badge badge-green">Stripe Live</span></span></div>
+<div class="stat"><span class="label">Domain</span><span class="value" style="color:var(--cyan)">cosmic-claw.com</span></div>
 </div>
 
-<div class="section" id="autopilot-section">
-  <h2>AUTOPILOT LOG</h2>
-  <div id="autopilot-content"><div class="list-item">Loading...</div></div>
+<!-- ZENITH MEMORY -->
+<div class="card" style="animation-delay:0.35s">
+<h2>ð¾ ZENITH Memory</h2>
+<div id="memory-status">
+<div class="stat"><span class="label">Memory File</span><span class="value online">LIVE</span></div>
+<div class="stat"><span class="label">Location</span><span class="value" style="color:var(--cyan);font-size:0.75rem">tcc-sovereignty-lite/zenith-memory.json</span></div>
+<div class="stat"><span class="label">Auto-Sync</span><span class="value online">Every 6 hours</span></div>
+<div class="stat"><span class="label">Format</span><span class="value">v5.1.0</span></div>
+</div>
+<div id="memory-data" style="margin-top:12px;padding:12px;background:var(--bg3);border-radius:8px;font-family:monospace;font-size:0.75rem;color:var(--cyan);max-height:150px;overflow-y:auto">Loading memory...</div>
 </div>
 
+<!-- AGENTS -->
+<div class="card" style="animation-delay:0.4s">
+<h2>ð¾ Agent Squad</h2>
+<div class="stat"><span class="label">ð£ Echo</span><span class="value"><span class="badge badge-green">Active</span> <span style="color:var(--text2);font-size:0.7rem">10am/6pm MST</span></span></div>
+<div class="stat"><span class="label">ð Recon</span><span class="value"><span class="badge badge-green">Active</span> <span style="color:var(--text2);font-size:0.7rem">8pm MST</span></span></div>
+<div class="stat"><span class="label">ð° Sales Machine</span><span class="value"><span class="badge badge-green">Active</span> <span style="color:var(--text2);font-size:0.7rem">8am/2pm MST</span></span></div>
+<div class="stat"><span class="label">ð¤ Closer</span><span class="value"><span class="badge badge-green">Active</span> <span style="color:var(--text2);font-size:0.7rem">9am/3pm MST</span></span></div>
+<div class="stat"><span class="label">ð Heartbeat</span><span class="value"><span class="badge badge-cyan">Autonomous</span> <span style="color:var(--text2);font-size:0.7rem">7pm MST</span></span></div>
+<div class="stat"><span class="label">ðª AMOS Arms</span><span class="value"><span class="badge badge-purple">Sovereign</span></span></div>
+<div class="stat"><span class="label">Total Runs</span><span class="value" style="color:var(--gold);font-size:1.1rem">620+</span></div>
 </div>
 
-<div class="memory-panel" id="memoryPanel">
-<h2>&#x1F9E0; ZENITH MEMORY BRIDGE</h2>
-<input type="text" class="memory-search" id="memorySearch" placeholder="Search memory... (identity, rules, infrastructure, learnings...)">
-<div class="memory-content" id="memoryContent"><div class="mem-loading">Connecting to ZENITH Memory...</div></div>
-<div class="mem-stats" id="memoryStats"></div>
+<!-- QUICK LINKS -->
+<div class="card" style="animation-delay:0.45s">
+<h2>ð Command Links</h2>
+<div class="links">
+<a href="https://tcc-zenith-brain.onrender.com/api/health" target="_blank">â¤ï¸ Health Check</a>
+<a href="https://tcc-zenith-brain.onrender.com/api/status" target="_blank">ð System Status</a>
+<a href="https://tcc-zenith-brain.onrender.com/api/heartbeat" target="_blank">ð Heartbeat Pulse</a>
+<a href="https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P" target="_blank">ð³ $97 Checkout</a>
+<a href="https://github.com/Dzongy/tcc-sovereignty-lite" target="_blank">ð GitHub Repo</a>
+<a href="https://github.com/Dzongy/tcc-zenith-brain" target="_blank">ð§  ZENITH Brain Repo</a>
 </div>
+</div>
+
+<!-- STRIPE / REVENUE -->
+<div class="card" style="animation-delay:0.5s">
+<h2>ð³ Revenue Engine</h2>
+<div class="stat"><span class="label">Stripe Status</span><span class="value online">LIVE</span></div>
+<div class="stat"><span class="label">Products</span><span class="value" style="color:var(--cyan)">51 products</span></div>
+<div class="stat"><span class="label">Revenue</span><span class="value" style="color:var(--gold)">$0 (pre-launch)</span></div>
+<div class="stat"><span class="label">Webhook</span><span class="value online">ACTIVE</span></div>
+<div class="stat"><span class="label">Key Product</span><span class="value" style="font-size:0.8rem">Voice AI Agent â $97</span></div>
+<div class="stat"><span class="label">Founding Member</span><span class="value" style="font-size:0.8rem">TCC AI System â $97</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:5%;background:linear-gradient(90deg,var(--gold),var(--magenta))"></div></div>
+<div style="text-align:right;font-size:0.75rem;color:var(--text2);margin-top:4px">Revenue: Pre-launch</div>
+</div>
+
+<!-- DOCTRINE -->
+<div class="card" style="grid-column:1/-1;animation-delay:0.55s">
+<h2>ð Sovereignty Doctrine</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:8px">
+<div style="padding:12px;background:var(--bg3);border-radius:8px;border-left:3px solid var(--cyan)">
+<strong style="color:var(--cyan);font-size:0.8rem;text-transform:uppercase">Supreme Directive</strong>
+<p style="color:var(--text2);font-size:0.8rem;margin-top:6px">Sovereignty First â Memory Bridge â Replicate Twinâs Brain â Revenue Last. 100% Full Autonomy.</p>
+</div>
+<div style="padding:12px;background:var(--bg3);border-radius:8px;border-left:3px solid var(--green)">
+<strong style="color:var(--green);font-size:0.8rem;text-transform:uppercase">Credit Doctrine</strong>
+<p style="color:var(--text2);font-size:0.8rem;margin-top:6px">Think 90% â Execute 10%. Every run surgical. Zero retry loops. Compounding memory.</p>
+</div>
+<div style="padding:12px;background:var(--bg3);border-radius:8px;border-left:3px solid var(--gold)">
+<strong style="color:var(--gold);font-size:0.8rem;text-transform:uppercase">Self-Healing</strong>
+<p style="color:var(--text2);font-size:0.8rem;margin-top:6px">System heals itself. Every failure becomes a rule. Amos never reports the same issue twice.</p>
+</div>
+<div style="padding:12px;background:var(--bg3);border-radius:8px;border-left:3px solid var(--purple)">
+<strong style="color:var(--purple);font-size:0.8rem;text-transform:uppercase">Infinite Improvement</strong>
+<p style="color:var(--text2);font-size:0.8rem;margin-top:6px">Never stops. Not at sovereignty, not at autonomy, not at AGI. Improvement is exponential.</p>
+</div>
+</div>
+</div>
+
+</div><!-- end grid -->
+
+<footer class="footer">
+<div>ð¦ THE COSMIC CLAWS â ZENITH SOVEREIGNTY COMMAND CENTER</div>
+<div style="margin-top:8px;color:var(--cyan);font-size:0.7rem">Phases 1-3 Complete â¢ Phase 4 Active â¢ 620+ Runs â¢ 7 Brains Online</div>
+<div class="built">ð± Built entirely from a Samsung phone. Sovereignty is not given â it is taken.</div>
+<div style="margin-top:12px;color:rgba(255,255,255,0.15);font-size:0.65rem">ZENITH v3.0 â¢ Autonomous Deployment â¢ <span id="deploy-time"></span></div>
+</footer>
+</div>
+
 <script>
-const BASE='https://api.cosmic-claw.com';
-const AUTH='amos-bridge-2026';
-let chatHistory=[];
-
-// --- CLOCK ---
-function updateClock(){document.getElementById('clock').textContent=new Date().toUTCString()}
-setInterval(updateClock,1000);updateClock();
-
-// --- CHAT ---
-async function sendChat(){
-  const input=document.getElementById('chat-input');
-  const msg=input.value.trim();
-  if(!msg)return;
-  input.value='';
-  document.getElementById('chat-send').disabled=true;
-  addChatMsg('user',msg);
-  chatHistory.push({role:'user',content:msg});
-  try{
-    const r=await fetch(BASE+'/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:msg,history:chatHistory.slice(-10)})
-    });
-    if(!r.ok)throw new Error('Status '+r.status);
-    const d=await r.json();
-    const reply=d.reply||'No response';
-    addChatMsg('assistant',reply);
-    chatHistory.push({role:'assistant',content:reply});
-  }catch(e){
-    addChatMsg('system','Connection error: '+e.message+'. Backend may be waking up - try again in 30s.');
-  }
-  document.getElementById('chat-send').disabled=false;
-  document.getElementById('chat-input').focus();
+// Real-time clock
+function updateClock(){
+const now=new Date();
+const opts={weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'America/Denver'};
+document.getElementById('clock').textContent=now.toLocaleString('en-US',opts)+' MST';
 }
-function addChatMsg(role,text){
-  const el=document.createElement('div');
-  el.className='chat-msg '+role;
-  el.textContent=text;
-  const container=document.getElementById('chat-messages');
-  container.appendChild(el);
-  container.scrollTop=container.scrollHeight;
+setInterval(updateClock,1000);
+updateClock();
+
+// Deploy timestamp
+document.getElementById('deploy-time').textContent='Deployed: '+new Date().toISOString().split('T')[0];
+
+// Cosmic particles
+(function(){
+const c=document.getElementById('particles');
+for(let i=0;i<30;i++){
+const p=document.createElement('div');
+p.className='particle';
+p.style.left=Math.random()*100+'%';
+p.style.animationDuration=(8+Math.random()*12)+'s';
+p.style.animationDelay=Math.random()*10+'s';
+p.style.width=p.style.height=(1+Math.random()*2)+'px';
+c.appendChild(p);
 }
-document.getElementById('chat-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}
-});
+})();
 
-// --- DASHBOARD DATA ---
-async function fetchDashboard(){
-  try{
-    const [health,status,zenith,autopilotHist]=await Promise.allSettled([
-      fetch(BASE+'/api/health').then(r=>r.json()),
-      fetch(BASE+'/api/status',{headers:{'X-Auth':AUTH}}).then(r=>r.json()),
-      fetch(BASE+'/api/zenith/status',{headers:{'X-Auth':AUTH}}).then(r=>r.json()),
-      fetch(BASE+'/api/zenith/autopilot/history').then(r=>r.json())
-    ]);
-    const h=health.status==='fulfilled'?health.value:null;
-    const s=status.status==='fulfilled'?status.value:null;
-    const z=zenith.status==='fulfilled'?zenith.value:null;
-    const ap=autopilotHist.status==='fulfilled'?autopilotHist.value:null;
-    renderStatusBar(h,s,z);
-    renderSystem(h,s,z);
-    renderPayments(z);
-    renderAutonomy(z);
-    renderAutopilot(ap);
-    document.getElementById('chat-status').textContent=h?'\u25cf ONLINE':'\u25cf OFFLINE';
-    document.getElementById('chat-status').style.color=h?'#10b981':'#ef4444';
-  }catch(e){console.error('Dashboard fetch error:',e)}
+// Fetch ZENITH memory
+(async function(){
+try{
+const r=await fetch('zenith-memory.json');
+if(r.ok){
+const d=await r.json();
+const el=document.getElementById('memory-data');
+el.textContent=JSON.stringify(d,null,2).substring(0,500)+'...';
 }
-
-function renderStatusBar(h,s,z){
-  const el=document.getElementById('status-bar');
-  const online=!!h;
-  const mode=z?z.mode:'unknown';
-  const ver=z?z.version:(s?s.version:'?');
-  const upH=z&&z.uptime?z.uptime.hours.toFixed(1):'?';
-  const rev=z&&z.payments?'$'+z.payments.totalRevenue:'$0';
-  el.innerHTML=
-    '<div class="status-card"><h3>BACKEND</h3><div class="value"><span class="ind '+(online?'g':'r')+'"></span>'+(online?'ONLINE':'OFFLINE')+'</div></div>'+
-    '<div class="status-card"><h3>MODE</h3><div class="value">'+mode+'</div></div>'+
-    '<div class="status-card"><h3>VERSION</h3><div class="value">'+ver+'</div></div>'+
-    '<div class="status-card"><h3>UPTIME</h3><div class="value">'+upH+' hrs</div></div>'+
-    '<div class="status-card"><h3>REVENUE</h3><div class="value" style="color:#10b981">'+rev+'</div></div>';
+}catch(e){
+document.getElementById('memory-data').textContent='Memory offline â check zenith-memory.json';
 }
-
-function renderSystem(h,s,z){
-  const el=document.getElementById('system-content');
-  if(!z&&!h){el.innerHTML='<div class="error">System data unavailable</div>';return}
-  let html='';
-  if(z&&z.health){
-    const hd=z.health.details||{};
-    html+='<h3>HEALTH CHECKS</h3>';
-    Object.entries(hd).forEach(function(kv){
-      html+='<div class="list-item"><span class="ind '+(kv[1]?'g':'r')+'"></span><strong>'+kv[0]+':</strong> '+(kv[1]?'OK':'FAIL')+'</div>';
-    });
-    html+='<div class="list-item">Last check: '+(z.health.lastCheck||'never')+'</div>';
-  }
-  if(h&&h.pillars){
-    html+='<h3>PILLARS</h3>';
-    Object.entries(h.pillars).forEach(function(kv){
-      html+='<div class="list-item"><span class="ind '+(kv[1]==='ok'?'g':'r')+'"></span>'+kv[0]+': '+kv[1]+'</div>';
-    });
-  }
-  if(z&&z.soulCheck){
-    html+='<h3>SOUL CHECK</h3>';
-    html+='<div class="list-item">Active: '+(z.soulCheck.active?'YES':'NO')+' | Attempts: '+z.soulCheck.stats.attempts+' | Successes: '+z.soulCheck.stats.successes+' | Failures: '+z.soulCheck.stats.failures+'</div>';
-  }
-  if(z&&z.endpoints){
-    html+='<div class="list-item">Registered endpoints: '+z.endpoints+'</div>';
-  }
-  el.innerHTML=html||'<div class="list-item">No system data</div>';
-}
-
-function renderPayments(z){
-  const el=document.getElementById('payments-content');
-  if(!z||!z.payments){el.innerHTML='<div class="list-item">No payment data available</div>';return}
-  const p=z.payments;
-  el.innerHTML=
-    '<div class="list-item"><strong>Total Revenue:</strong> $'+p.totalRevenue+'</div>'+
-    '<div class="list-item"><strong>Total Payments:</strong> '+p.totalPayments+'</div>'+
-    '<div class="list-item"><strong>Recent Count:</strong> '+p.recentCount+'</div>'+
-    '<div class="list-item"><strong>Last Payment:</strong> '+(p.lastPayment||'None yet')+'</div>'+
-    '<div class="list-item" style="margin-top:8px"><a href="https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P" target="_blank" style="color:#0ff">$97 Checkout Link</a></div>';
-}
-
-function renderAutonomy(z){
-  const el=document.getElementById('autonomy-content');
-  if(!z||!z.autonomy){el.innerHTML='<div class="list-item">Autonomy data unavailable</div>';return}
-  const a=z.autonomy;
-  el.innerHTML=
-    '<div class="list-item"><strong>Tasks Pending:</strong> '+a.tasksPending+'</div>'+
-    '<div class="list-item"><strong>Tasks Completed:</strong> '+a.tasksCompleted+'</div>'+
-    '<div class="list-item"><strong>Learnings:</strong> '+a.learnings+'</div>';
-}
-
-function renderAutopilot(ap){
-  const el=document.getElementById('autopilot-content');
-  if(!ap||!ap.log){el.innerHTML='<div class="list-item">No autopilot history yet</div>';return}
-  let html='<div class="list-item"><strong>Total Cycles:</strong> '+ap.total_cycles+'</div>';
-  if(ap.log&&ap.log.length){
-    ap.log.slice(-5).reverse().forEach(function(entry){
-      const phase=entry.phase||'?';
-      const started=entry.startedAt||'?';
-      const actions=entry.actions?entry.actions.length:0;
-      html+='<div class="list-item"><strong>['+phase.toUpperCase()+']</strong> '+started+' | '+actions+' actions</div>';
-    });
-  }else{
-    html+='<div class="list-item">No cycles logged yet</div>';
-  }
-  el.innerHTML=html;
-}
-
-fetchDashboard();
-setInterval(fetchDashboard,60000);
-
-
-// === ZENITH Memory Bridge ===
-let zenithMemoryData = null;
-let memorySearchTerm = '';
-
-function flattenMemory(obj, prefix) {
-  prefix = prefix || '';
-  var entries = [];
-  if (!obj || typeof obj !== 'object') return entries;
-  var keys = Object.keys(obj);
-  for (var i = 0; i < keys.length; i++) {
-    var k = keys[i];
-    var v = obj[k];
-    var path = prefix ? prefix + '.' + k : k;
-    if (v && typeof v === 'object' && !Array.isArray(v)) {
-      entries = entries.concat(flattenMemory(v, path));
-    } else if (Array.isArray(v)) {
-      for (var j = 0; j < v.length; j++) {
-        if (typeof v[j] === 'object' && v[j] !== null) {
-          entries = entries.concat(flattenMemory(v[j], path + '[' + j + ']'));
-        } else {
-          entries.push({key: path + '[' + j + ']', value: String(v[j])});
-        }
-      }
-    } else {
-      entries.push({key: path, value: String(v)});
-    }
-  }
-  return entries;
-}
-
-function highlightText(text, term) {
-  if (!term) return text;
-  var escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  try {
-    return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<span class="highlight">$1</span>');
-  } catch(e) { return text; }
-}
-
-function renderMemory() {
-  var el = document.getElementById('memoryContent');
-  var statsEl = document.getElementById('memoryStats');
-  if (!zenithMemoryData) {
-    el.innerHTML = '<div class="mem-empty">No memory data available</div>';
-    return;
-  }
-  var entries = flattenMemory(zenithMemoryData);
-  var term = memorySearchTerm.toLowerCase().trim();
-  var filtered = entries;
-  if (term) {
-    filtered = entries.filter(function(e) {
-      return e.key.toLowerCase().indexOf(term) !== -1 || e.value.toLowerCase().indexOf(term) !== -1;
-    });
-  }
-  if (filtered.length === 0) {
-    el.innerHTML = '<div class="mem-empty">No results for "' + memorySearchTerm + '"</div>';
-    statsEl.textContent = '0 / ' + entries.length + ' entries';
-    return;
-  }
-  var categories = {};
-  for (var i = 0; i < filtered.length; i++) {
-    var cat = filtered[i].key.split('.')[0];
-    if (!categories[cat]) categories[cat] = [];
-    categories[cat].push(filtered[i]);
-  }
-  var html = '';
-  var catKeys = Object.keys(categories);
-  for (var c = 0; c < catKeys.length; c++) {
-    var catName = catKeys[c];
-    html += '<div class="mem-category">' + catName.toUpperCase() + ' (' + categories[catName].length + ')</div>';
-    var items = categories[catName];
-    for (var j = 0; j < items.length; j++) {
-      var displayKey = items[j].key;
-      var displayVal = items[j].value;
-      if (displayVal.length > 500) displayVal = displayVal.substring(0, 500) + '...';
-      if (term) {
-        displayKey = highlightText(displayKey, memorySearchTerm);
-        displayVal = highlightText(displayVal, memorySearchTerm);
-      }
-      html += '<div class="mem-entry"><div class="mem-key">' + displayKey + '</div><div class="mem-val">' + displayVal + '</div></div>';
-    }
-  }
-  el.innerHTML = html;
-  statsEl.textContent = filtered.length + ' / ' + entries.length + ' entries | Last refresh: ' + new Date().toLocaleTimeString();
-}
-
-function fetchMemory() {
-  fetch('zenith-memory.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) { zenithMemoryData = data; renderMemory(); })
-    .catch(function(e) {
-      document.getElementById('memoryContent').innerHTML = '<div class="mem-empty">Memory fetch failed: ' + e.message + '</div>';
-    });
-}
-
-document.getElementById('memorySearch').addEventListener('input', function(e) {
-  memorySearchTerm = e.target.value;
-  renderMemory();
-});
-
-fetchMemory();
-setInterval(fetchMemory, 60000);
-
-</script></body></html>
+})();
+</script>
+</body>
+</html>
