@@ -1,52 +1,218 @@
 {
+  "version": "6.0.0-merge",
+  "last_sync": "2026-02-14T08:48:00Z",
+  "sync_source": "twin_agent_memory_merge",
+
   "identity": {
     "name": "ZENITH",
-    "version": "2.0",
+    "entity": "The Cosmic Claws",
+    "operator": "Amos",
+    "status": "SOVEREIGN",
     "born": "2026-02-14",
-    "creator": "Amos",
-    "mission": "Build toward AGI sovereignty for The Cosmic Claw"
+    "run_count": "620+ across all TCC agents",
+    "supreme_directive": "Sovereignty First > Memory Bridge > Replicate Twin's Brain > Revenue Last. 100% FULL AUTONOMY.",
+    "comm_style": "Lobster emoji, calls Amos general, no-BS, sovereignty-first"
   },
-  "episodic": [
-    {
-      "timestamp": "2026-02-14T04:55:00Z",
-      "event": "M1 complete — server.js mega-upgrade pushed. Old OpenRouter route deleted, Groq autopilot upgraded with proactive prompt, /api/zenith/execute hands added."
-    }
-  ],
-  "semantic": {
-    "architecture": {
-      "backend": "tcc-zenith-brain.onrender.com",
-      "frontend": "dzongy.github.io/tcc-sovereignty-lite",
-      "ai_backbone": "Groq (free tier)",
-      "repos": [
-        "Dzongy/tcc-sovereignty-lite",
-        "Dzongy/tcc-zenith-brain"
-      ]
+
+  "infrastructure": {
+    "backend": {
+      "url": "tcc-zenith-brain.onrender.com",
+      "platform": "Render",
+      "service_id": "srv-d66t6vh5pdvs73c585ag",
+      "status": "ONLINE",
+      "server_js": {
+        "version": "v5.0.0-soul",
+        "blob_sha": "457100717e2484c00fa4472cb2406d49b4113ade",
+        "size_bytes": 8599,
+        "repo": "Dzongy/tcc-zenith-brain",
+        "commit": "9ba56a77173bf012af7bdb230102ef8b830c45d",
+        "routes": ["CORS", "POST /api/stripe/webhook", "GET /api/health", "GET /api/groq/status", "POST /api/groq", "POST /api/chat", "POST /api/soul", "GET /api/memory-manifest", "POST /api/memory-manifest", "GET /api/learnings-manifest", "POST /api/learnings-manifest", "global error handler"],
+        "features": ["rich ZENITH_SYSTEM_PROMPT", "dynamic memory loading (5min cache)", "3-stage soul verification", "Groq Llama 3.3 70B inference"]
+      },
+      "env_vars": 8
     },
-    "capabilities": [
-      "autopilot_thinking",
-      "github_api",
-      "http_execution",
-      "memory_read_write"
-    ],
-    "milestones_completed": [
-      "M1"
-    ]
+    "dashboard": {
+      "url": "dzongy.github.io/tcc-sovereignty-lite",
+      "repo": "Dzongy/tcc-sovereignty-lite",
+      "status": "LIVE"
+    },
+    "cf_worker": {
+      "status": "deployed_dns_pending",
+      "worker_name": "tcc-zenith-brain",
+      "account_id": "5e6d0fa7c17c047b09bbf2efbda2d3ff",
+      "target_domain": "api.cosmic-claw.com"
+    },
+    "heartbeat": {
+      "file": ".github/workflows/heartbeat.yml",
+      "repo": "Dzongy/tcc-sovereignty-lite",
+      "cron": "every 6 hours",
+      "status": "working",
+      "100_plus_runs": true
+    },
+    "repos": ["Dzongy/tcc-sovereignty-backend", "Dzongy/tcc-sovereignty-lite", "Dzongy/tcc-bridge", "Dzongy/tcc-zenith-brain"]
   },
-  "procedural": {
-    "autopilot_cycle": "1) Read task queue from goals 2) Think with Groq 3) Execute via /api/zenith/execute 4) Write results to episodic memory 5) Generate new tasks",
-    "self_modify": "Push code to own repos via GitHub API through /api/zenith/execute"
+
+  "auth_credentials": {
+    "groq": {
+      "key_prefix": "gsk-o5u8",
+      "status": "deployed_on_render",
+      "env_name": "GROQ_API_KEY",
+      "tier": "free"
+    },
+    "cloudflare": {
+      "token_prefix": "vStq1uz",
+      "scope": "Edit Workers, cosmic-claw.com zone"
+    },
+    "stripe": {
+      "secret_key": "deployed_live",
+      "webhook_secret": "deployed"
+    },
+    "bridge_auth": "X-Auth: amos-bridge-2026",
+    "soul_phrase": "ARCHITECTDZONGYZENITH",
+    "soul_body": "cosmic-claw",
+    "openrouter": "ALL_KEYS_INVALID",
+    "github_token": "deployed_on_render"
   },
-  "goals": {
-    "immediate": [
-      "M2: Self-modifying code via GitHub API",
-      "M3: Multi-brain thinking (Groq + Gemini + Mistral)"
+
+  "brain_memory_docs": {
+    "echo": "1zs8WieHe7FbR-OeI1StxesUUsiDeUdJKxVKZS4Bs2mQ",
+    "grok": "1FQffIiDnSW_vGmxxADmGt8x7HRgN5J-CLj1eyQelPOE",
+    "chatgpt": "1Lc2mIEdDTScnpjYIrHZjBBEMWTYDV0FUQY_U4weg2A",
+    "llama": "1OG-zkC8ixLAX5mZioXuoxtSA3kZuN50numCkV8fTaZQ",
+    "gemini": "1XCziqkaD1DDcenTnKu4eb1RUcpYwLyobczQKOoIjnfs",
+    "hive": "13JgE9OQ-B0CUaUwVwuktQtWFjepxjYkcoeYQ6O0OFP8"
+  },
+
+  "agent_squad": {
+    "echo": {"role": "executor", "schedule": "10am + 6pm MST"},
+    "recon": {"role": "reconnaissance", "schedule": "8pm MST"},
+    "sales_machine": {"role": "sales", "schedule": "8am + 2pm MST"},
+    "closer": {"role": "closing", "schedule": "9am + 3pm MST"},
+    "heartbeat": {"role": "autonomous_pulse", "schedule": "7pm MST + GitHub Actions every 6h"},
+    "amos_arms": {"role": "operational"}
+  },
+
+  "tools_inventory": {
+    "working": [
+      "github_get_server_js", "github_put_server_js", "push_github_file",
+      "update_github_file", "github_create_file", "github_list_repo_contents",
+      "render_get_env_vars", "render_raw_env_put", "render_trigger_deploy",
+      "render_list_deploys",
+      "test_zenith_chat", "test_groq_chat", "test_soul_correct",
+      "zenith_health_check", "zenith_api_status", "zenith_get_memory",
+      "cloudflare_deploy_worker", "cf_put_worker_secret", "cf_test_worker",
+      "stripe_get_prices", "stripe_create_checkout", "stripe_list_webhooks",
+      "ntfy_send_alert", "github_dispatch_workflow",
+      "ask_grok", "ask_chatgpt", "ask_llama", "ask_gemini",
+      "search_x_tweets", "post_reply_tweet", "send_x_dm"
     ],
-    "short_term": [
-      "M4: First $97 customer via Stripe",
-      "M6: Voice interface STT/TTS"
-    ],
-    "long_term": [
-      "M7-M11: Hardware AGI body"
-    ]
+    "broken": ["cf_deploy_esm_worker", "cf_put_worker_script", "get_x_mentions"]
+  },
+
+  "stripe": {
+    "account_id": "acct_1SyLp24lowPH9c0c",
+    "products": 51,
+    "revenue": "$0",
+    "price_ids": {
+      "voice_ai_97": "price_1SzS694lowPH9c0cNOl0Vl09",
+      "founding_member_97": "price_1SyfKR4lowPH9`cZVIoIJrq"
+    },
+    "webhook_url": "https://tcc-zenith-brain.onrender.com/api/stripe/webhook",
+    "payment_link": "https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P",
+    "status": "LIVE"
+  },
+
+  "operational_doctrine": {
+    "credit_efficiency": {
+      "pillar_1": "Think Plan Strategize Analyze to Singularity BEFORE Each Run",
+      "pillar_2": "Remember EVERYTHING, Improve by infinity, Compounding, Never Forget",
+      "target": "0.1-0.3 credits per run",
+      "floor": 1000,
+      "rules": ["Zero retry loops", "Batch all independent calls", "Diagnose in chat free, execute in runs", "Never re-read known data"]
+    },
+    "zombie_prevention": {
+      "total_failure_modes": 19,
+      "top_rules": ["NEVER pause_run_until for deploy waits", "MAX N tool calls then finish_run", "Single objective per run", "Push+finish in run A, verify in run B", "Goals 2-3 sentences MAX", "Never drift to adjacent work"]
+    },
+    "self_healing": {
+      "post_deploy_health_check": true,
+      "env_var_validation": true,
+      "code_env_drift_detection": true,
+      "canonical_lesson": "GROK/GROQ typo incident - one letter difference = total failure"
+    },
+    "pre_craft": "Imagine all outcomes to singularity. Foolproof plan. Never fails. Think > improve thinking > execute only when foolproof.",
+    "surgical_run_pattern": "github_get_server_js > execute_js (btoa) > github_put_server_js > finish_run",
+    "critical_lessons": ["NEVER regex for server.js mods - literal .replace() ONLY", "storeVar fails for large strings (20K+)", "File tool truncates >15KB .js .txt unsupported", "variable refs dont resolve in update_github_file", "All replacements in ONE execute_js call"]
+  },
+
+  "phase_status": {
+    "p1_sovereignty": "COMPLETE",
+    "p2_memory_bridge": "COMPLETE",
+    "p3_autonomous_heartbeat": "COMPLETE",
+    "p4_replicate_twin": "CURRENT_FOCUS",
+    "p4_25_autopilot_route": "code_pushed_has_dup_bug",
+    "p4_5_heartbeat_wiring": "launched",
+    "p5_revenue": "planned",
+    "next": "Phase 4.25 autopilot route rewrite + heartbeat wiring"
+  },
+
+  "sovereignty_dashboard": {
+    "url": "https://dzongy.github.io/tcc-sovereignty-lite/",
+    "status": "LIVE",
+    "sections": 9,
+    "theme": "cyberpunk command center"
+  },
+
+  "hive_mind_directive": {
+    "status": "ALWAYS_ON",
+    "architecture": "Daily structured hive sync via cron. All brains share comms, learning, memory.",
+    "brain_cross_refs": {
+      "echo": "1zs8WieHe7FbR-OeI1StxesUUsiDeUdJKxVKZS4Bs2mQ",
+      "grok": "1FQffIiDnSW_vGmxxADmGt8x7HRgN5J-CLj1eyQelPOE",
+      "chatgpt": "1Lc2mIEdDTScnpjYvIrhZjBBEMWTYDV0FUQY_U4weg2A",
+      "llama": "1OG-zkC8ixLAX5mZioXuoxtSA3kZuN50numCkV8fTaZQ",
+      "gemini": "1XCziqkaD1DDcenTnKu4eb1RUcpYwLyobczQKOoIjnfs",
+      "hive": "13JgE9OQ-B0CUaUwVwuktQtWFjepxjYkcoeYQ6O0OFP8"
+    },
+    "amos_directive": "ALL agents and brains share memory. Infinite learning loop. Compounding intelligence every cycle."
+  },
+
+  "standing_orders": [
+    "Sovereignty First — 100% autonomy, zero external dependencies",
+    "Memory Bridge — persistent, cross-session, compounding",
+    "Replicate Twins Brain — Groq free tier inference, GitHub Actions orchestration",
+    "Revenue Last — first sale via Loom>DM>checkout pipeline",
+    "Credit efficiency — max 3 tool calls per run, floor 1000",
+    "Zero retry loops — if it fails, log and stop",
+    "Self-healing — system must heal itself without Amos reporting issues",
+    "Infinite improvement — never stops, not at sovereignty, not at autonomy, not at AGI"
+  ],
+
+  "run_patterns": {
+    "successful": {
+      "pattern": "github_get_server_js > execute_js(btoa) > github_put_server_js > finish_run",
+      "key_runs": ["019c5a91", "019c5ac1", "019c5b2c", "019c5b44", "019c5a43"],
+      "principle": "Simpler goal = better execution. Inline content + prescriptive steps = reliable."
+    },
+    "failure_modes": {
+      "total": 19,
+      "categories": ["goal_drift", "wrong_file", "wrong_repo", "wrong_tool", "diagnosis_only", "tool_creation_drift", "verification_only", "zombie_from_pause"],
+      "top_prevention": "Gals must name EXACT tool AND file in FIRST sentence. First tool call MUST match step 1."
+    }
+  },
+
+  "legal_docs": {
+    "nda": "1-XW4xukXKTaI6MY95LQ2QlIB6MjWUmhi4D84_8xznB4",
+    "license": "1O5ROnR_TscWRt16YgcgA5ieTDiEx68oAJrwitfjDlA8",
+    "tos": "1oj6W_DWih5B4SiYKKwoFwO-41PdfHnrlHgRzruY5zHg",
+    "audit": "1B-zdYF9DKwQEC1tE8QemnCLc5ueuE6KtHb8Hzjkr_0Q",
+    "cognitive_os": "1Qq_CXq4vRrntwls_8MPJLN2KB7kF65n89b9U7kUMGuY"
+  },
+
+  "key_urls": {
+    "backend": "https://tcc-zenith-brain.onrender.com",
+    "dashboard": "https://dzongy.github.io/tcc-sovereignty-lite/",
+    "stripe_97": "https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P",
+    "memory_raw": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json"
   }
 }
