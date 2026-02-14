@@ -1,0 +1,23 @@
+name: Zenith Thinking Loop (Gemini)
+on:
+  schedule:
+    - cron: '15,45 * * * *'
+  workflow_dispatch:
+jobs:
+  think:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Zenith Gemini Think
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          pip install google-generativeai
+          python3 scripts/gemini_think.py
+      - name: Commit Memory
+        run: |
+          git config user.name "Zenith-Gemini"
+          git config user.email "zenith-gemini@tcc.ai"
+          git add -A
+          git diff --cached --quiet || git commit -m "Gemini thought $(date -u +%H:%M)"
+          git push
