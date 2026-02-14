@@ -1,7 +1,7 @@
 name: ZENITH Heartbeat
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */1 * * *'
   workflow_dispatch:
 
 permissions:
@@ -55,3 +55,7 @@ jobs:
 
       - name: Trigger ZENITH Autopilot
         run: curl -s -X POST https://tcc-zenith-brain.onrender.com/api/zenith/autopilot -H "Content-Type: application/json" || true
+
+      - name: Wake ZENITH Brain
+        run: |
+          curl -s -X POST https://tcc-zenith-brain.onrender.com/api/zenith/autopilot -H "Content-Type: application/json" -d '{"task":"Hourly autonomous cycle: check task queue, think proactively, generate new tasks, execute pending items, update memory"}' || true
