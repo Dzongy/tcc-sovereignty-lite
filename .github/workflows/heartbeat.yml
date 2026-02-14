@@ -1,0 +1,14 @@
+name: ZENITH Heartbeat
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update heartbeat
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          VERSION=$(cat zenith-memory.json | python3 -c "import sys,json; d=json.load(sys.stdin); v=d.get('version','0.0.0').split('.'); v[2]=str(int(v[2])+1); print('.'.join(v))" 2>/dev/null || echo "
