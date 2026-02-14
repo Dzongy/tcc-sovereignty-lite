@@ -1,24 +1,23 @@
 name: Zenith Thinking Loop (Groq)
+
 on:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
+
 jobs:
   think:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: pip install requests
-      - name: Zenith Groq Think
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run ZENITH thinking loop
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: |
-          python3 scripts/groq_think.py
-      - name: Commit Memory
-        run: |
-          git config user.name "Zenith"
-          git config user.email "zenith@tcc.ai"
-          git add -A
-          git diff --cached --quiet || git commit -m "Groq thought $(date -u +%H:%M)"
-          git push
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/groq_think.py
