@@ -3,12 +3,52 @@ on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   heartbeat:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Update heartbeat
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Update zenith-memory.json
         run: |
+          FILE="zenith-memory.json"
+          if [ ! -f "$FILE" ]; then
+            echo "Memory file missing, skipping"
+            exit 0
+          fi
+          # Read current version
+          CURRENT=$(cat "$FILE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('version','5.0.0'))")
+          # Increment patch
+          MAJOR=$(echo $CURRENT | cut -d. -f1)
+          MINOR=$(echo $CURRENT | cut -d. -f2)
+          PATCH=$(echo $CURRENT | cut -d. -f3)
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
+          # Get timestamp
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          VERSION=$(cat zenith-memory.json | python3 -c "import sys,json; d=json.load(sys.stdin); v=d.get('version','0.0.0').split('.'); v[2]=str(int(v[2])+1); print('.'.join(v))" 2>/dev/null || echo "
+          # Update file
+          python3 -c "
+          import json
+          with open('$FILE','r') as f:
+              d = json.load(f)
+          d['version'] = '${NEW_VERSION}'
+          d['last_heartbeat'] = '${TIMESTAMP}'
+          d['heartbeat_count'] = d.get('heartbeat_count', 0) + 1
+          with open('$FILE','w') as f:
+              json.dump(d, f, indent=2)
+          "
+          echo "Updated to v${NEW_VERSION} at ${TIMESTAMP}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "ZENITH-Heartbeat"
+          git config user.email "zenith@tcc.local"
+          git add zenith-memory.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "heartbeat: v$(cat zenith-memory.json | python3 -c 'import sys,json;print(json.load(sys.stdin)["version"])')"
+          git push
