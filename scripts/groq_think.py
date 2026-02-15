@@ -136,7 +136,7 @@ def main():
         print("FATAL: No Groq API key")
         sys.exit(1)
 
-    print(f"ZENITH Thinking Loop v4.0 Ã¢ÂÂ ntfy Hive Mind")
+    print(f"ZENITH Thinking Loop v4.0 -- ntfy Hive Mind")
     print(f"Model: {MODEL}")
     print(f"Key source: {'env' if os.environ.get('GROQ_API_KEY','').strip() else 'fallback'}")
 
@@ -173,7 +173,7 @@ def main():
     # Think
     thought = think(prompt)
     if not thought:
-        print("Thinking failed Ã¢ÂÂ Groq returned nothing")
+        print("Thinking failed -- Groq returned nothing")
         ntfy_publish(NTFY_HIVE, f"ZENITH Cycle {cycle} FAILED", "Groq returned no response", priority="high", tags="warning")
         sys.exit(1)
 
