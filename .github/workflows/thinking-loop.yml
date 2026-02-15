@@ -11,10 +11,27 @@ jobs:
         run: curl -s -o /dev/null -w "%{http_code}" https://tcc-zenith-brain.onrender.com/api/health || true
       - name: Wait for cold start
         run: sleep 20
-      - name: Trigger ZENITH autopilot
+      - name: Trigger autopilot and save memory
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST -m 120 https://tcc-zenith-brain.onrender.com/api/zenith/autopilot)
-          echo "Autopilot response: $STATUS"
-          if [ "$STATUS" = "000" ]; then echo "Timeout - Render may be cold"; exit 0; fi
-          if [ "$STATUS" -ge 500 ]; then echo "Server error"; exit 1; fi
-          echo "Success"
+          RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d '{}' -m 120 https://tcc-zenith-brain.onrender.com/api/zenith/autopilot)
+          echo "Response received: $(echo "$RESPONSE" | head -c 200)"
+          SUCCESS=$(echo "$RESPONSE" | jq -r '.success // false')
+          if [ "$SUCCESS" != "true" ]; then
+            echo "Autopilot failed or no success field"
+            exit 0
+          fi
+          MEMORY=$(echo "$RESPONSE" | jq '.memory')
+          if [ "$MEMORY" = "null" ] || [ -z "$MEMORY" ]; then
+            echo "No memory in response, skipping write"
+            exit 0
+          fi
+          echo "$MEMORY" > /tmp/zenith-memory.json
+          SHA=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json" | jq -r '.sha')
+          CONTENT=$(base64 -w 0 /tmp/zenith-memory.json)
+          curl -s -X PUT -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json" \
+            -d "{\"message\":\"Thinking loop: memory sync $(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"content\":\"$CONTENT\",\"sha\":\"$SHA\"}"
+          echo "Memory committed to GitHub"
