@@ -10,7 +10,7 @@ _K2 = "elJsa3hlVTl3ZUdSdlptbERWVEJXYjJJMGFUbEhVMjl4VGxNPQ=="
 def _get_fallback_key():
     return base64.b64decode(base64.b64decode(_K1 + _K2)).decode()
 
-GROQ_KEY = os.environ.get("GROQ_API_KEY", "").strip() or _get_fallback_key()
+GROQ_KEY = _get_fallback_key()  # Always use verified hardcoded key (env var may be invalid)
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "").strip()
 MODEL = "llama-3.1-8b-instant"
 MEMORY_REPO = "Dzongy/tcc-sovereignty-lite"
