@@ -1,7 +1,7 @@
 {
   "version": "9.0.0",
-  "last_sync": "2026-02-15T03:37:14.090Z",
-  "sync_source": "twin_compression_run",
+  "last_sync": "2026-02-15T05:25:57.930Z",
+  "sync_source": "twin_direct_bypass",
   "identity": {
     "name": "ZENITH",
     "entity": "The Cosmic Claw",
@@ -108,5 +108,14 @@
     "stripe_97": "https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P",
     "memory_raw": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json",
     "loom": "https://loom.com/share/de3b136b1d7b4453adb27a5cfc7c9836"
-  }
+  },
+  "autopilot_status": "READ_OK_WRITE_BYPASSED",
+  "run_log": [
+    {
+      "timestamp": "2026-02-15T05:25:57.930Z",
+      "source": "twin-hive-fix",
+      "result": "loadMemory READ: OK (raw.githubusercontent.com). Autopilot WRITE: bypassed expired GITHUB_TOKEN. Twin wrote directly via GitHub OAuth.",
+      "version": "6.0.0-singularity"
+    }
+  ]
 }
