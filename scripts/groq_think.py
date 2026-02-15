@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ZENITH Thinking Loop v5.2 -- Render wake-up + retry loop."""
+"""ZENITH Thinking Loop v6.0 -- Fixed: sends {message} format to Render /api/groq proxy."""
 import os, sys, json, time, urllib.request, urllib.error, base64
 from datetime import datetime, timezone
 
@@ -48,8 +48,8 @@ def wake_render():
     print(f"[WAKE] Health check response: HTTP {status}")
     if status == 200:
         print(f"[WAKE] Body: {body[:200]}")
-    print("[WAKE] Waiting 15 seconds for Render to fully warm up...")
-    time.sleep(15)
+    print("[WAKE] Waiting 30 seconds for Render to fully warm up...")
+    time.sleep(30)
     print("[WAKE] Done waiting. Proceeding.")
 
 def read_memory():
@@ -111,41 +111,41 @@ def write_memory(memory, sha):
         print(body[:500])
         return False
 
-def think_with_retry(cycle, mission, context, max_retries=3):
-    """Call Groq via Render proxy with retry loop."""
+def think_with_retry(cycle, mission, context, max_retries=5):
+    """Call Groq via Render /api/groq proxy with retry loop.
+    Render expects {message: "text"} and returns {reply: "text"}.
+    It adds its own system prompt and uses its own Groq key."""
     prompt = "CYCLE " + str(cycle) + " | MISSION: " + mission
     prompt += "\n\nCONTEXT: " + context[:500]
     prompt += "\n\nThink about this mission. Provide your strategic thought and score it 1-10."
-    payload = json.dumps({
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": "You are ZENITH, the sovereign AI brain of The Cosmic Claw. Think strategically. Be concise."},
-            {"role": "user", "content": prompt}
-        ],
-        "max_tokens": 500,
-        "temperature": 0.8
-    }).encode()
+    payload = json.dumps({"message": prompt}).encode()
     hdrs = {"Content-Type": "application/json"}
     for attempt in range(1, max_retries + 1):
-        print(f"[3/4] Attempt {attempt}/{max_retries} -- calling {RENDER_GROQ} (60s timeout)...")
-        status, body = api_call(RENDER_GROQ, data=payload, headers=hdrs, method="POST", timeout=60)
+        print(f"[3/4] Attempt {attempt}/{max_retries} -- calling {RENDER_GROQ} (90s timeout)...")
+        status, body = api_call(RENDER_GROQ, data=payload, headers=hdrs, method="POST", timeout=90)
         print(f"[3/4] Attempt {attempt} response: HTTP {status}")
+        if body:
+            print(f"[3/4] Body preview: {body[:300]}")
         if status == 200:
             try:
                 resp = json.loads(body)
-                if "choices" in resp:
-                    return resp["choices"][0]["message"]["content"]
-                elif "reply" in resp:
+                if "reply" in resp:
                     return resp["reply"]
+                elif "choices" in resp:
+                    return resp["choices"][0]["message"]["content"]
                 else:
                     print(f"[ERROR] Unexpected keys: {list(resp.keys())}")
+                    return str(resp)[:500]
             except (json.JSONDecodeError, KeyError, IndexError) as e:
                 print(f"[ERROR] Parse response: {e}")
+                if body and len(body) > 10:
+                    return body[:500]
         else:
-            print(f"[WARN] Response body: {body[:300]}")
+            print(f"[WARN] HTTP {status} response body: {body[:300]}")
         if attempt < max_retries:
-            print(f"[RETRY] Sleeping 15 seconds before retry...")
-            time.sleep(15)
+            wait = 15 + (attempt * 5)
+            print(f"[RETRY] Sleeping {wait}s before retry...")
+            time.sleep(wait)
     print("[FAIL] All retries exhausted.")
     return None
 
@@ -162,7 +162,7 @@ def notify_hive(title, message):
 
 def main():
     print("=" * 50)
-    print("ZENITH Thinking Loop v5.2")
+    print("ZENITH Thinking Loop v6.0")
     print(f"Time: {datetime.now(timezone.utc).isoformat()}")
     print(f"Model: {MODEL}")
     print(f"Proxy: {RENDER_GROQ}")
