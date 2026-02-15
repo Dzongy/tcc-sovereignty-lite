@@ -2,7 +2,7 @@ name: Zenith Thinking Loop (Groq)
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/40 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -11,6 +11,7 @@ permissions:
 jobs:
   think:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -21,5 +22,19 @@ jobs:
 
       - name: Run ZENITH thinking loop
         env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/groq_think.py
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          echo "=== ZENITH Thinking Loop v5.3-clean ==="
+          echo "Time: $(date -u)"
+          echo "Token budget: 2500/cycle, 36 cycles/day max (100K TPD)"
+          python3 scripts/groq_think.py || {
+            EXIT_CODE=$?
+            echo "ERROR: groq_think.py exited with code $EXIT_CODE"
+            if [ $EXIT_CODE -eq 42 ]; then
+              echo "Rate limited (429). Will retry next cycle."
+            fi
+            exit $EXIT_CODE
+          }
+          echo "=== Thinking cycle complete ==="
