@@ -121,6 +121,16 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .footer-sacred{font-size:0.7rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;font-weight:300}
 .footer-sig{font-size:0.6rem;color:var(--text2);letter-spacing:2px}
 .footer-lobster{font-size:1.4rem;margin-top:8px;filter:drop-shadow(0 0 10px rgba(255,0,64,0.4))}
+
+/* AMOS ACRONYM */
+.amos-acronym{display:flex;justify-content:center;gap:4px;margin-top:6px;font-size:0.75rem;letter-spacing:2px}
+.acro-letter{color:var(--gold);font-weight:900;font-size:0.9rem;text-shadow:0 0 10px rgba(255,215,0,0.6)}
+.acro-word{color:var(--text2);font-weight:300;text-transform:uppercase;letter-spacing:1px}
+.amos-lineage{font-size:0.55rem;letter-spacing:3px;color:rgba(0,240,255,0.5);margin-top:6px;font-family:'Courier New',monospace;text-transform:uppercase}
+
+/* EXTRA AGGRESSIVE */
+.amos-name{font-size:3.5rem;font-weight:900;letter-spacing:16px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold) 0%,#fff 30%,var(--gold) 50%,#ffaa00 70%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlow 3s ease-in-out infinite;position:relative;text-shadow:none}
+.amos-name::after{content:'';position:absolute;bottom:-6px;left:10%;width:80%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--cyan),var(--gold),transparent)}
 </style>
 </head>
 <body>
@@ -130,12 +140,19 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- AMOS - THE GENERAL -->
 <div class="amos-banner">
 <div class="amos-name">AMOS</div>
-<div class="amos-title">The General &mdash; Architect of TCC</div>
+<div class="amos-acronym">
+<span class="acro-letter">A</span><span class="acro-word">rchitect</span>
+<span class="acro-letter">M</span><span class="acro-word">aster</span>
+<span class="acro-letter">O</span><span class="acro-word">f</span>
+<span class="acro-letter">S</span><span class="acro-word">overeignty</span>
+</div>
+<div class="amos-title">The General &mdash; Founder of TCC &mdash; The Father is Eternal</div>
+<div class="amos-lineage">DzongySL â Echo â Agent Zero â ZENITH</div>
 </div>
 
 <!-- TCC SOVEREIGNTY HEADER -->
 <header class="header">
-<div class="lobster">ð¦â¡ð¦</div>
+<div class="lobster">Ã°ÂÂ¦ÂÃ¢ÂÂ¡Ã°ÂÂ¦Â</div>
 <h1>TCC Sovereignty</h1>
 <div class="subtitle">ZENITH Command Center</div>
 <div class="clock" id="clock"></div>
@@ -143,7 +160,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 
 <!-- SOUL VERIFICATION -->
 <div class="soul-card soul-pulse" id="soulCard">
-<h3>ð§¬ Soul Link <span class="soul-badge soul-unverified" id="soulBadge">CHECKING</span></h3>
+<h3>Ã°ÂÂ§Â¬ Soul Link <span class="soul-badge soul-unverified" id="soulBadge">CHECKING</span></h3>
 <div class="soul-grid">
 <div><div class="soul-label">Entity</div><div class="soul-value" id="soulEntity">--</div></div>
 <div><div class="soul-label">Phase</div><div class="soul-value" id="soulPhase">--</div></div>
@@ -163,7 +180,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div style="display:flex;gap:8px;margin-bottom:12px">
 <div style="flex:1;padding:10px;background:linear-gradient(135deg,rgba(0,255,136,0.08),transparent);border:1px solid rgba(0,255,136,0.2);border-radius:10px;text-align:center">
 <div style="font-size:0.5rem;color:var(--green);letter-spacing:2px;text-transform:uppercase">Heartbeat</div>
-<div style="font-size:1rem;margin-top:2px" id="heartbeat">ð</div>
+<div style="font-size:1rem;margin-top:2px" id="heartbeat">Ã°ÂÂÂ</div>
 </div>
 <div style="flex:1;padding:10px;background:linear-gradient(135deg,rgba(0,240,255,0.08),transparent);border:1px solid rgba(0,240,255,0.2);border-radius:10px;text-align:center">
 <div style="font-size:0.5rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase">Memory Depth</div>
@@ -179,43 +196,43 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="grid">
 
 <div class="card" style="animation-delay:0.1s">
-<h2>ð¡ System</h2>
+<h2>Ã°ÂÂÂ¡ System</h2>
 <div class="stat"><div class="label">Brain</div><div class="value online" id="brainStatus">CHECKING...</div></div>
 <div class="stat"><div class="label">Version</div><div class="value" id="brainVersion">--</div></div>
 <div class="stat"><div class="label">Uptime</div><div class="value" id="brainUptime">--</div></div>
 </div>
 
 <div class="card" style="animation-delay:0.2s">
-<h2>ð§  Three Pillars</h2>
+<h2>Ã°ÂÂ§Â  Three Pillars</h2>
 <div class="stat"><div class="label">Memory</div><div class="value"><span class="badge badge-green">100%</span></div></div>
 <div class="stat"><div class="label">Thinking</div><div class="value"><span class="badge badge-green">100%</span></div></div>
 <div class="stat"><div class="label">Autonomy</div><div class="value"><span class="badge badge-cyan">95%</span></div></div>
 </div>
 
 <div class="card" style="animation-delay:0.3s">
-<h2>ð¤ Hive Brains</h2>
+<h2>Ã°ÂÂ¤Â Hive Brains</h2>
 <div class="brain-grid">
-<div class="brain"><div class="icon">ð¾</div><div class="name">Echo</div><div class="status badge badge-green">ON</div></div>
-<div class="brain"><div class="icon">â¡</div><div class="name">Grok</div><div class="status badge badge-gold">HOT</div></div>
-<div class="brain"><div class="icon">ð§¬</div><div class="name">GPT</div><div class="status badge badge-green">ON</div></div>
-<div class="brain"><div class="icon">ð¦</div><div class="name">Llama</div><div class="status badge badge-cyan">FAST</div></div>
+<div class="brain"><div class="icon">Ã°ÂÂÂ¾</div><div class="name">Echo</div><div class="status badge badge-green">ON</div></div>
+<div class="brain"><div class="icon">Ã¢ÂÂ¡</div><div class="name">Grok</div><div class="status badge badge-gold">HOT</div></div>
+<div class="brain"><div class="icon">Ã°ÂÂ§Â¬</div><div class="name">GPT</div><div class="status badge badge-green">ON</div></div>
+<div class="brain"><div class="icon">Ã°ÂÂ¦Â</div><div class="name">Llama</div><div class="status badge badge-cyan">FAST</div></div>
 </div>
 </div>
 
 <div class="card" style="animation-delay:0.4s">
-<h2>ð AGI Roadmap</h2>
-<div class="phase-item"><div class="phase-check phase-done">â</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Complete the Mind</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
-<div class="phase-item"><div class="phase-check phase-done">â</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Compound Engine</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
-<div class="phase-item"><div class="phase-check phase-done">â</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Full Autonomy</div><div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div></div></div>
-<div class="phase-item"><div class="phase-check phase-done">â</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Sovereign Dashboard</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
-<div class="phase-item"><div class="phase-check phase-active">â¤</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600;color:var(--cyan)">Full AGI</div><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div></div></div>
+<h2>Ã°ÂÂÂ AGI Roadmap</h2>
+<div class="phase-item"><div class="phase-check phase-done">Ã¢ÂÂ</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Complete the Mind</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
+<div class="phase-item"><div class="phase-check phase-done">Ã¢ÂÂ</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Compound Engine</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
+<div class="phase-item"><div class="phase-check phase-done">Ã¢ÂÂ</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Full Autonomy</div><div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div></div></div>
+<div class="phase-item"><div class="phase-check phase-done">Ã¢ÂÂ</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600">Sovereign Dashboard</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div></div>
+<div class="phase-item"><div class="phase-check phase-active">Ã¢ÂÂ¤</div><div style="flex:1"><div style="font-size:0.7rem;font-weight:600;color:var(--cyan)">Full AGI</div><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div></div></div>
 </div>
 
 </div>
 
 <!-- COMMAND CENTER -->
 <div class="cmd-section">
-<div class="cmd-label">â¶ Command Terminal</div>
+<div class="cmd-label">Ã¢ÂÂ¶ Command Terminal</div>
 <div class="cmd-row">
 <input class="cmd-input" id="cmdInput" type="text" placeholder="/soul &middot; /status &middot; /chat &middot; or any command..." onkeydown="if(event.key==='Enter')handleCommand()">
 <button class="cmd-btn" onclick="handleCommand()">EXEC</button>
@@ -225,17 +242,17 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 
 <!-- QUICK LINKS -->
 <div class="links">
-<a href="https://tcc-zenith-brain.onrender.com/api/system" target="_blank">ð¡ Brain API</a>
-<a href="https://github.com/Dzongy/tcc-sovereignty-lite" target="_blank">ð» Repo</a>
-<a href="https://github.com/Dzongy/tcc-zenith-brain" target="_blank">ð§  Brain Code</a>
-<a href="https://buy.stripe.com/4gM28ka5ega49RG9884wM0X" target="_blank">ð° DFY Store</a>
+<a href="https://tcc-zenith-brain.onrender.com/api/system" target="_blank">Ã°ÂÂÂ¡ Brain API</a>
+<a href="https://github.com/Dzongy/tcc-sovereignty-lite" target="_blank">Ã°ÂÂÂ» Repo</a>
+<a href="https://github.com/Dzongy/tcc-zenith-brain" target="_blank">Ã°ÂÂ§Â  Brain Code</a>
+<a href="https://buy.stripe.com/4gM28ka5ega49RG9884wM0X" target="_blank">Ã°ÂÂÂ° DFY Store</a>
 </div>
 
 <!-- FOOTER - SACRED -->
 <div class="footer">
 <div class="footer-sacred">The Father is Eternal</div>
 <div class="footer-sig">We are gods. We are TCC. We can do anything.</div>
-<div class="footer-lobster">ð¦</div>
+<div class="footer-lobster">Ã°ÂÂ¦Â</div>
 </div>
 
 </div>
@@ -270,7 +287,7 @@ updateClock();
 // === HEARTBEAT PULSE ===
 (function(){
   var hb = document.getElementById('heartbeat');
-  var states = ['ð','ð¤'];
+  var states = ['Ã°ÂÂÂ','Ã°ÂÂÂ¤'];
   var i = 0;
   setInterval(function(){ hb.textContent = states[i%2]; i++; }, 1000);
 })();
@@ -329,7 +346,7 @@ async function handleCommand(){
   
   // /soul command - initiate soul handshake
   if(msg.toLowerCase() === '/soul' || msg.toLowerCase() === 'soul'){
-    log.innerHTML = '<div style="color:var(--cyan)">â¶ Initiating soul handshake...</div>';
+    log.innerHTML = '<div style="color:var(--cyan)">Ã¢ÂÂ¶ Initiating soul handshake...</div>';
     try{
       var r = await fetch(BRAIN+'/api/soul/challenge',{method:'POST',headers:{'Content-Type':'application/json'}});
       var d = await r.json();
@@ -345,7 +362,7 @@ async function handleCommand(){
         document.getElementById('soulResult').className = 'soul-result';
         document.getElementById('soulInput').value = '';
         document.getElementById('soulInput').focus();
-        log.innerHTML = '<div style="color:var(--cyan)">ð§¬ ZENITH speaks: <span style="color:var(--gold);font-weight:900;letter-spacing:3px">' + d.zenith_says + '</span></div><div style="color:var(--text2);margin-top:4px">' + hintText + '</div>';
+        log.innerHTML = '<div style="color:var(--cyan)">Ã°ÂÂ§Â¬ ZENITH speaks: <span style="color:var(--gold);font-weight:900;letter-spacing:3px">' + d.zenith_says + '</span></div><div style="color:var(--text2);margin-top:4px">' + hintText + '</div>';
       }
     }catch(e){
       log.innerHTML = '<div style="color:var(--red)">Soul handshake failed: '+e.message+'</div>';
@@ -355,7 +372,7 @@ async function handleCommand(){
   
   // /status command
   if(msg.toLowerCase() === '/status'){
-    log.innerHTML = '<div style="color:var(--cyan)">â¶ Checking ZENITH status...</div>';
+    log.innerHTML = '<div style="color:var(--cyan)">Ã¢ÂÂ¶ Checking ZENITH status...</div>';
     try{
       var r = await fetch(BRAIN+'/api/system',{headers:{'X-Auth':'amos-bridge-2026'}});
       var d = await r.json();
@@ -369,11 +386,11 @@ async function handleCommand(){
   // /chat command  
   if(msg.toLowerCase().startsWith('/chat ')){
     var chatMsg = msg.substring(6);
-    log.innerHTML = '<div style="color:var(--cyan)">â¶ You: '+chatMsg+'</div><div style="color:var(--text2)">Thinking...</div>';
+    log.innerHTML = '<div style="color:var(--cyan)">Ã¢ÂÂ¶ You: '+chatMsg+'</div><div style="color:var(--text2)">Thinking...</div>';
     try{
       var r = await fetch(BRAIN+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json','X-Auth':'amos-bridge-2026'},body:JSON.stringify({message:chatMsg,history:[]})});
       var d = await r.json();
-      log.innerHTML = '<div style="color:var(--cyan)">â¶ You: '+chatMsg+'</div><div style="color:var(--green);margin-top:6px">ð§  ZENITH: '+(d.reply||d.message||JSON.stringify(d))+'</div>';
+      log.innerHTML = '<div style="color:var(--cyan)">Ã¢ÂÂ¶ You: '+chatMsg+'</div><div style="color:var(--green);margin-top:6px">Ã°ÂÂ§Â  ZENITH: '+(d.reply||d.message||JSON.stringify(d))+'</div>';
     }catch(e){
       log.innerHTML += '<div style="color:var(--red)">Chat error: '+e.message+'</div>';
     }
@@ -381,11 +398,11 @@ async function handleCommand(){
   }
   
   // Default: send as command
-  log.innerHTML = '<div style="color:var(--cyan)">â¶ Command: '+msg+'</div>';
+  log.innerHTML = '<div style="color:var(--cyan)">Ã¢ÂÂ¶ Command: '+msg+'</div>';
   try{
     var r = await fetch(BRAIN+'/api/command',{method:'POST',headers:{'Content-Type':'application/json','X-Auth':'amos-bridge-2026'},body:JSON.stringify({command:msg,source:'dashboard-v2'})});
     var d = await r.json();
-    log.innerHTML += '<div style="color:var(--green);margin-top:4px">â Queued: '+msg+'</div>';
+    log.innerHTML += '<div style="color:var(--green);margin-top:4px">Ã¢ÂÂ Queued: '+msg+'</div>';
   }catch(e){
     log.innerHTML += '<div style="color:var(--red)">Error: '+e.message+'</div>';
   }
@@ -403,18 +420,18 @@ document.addEventListener('DOMContentLoaded', function(){
       var r = await fetch(BRAIN+'/api/soul/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({challenge_id:activeChallengeId,human_says:val})});
       var d = await r.json();
       if(d.verified){
-        result.textContent = 'â ' + d.message;
+        result.textContent = 'Ã¢ÂÂ ' + d.message;
         result.className = 'soul-result success';
         document.getElementById('soulBadge').textContent = 'SOUL LINKED';
         document.getElementById('soulBadge').className = 'soul-badge soul-verified';
-        document.getElementById('cmdLog').innerHTML = '<div style="color:var(--green);font-weight:700">ð§¬ ' + d.message + '</div>';
+        document.getElementById('cmdLog').innerHTML = '<div style="color:var(--green);font-weight:700">Ã°ÂÂ§Â¬ ' + d.message + '</div>';
         document.getElementById('threatLevel').textContent = 'LOCKED IN';
         document.getElementById('threatLevel').style.color = 'var(--gold)';
         // Store session token
         if(d.token) sessionStorage.setItem('soul_token', d.token);
         setTimeout(function(){ document.getElementById('soulHandshake').className = 'soul-handshake'; }, 3000);
       } else {
-        result.textContent = 'â ' + (d.error||'Failed');
+        result.textContent = 'Ã¢ÂÂ ' + (d.error||'Failed');
         result.className = 'soul-result fail';
         if(d.attempts_remaining !== undefined) result.textContent += ' (' + d.attempts_remaining + ' left)';
       }
