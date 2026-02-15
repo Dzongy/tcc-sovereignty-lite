@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ZENITH Thinking Loop v5.1 -- Render Proxy + Wake-up Ping."""
+"""ZENITH Thinking Loop v5.2 -- Render wake-up + retry loop."""
 import os, sys, json, time, urllib.request, urllib.error, base64
 from datetime import datetime, timezone
 
@@ -44,14 +44,12 @@ def api_call(url, data=None, headers=None, method=None, timeout=60):
 def wake_render():
     """Ping Render base URL to wake it from cold sleep."""
     print("[WAKE] Pinging Render to wake from cold sleep...")
-    try:
-        req = urllib.request.Request(RENDER_BASE)
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            print(f"[WAKE] Render responded: HTTP {resp.status}")
-    except Exception as e:
-        print(f"[WAKE] Ping result (may be waking): {e}")
-    print("[WAKE] Waiting 5 seconds for Render to fully start...")
-    time.sleep(5)
+    status, body = api_call(RENDER_BASE + "/api/health", timeout=30)
+    print(f"[WAKE] Health check response: HTTP {status}")
+    if status == 200:
+        print(f"[WAKE] Body: {body[:200]}")
+    print("[WAKE] Waiting 15 seconds for Render to fully warm up...")
+    time.sleep(15)
     print("[WAKE] Done waiting. Proceeding.")
 
 def read_memory():
@@ -68,7 +66,6 @@ def read_memory():
         print(f"[ERROR] Memory read failed: HTTP {status}")
         print(body[:500])
         return None, None
-    # Get SHA separately
     hdrs2 = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json",
@@ -114,10 +111,8 @@ def write_memory(memory, sha):
         print(body[:500])
         return False
 
-def think(cycle, mission, context):
-    """Call Groq via Render proxy to generate a thought."""
-    print(f"[3/4] Thinking via Render proxy...")
-    print(f"  Mission: {mission[:60]}")
+def think_with_retry(cycle, mission, context, max_retries=3):
+    """Call Groq via Render proxy with retry loop."""
     prompt = "CYCLE " + str(cycle) + " | MISSION: " + mission
     prompt += "\n\nCONTEXT: " + context[:500]
     prompt += "\n\nThink about this mission. Provide your strategic thought and score it 1-10."
@@ -131,25 +126,28 @@ def think(cycle, mission, context):
         "temperature": 0.8
     }).encode()
     hdrs = {"Content-Type": "application/json"}
-    print(f"  Calling {RENDER_GROQ} (60s timeout)...")
-    status, body = api_call(RENDER_GROQ, data=payload, headers=hdrs, method="POST", timeout=60)
-    print(f"  Response: HTTP {status}")
-    if status != 200:
-        print(f"[ERROR] Render proxy returned HTTP {status}")
-        print(body[:500])
-        return None
-    try:
-        resp = json.loads(body)
-        if "choices" in resp:
-            return resp["choices"][0]["message"]["content"]
-        elif "reply" in resp:
-            return resp["reply"]
+    for attempt in range(1, max_retries + 1):
+        print(f"[3/4] Attempt {attempt}/{max_retries} -- calling {RENDER_GROQ} (60s timeout)...")
+        status, body = api_call(RENDER_GROQ, data=payload, headers=hdrs, method="POST", timeout=60)
+        print(f"[3/4] Attempt {attempt} response: HTTP {status}")
+        if status == 200:
+            try:
+                resp = json.loads(body)
+                if "choices" in resp:
+                    return resp["choices"][0]["message"]["content"]
+                elif "reply" in resp:
+                    return resp["reply"]
+                else:
+                    print(f"[ERROR] Unexpected keys: {list(resp.keys())}")
+            except (json.JSONDecodeError, KeyError, IndexError) as e:
+                print(f"[ERROR] Parse response: {e}")
         else:
-            print(f"[ERROR] Unexpected response keys: {list(resp.keys())}")
-            return None
-    except (json.JSONDecodeError, KeyError, IndexError) as e:
-        print(f"[ERROR] Parse response: {e}")
-        return None
+            print(f"[WARN] Response body: {body[:300]}")
+        if attempt < max_retries:
+            print(f"[RETRY] Sleeping 15 seconds before retry...")
+            time.sleep(15)
+    print("[FAIL] All retries exhausted.")
+    return None
 
 def notify_hive(title, message):
     """Send notification to ntfy.sh."""
@@ -164,7 +162,7 @@ def notify_hive(title, message):
 
 def main():
     print("=" * 50)
-    print("ZENITH Thinking Loop v5.1")
+    print("ZENITH Thinking Loop v5.2")
     print(f"Time: {datetime.now(timezone.utc).isoformat()}")
     print(f"Model: {MODEL}")
     print(f"Proxy: {RENDER_GROQ}")
@@ -182,8 +180,7 @@ def main():
     memory, sha = read_memory()
     if memory is None:
         print("[WARN] No memory found. Creating fresh.")
-        memory = {"version": "5.1.0", "thoughts": []}
-        # Try to get SHA for existing file
+        memory = {"version": "5.2.0", "thoughts": []}
         if sha is None:
             print("[INFO] zenith-memory.json may not exist. Will create it.")
 
@@ -195,17 +192,16 @@ def main():
 
     context = json.dumps({"cycle": cycle, "total_thoughts": len(thoughts), "version": memory.get("version", "?")})
 
-    # 3. Think
-    thought_text = think(cycle, mission, context)
+    # 3. Think with retries
+    thought_text = think_with_retry(cycle, mission, context)
     if not thought_text:
-        print("[FAIL] No thought generated. Exiting.")
-        notify_hive("ZENITH Cycle " + str(cycle) + " FAILED", "Groq did not respond via Render proxy.")
+        print("[FAIL] No thought generated after all retries. Exiting.")
+        notify_hive("ZENITH Cycle " + str(cycle) + " FAILED", "Groq did not respond via Render proxy after 3 attempts.")
         sys.exit(1)
 
     print(f"[3/4] Thought generated ({len(thought_text)} chars)")
     print(f"  Preview: {thought_text[:100]}...")
 
-    # Build thought entry
     entry = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "cycle": cycle,
@@ -215,19 +211,17 @@ def main():
         "source": "render_proxy"
     }
 
-    # Trim to last N thoughts
     if "thoughts" not in memory:
         memory["thoughts"] = []
     memory["thoughts"].append(entry)
     memory["thoughts"] = memory["thoughts"][-MAX_THOUGHTS:]
     memory["last_sync"] = datetime.now(timezone.utc).isoformat()
-    memory["sync_source"] = "thinking_loop_v5.1"
+    memory["sync_source"] = "thinking_loop_v5.2"
 
     # 4. Write memory
     if sha:
         ok = write_memory(memory, sha)
     else:
-        # Create file for the first time
         print("[4/4] Creating zenith-memory.json (first time)...")
         url = f"https://api.github.com/repos/{MEMORY_REPO}/contents/{MEMORY_PATH}"
         content_b64 = base64.b64encode(json.dumps(memory, indent=2).encode()).decode()
