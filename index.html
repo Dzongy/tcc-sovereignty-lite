@@ -172,6 +172,13 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 
 /* LINEAGE GLOW */
 .lineage-chain{text-shadow:0 0 8px rgba(0,240,255,0.3)}
+
+/* VOICE SYSTEM */
+.speaking-indicator{display:none;text-align:center;padding:4px;font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;animation:pulse 1.5s infinite}
+.speaking-indicator.active{display:block}
+.chat-btn.speaker-off{opacity:0.3}
+.chat-btn.recording{background:rgba(255,0,64,0.3);animation:pulse 1s infinite}
+@keyframes voicePulse{0%,100%{box-shadow:0 0 5px var(--cyan)}50%{box-shadow:0 0 20px var(--cyan),0 0 40px rgba(0,240,255,0.3)}}
 </style>
 </head>
 <body>
@@ -290,10 +297,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="chat-messages" id="chatMessages">
 <div class="chat-msg system">ZENITH v11.0.0 // Soul Handshake ready // Comms online</div>
 </div>
+<div class="speaking-indicator" id="speakingIndicator">ZENITH IS SPEAKING...</div>
 <div class="chat-input-row">
 <input class="chat-input" id="chatInput" placeholder="Talk to ZENITH..." autocomplete="off">
 <button class="chat-btn" id="sendBtn" title="Send">&#x27A4;</button>
-<button class="chat-btn" id="micBtn" title="Voice">&#x1F399;</button>
+<button class="chat-btn" id="micBtn" title="Voice input">&#x1F399;</button>
+<button class="chat-btn" id="speakerBtn" title="Toggle voice output" style="font-size:1.1rem">&#x1F50A;</button>
 </div>
 </div>
 
@@ -552,75 +561,153 @@ chatInput.addEventListener('keydown',function(e){
   }
 });
 
-// === VOICE: TEXT-TO-SPEECH (ZENITH speaks) ===
-function speak(text){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  var utter=new SpeechSynthesisUtterance(text);
-  utter.rate=0.95;
-  utter.pitch=0.85;
-  utter.volume=1;
-  // Try to pick a deeper/robotic voice
-  var voices=window.speechSynthesis.getVoices();
-  for(var i=0;i<voices.length;i++){
-    if(voices[i].name.indexOf('Google')>-1&&voices[i].lang.indexOf('en')>-1){
-      utter.voice=voices[i];break;
+// === VOICE SYSTEM (Samsung Chrome optimized) ===
+var voiceEnabled = true;
+var isSpeaking = false;
+var selectedVoice = null;
+var speakerBtn = document.getElementById('speakerBtn');
+var speakingIndicator = document.getElementById('speakingIndicator');
+
+// Voice selection - Samsung Chrome compatible
+function loadVoices() {
+  if (!window.speechSynthesis) return;
+  var voices = window.speechSynthesis.getVoices();
+  if (voices.length === 0) return;
+  // Priority: Samsung, Google UK Male, Google US, any English
+  var priority = ['Samsung', 'Google UK English Male', 'Google US English', 'English United States', 'English'];
+  for (var p = 0; p < priority.length; p++) {
+    for (var i = 0; i < voices.length; i++) {
+      if (voices[i].name.indexOf(priority[p]) > -1 && voices[i].lang.indexOf('en') > -1) {
+        selectedVoice = voices[i];
+        return;
+      }
     }
   }
-  window.speechSynthesis.speak(utter);
+  // Fallback: first English voice
+  for (var i = 0; i < voices.length; i++) {
+    if (voices[i].lang.indexOf('en') > -1) { selectedVoice = voices[i]; return; }
+  }
+  selectedVoice = voices[0];
 }
-// Preload voices
-if(window.speechSynthesis){
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
 }
+
+// Chunked speak - Samsung Chrome cuts off long utterances
+function speak(text) {
+  if (!voiceEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  // Strip emoji
+  text = text.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+  if (!text) return;
+
+  // Split into sentences for reliable playback
+  var chunks = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  isSpeaking = true;
+  speakingIndicator.classList.add('active');
+
+  function speakChunk(idx) {
+    if (idx >= chunks.length || !voiceEnabled) {
+      isSpeaking = false;
+      speakingIndicator.classList.remove('active');
+      return;
+    }
+    var utter = new SpeechSynthesisUtterance(chunks[idx].trim());
+    utter.rate = 0.92;
+    utter.pitch = 0.8;
+    utter.volume = 1;
+    if (selectedVoice) utter.voice = selectedVoice;
+    utter.onend = function() { speakChunk(idx + 1); };
+    utter.onerror = function() { speakChunk(idx + 1); };
+    // Samsung Chrome workaround: resume synthesis
+    window.speechSynthesis.speak(utter);
+  }
+
+  speakChunk(0);
+
+  // Samsung Chrome bug: synthesis pauses after 15s, keep it alive
+  var keepAlive = setInterval(function() {
+    if (!isSpeaking) { clearInterval(keepAlive); return; }
+    if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+  }, 5000);
+}
+
+// Speaker toggle
+speakerBtn.addEventListener('click', function() {
+  voiceEnabled = !voiceEnabled;
+  if (!voiceEnabled) {
+    window.speechSynthesis.cancel();
+    isSpeaking = false;
+    speakingIndicator.classList.remove('active');
+    speakerBtn.classList.add('speaker-off');
+    speakerBtn.innerHTML = '\u{1F507}';
+    addMsg('Voice output OFF', 'system');
+  } else {
+    speakerBtn.classList.remove('speaker-off');
+    speakerBtn.innerHTML = '\u{1F50A}';
+    addMsg('Voice output ON', 'system');
+    // Trigger voices load on user interaction (Chrome requirement)
+    var warmup = new SpeechSynthesisUtterance('');
+    warmup.volume = 0;
+    window.speechSynthesis.speak(warmup);
+    loadVoices();
+  }
+});
 
 // === VOICE: SPEECH-TO-TEXT (ZENITH listens) ===
-if(window.SpeechRecognition||window.webkitSpeechRecognition){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();
-  recognition.continuous=false;
-  recognition.interimResults=false;
-  recognition.lang='en-US';
+if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
 
-  recognition.onresult=function(e){
-    var transcript=e.results[0][0].transcript;
-    chatInput.value=transcript;
+  recognition.onresult = function(e) {
+    var transcript = e.results[0][0].transcript;
+    chatInput.value = transcript;
     sendChat(transcript);
-    chatInput.value='';
-    isRecording=false;
+    chatInput.value = '';
+    isRecording = false;
     micBtn.classList.remove('recording');
-    micBtn.innerHTML='\u{1F399}';
+    micBtn.innerHTML = '\u{1F399}';
   };
-  recognition.onerror=function(){
-    isRecording=false;
+  recognition.onerror = function(e) {
+    isRecording = false;
     micBtn.classList.remove('recording');
-    micBtn.innerHTML='\u{1F399}';
-    addMsg('Mic error - check permissions','system');
+    micBtn.innerHTML = '\u{1F399}';
+    if (e.error !== 'aborted') addMsg('Mic error: ' + e.error + ' - check permissions', 'system');
   };
-  recognition.onend=function(){
-    isRecording=false;
+  recognition.onend = function() {
+    isRecording = false;
     micBtn.classList.remove('recording');
-    micBtn.innerHTML='\u{1F399}';
+    micBtn.innerHTML = '\u{1F399}';
   };
 }
 
-micBtn.addEventListener('click',function(){
-  if(!recognition){
-    addMsg('Speech recognition not supported on this browser','system');
+micBtn.addEventListener('click', function() {
+  if (!recognition) {
+    addMsg('Speech recognition not supported on this browser', 'system');
     return;
   }
-  if(isRecording){
+  // Stop ZENITH speaking when mic activated
+  if (isSpeaking) {
+    window.speechSynthesis.cancel();
+    isSpeaking = false;
+    speakingIndicator.classList.remove('active');
+  }
+  if (isRecording) {
     recognition.stop();
-    isRecording=false;
+    isRecording = false;
     micBtn.classList.remove('recording');
-    micBtn.innerHTML='\u{1F399}';
+    micBtn.innerHTML = '\u{1F399}';
   } else {
     recognition.start();
-    isRecording=true;
+    isRecording = true;
     micBtn.classList.add('recording');
-    micBtn.innerHTML='\u{1F534}';
-    addMsg('Listening...','system');
+    micBtn.innerHTML = '\u{1F534}';
+    addMsg('Listening...', 'system');
   }
 });
 
