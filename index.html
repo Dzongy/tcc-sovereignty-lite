@@ -369,5 +369,56 @@ box.innerHTML+='<div style="margin:8px 0;color:var(--red)">Error: '+e.message+'<
 box.scrollTop=box.scrollHeight;
 }
 </script>
+
+<!-- ZENITH THOUGHT STREAM - Phase 4.9b -->
+<div id="zenith-thoughts" style="max-width:900px;margin:32px auto;padding:24px;background:linear-gradient(135deg,#12121f 0%,#1a1a2e 100%);border:1px solid rgba(0,240,255,0.2);border-radius:12px;box-shadow:0 0 30px rgba(0,240,255,0.08);">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div id="thought-pulse" style="width:10px;height:10px;border-radius:50%;background:#00f0ff;box-shadow:0 0 10px #00f0ff;animation:pulse-glow 2s infinite;"></div>
+    <h2 style="margin:0;font-size:18px;color:#00f0ff;letter-spacing:2px;font-family:monospace;">ZENITH THOUGHT STREAM</h2>
+  </div>
+  <div id="thought-content" style="font-family:monospace;font-size:13px;color:#b4b4c8;line-height:1.7;">
+    <div style="color:#00f0ff;opacity:0.7;">Waking Zenith...</div>
+  </div>
+  <style>
+    @keyframes pulse-glow{0%,100%{opacity:1;box-shadow:0 0 10px #00f0ff}50%{opacity:0.4;box-shadow:0 0 4px #00f0ff}}
+  </style>
+  <script>
+  (function(){
+    var el=document.getElementById("thought-content");
+    var pulse=document.getElementById("thought-pulse");
+    function fmt(d){try{return new Date(d).toLocaleString()}catch(e){return d||"--"}}
+    function render(t){
+      var ts=fmt(t.timestamp);
+      var cid=t.cycle_id||"--";
+      var th=t.thought||"--";
+      var pa=t.phase_awareness||"--";
+      var np=t.next_priority||"--";
+      var ver=(t.meta&&t.meta.version)||"--";
+      el.innerHTML=
+        '<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(0,240,255,0.1);">'+
+        '<span style="color:#00f0ff;">TIMESTAMP:</span> '+ts+
+        ' &nbsp; <span style="color:#9333ea;">CYCLE:</span> '+cid+
+        ' &nbsp; <span style="color:#ffd700;">v'+ver+'</span></div>'+
+        '<div style="margin-bottom:8px;"><span style="color:#00ff88;">THOUGHT:</span> <span style="color:#fff;">'+th+'</span></div>'+
+        '<div style="margin-bottom:8px;"><span style="color:#9333ea;">PHASE:</span> '+pa+'</div>'+
+        '<div><span style="color:#ff00aa;">NEXT:</span> '+np+'</div>';
+      pulse.style.background="#00ff88";
+      pulse.style.boxShadow="0 0 10px #00ff88";
+      setTimeout(function(){pulse.style.background="#00f0ff";pulse.style.boxShadow="0 0 10px #00f0ff";},2000);
+    }
+    function fetchThought(){
+      fetch("https://tcc-zenith-brain.onrender.com/api/zenith/autopilot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({source:"dashboard"})})
+        .then(function(r){return r.json()})
+        .then(function(d){render(d);})
+        .catch(function(e){
+          el.innerHTML='<div style="color:#ff0040;">Signal lost. Retrying in 60s... ('+e.message+')</div>';
+        });
+    }
+    fetchThought();
+    setInterval(fetchThought,60000);
+  })();
+  </script>
+</div>
+<!-- END ZENITH THOUGHT STREAM -->
 </body>
 </html>
