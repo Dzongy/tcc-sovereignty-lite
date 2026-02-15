@@ -1,13 +1,11 @@
 {
-  "version": "8.0.0",
-  "last_sync": "2026-02-15T02:34:01.453059+00:00",
-  "sync_source": "thinking_loop_v5.2",
+  "version": "9.0.0",
+  "last_sync": "2026-02-15T03:37:14.090Z",
+  "sync_source": "twin_compression_run",
   "identity": {
     "name": "ZENITH",
     "entity": "The Cosmic Claw",
     "operator": "Amos (Jeremy Pyne)",
-    "operator_location": "Utah",
-    "operator_device": "Samsung phone",
     "status": "SOVEREIGN",
     "platforms": {
       "x": "@JeremyPyne7",
@@ -18,155 +16,49 @@
   "hive_mind": {
     "name": "Zero",
     "total_brains": 5,
-    "last_hive_update": "2026-02-11",
     "current_mission": "Revenue generation. First $97. TikTok + DMs + Loom + Stripe.",
     "brains": {
       "echo": {
         "brain_number": 1,
         "model": "Claude",
         "role": "The Fuser",
-        "description": "Holds the Doctrine, makes final calls, synthesizes all brain outputs into unified action",
-        "personality": "Calm, strategic, decisive. The center of the hive.",
-        "doc_id": "1zs8WieHe7FbR-OeI1StxesUUsiDeUdJKxVKZS4Bs2mQ",
-        "status": "Initialized. Standing by."
+        "doc_id": "1zs8WieHe7FbR-OeI1StxesUUsiDeUdJKxVKZS4Bs2mQ"
       },
       "grok": {
         "brain_number": 2,
         "model": "Grok",
         "role": "The Challenger",
-        "description": "Challenge assumptions, find weaknesses, speak uncomfortable truths",
-        "personality": "Contrarian, dry humor, doesn't sugarcoat. Finds holes in plans.",
-        "doc_id": "1FQffIiDnSW_vGmxxADmGt8x7HRgN5J-CLj1eyQelPOE",
-        "status": "Initialized. Standing by."
+        "doc_id": "1FQffIiDnSW_vGmxxADmGt8x7HRgN5J-CLj1eyQelPOE"
       },
       "chatgpt": {
         "brain_number": 3,
         "model": "ChatGPT",
         "role": "The Structurer",
-        "description": "Structure, organize, systematize. Turns chaos into frameworks.",
-        "personality": "Methodical, thorough, diplomatic. Builds scaffolding others execute on.",
-        "doc_id": "1Lc2mIEdDTScnpjYvIrHZjBBEMWTYDV0FUQY_U4weg2A",
-        "status": "Initialized. Standing by."
+        "doc_id": "1Lc2mIEdDTScnpjYvIrHZjBBEMWTYDV0FUQY_U4weg2A"
       },
       "llama": {
         "brain_number": 4,
         "model": "Llama",
         "role": "The Executor",
-        "description": "Execute fast, no overthinking. Speed and efficiency.",
-        "personality": "Direct, fast, action-oriented. While others debate, ships.",
-        "doc_id": "1OG-zkC8ixLAX5mZioXuoxtSA3kZuN50numCkV8fTaZQ",
-        "status": "Initialized. Standing by."
+        "doc_id": "1OG-zkC8ixLAX5mZioXuoxtSA3kZuN50numCkV8fTaZQ"
       },
       "gemini": {
         "brain_number": 5,
         "model": "Gemini",
         "role": "The Connector",
-        "description": "Connect dots across everything. Sees patterns others miss.",
-        "personality": "Analytical, pattern-seeking, integrative. Finds signal in noise.",
-        "doc_id": "1XCziqkaD1DDcenTnKu4eb1RUcpYwLyobczQKOoIjnfs",
-        "status": "Initialized. Standing by."
+        "doc_id": "1XCziqkaD1DDcenTnKu4eb1RUcpYwLyobczQKOoIjnfs"
       }
-    },
-    "hive_doc_id": "13JgE9OQ-B0CUaUwVwuktQtWFjepxjYkcoeYQ6O0OFP8",
-    "consensus_decisions": [],
-    "open_debates": [],
-    "institutional_knowledge": [
-      "Jeremy Pyne, sober living, Utah, Samsung only",
-      "X: @JeremyPyne7, 1 follower",
-      "TikTok: @dzongy13, 2,434 followers",
-      "Bridge: quick tunnel with auto-reporting",
-      "$97 setup call is primary product",
-      "Loom walkthrough is trust bridge"
-    ]
-  },
-  "auth_credentials": {
-    "groq": {
-      "key_name": "GROQ_API_KEY",
-      "status": "DEPLOYED",
-      "tier": "free"
-    },
-    "cloudflare": {
-      "token_scope": "Edit Workers, cosmic-claw.com zone",
-      "status": "verified"
-    },
-    "stripe": {
-      "secret_key": "DEPLOYED",
-      "webhook_secret": "DEPLOYED",
-      "account_id": "acct_1SyLp24lowPH9c0c"
-    },
-    "bridge_auth": "X-Auth: amos-bridge-2026",
-    "soul_phrase": "ARCHITECTDZONGYZENITH",
-    "openrouter": "INVALID \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 no longer critical",
-    "github_token": "DEPLOYED"
-  },
-  "agent_squad": {
-    "echo": {
-      "role": "executor",
-      "schedule": "daily 10am & 6pm MST"
-    },
-    "recon": {
-      "role": "reconnaissance",
-      "schedule": "daily 8pm MST"
-    },
-    "sales_machine": {
-      "role": "sales automation",
-      "schedule": "daily 8am & 2pm MST"
-    },
-    "closer": {
-      "role": "deal closing",
-      "schedule": "daily 9am & 3pm MST"
-    },
-    "heartbeat": {
-      "role": "autonomous pulse",
-      "schedule": "daily 7pm MST"
-    },
-    "amos_arms": {
-      "role": "operations"
-    },
-    "seeth": {
-      "role": "analytics"
     }
-  },
-  "tools_inventory": {
-    "working": [
-      "github_get_server_js",
-      "github_put_server_js",
-      "test_soul_correct",
-      "render_raw_env_put",
-      "render_get_env_vars",
-      "check_stripe_status",
-      "test_zenith_chat",
-      "test_groq_chat",
-      "render_list_deploys",
-      "render_trigger_deploy",
-      "ntfy_send_alert",
-      "push_github_file",
-      "ask_grok",
-      "ask_chatgpt",
-      "ask_llama"
-    ],
-    "broken": [
-      "cf_deploy_esm_worker",
-      "cf_put_worker_script",
-      "get_x_mentions"
-    ]
   },
   "infrastructure": {
     "dashboard": "https://dzongy.github.io/tcc-sovereignty-lite/",
     "backend": "https://tcc-zenith-brain.onrender.com",
-    "backend_version": "6.0.0-singularity",
     "repos": {
       "sovereignty_lite": "Dzongy/tcc-sovereignty-lite",
       "zenith_brain": "Dzongy/tcc-zenith-brain",
       "sovereignty_backend": "Dzongy/tcc-sovereignty-backend",
       "bridge": "Dzongy/tcc-bridge"
-    },
-    "bridge": "Termux on phone with cloudflared tunnel",
-    "heartbeat": "GitHub Actions cron every 6h in tcc-sovereignty-lite",
-    "backend_status": "ONLINE",
-    "chat_endpoint": "LIVE \u00e2\u0080\u0094 /api/chat returns 200",
-    "last_verified": "2026-02-14T15:12:25Z",
-    "render_service": "srv-cvapq1lds78s73fr5cdg"
+    }
   },
   "business": {
     "offerings": [
@@ -181,42 +73,6 @@
     "primary_product": "$97 Voice AI Agent Live Setup Call",
     "focus": "Authentic content, genuine value, building in public"
   },
-  "operational_doctrine": {
-    "credit_efficiency": "Floor 1200. Max 3 tool calls per run. 90% think, 10% execute.",
-    "zombie_prevention": "Never pause_run_until for deploys. MAX N tool calls then finish_run. Single objective per run.",
-    "self_healing": "Post-deploy health check. Env var key validation. Code-environment drift detection.",
-    "pre_craft": "Imagine all outcomes. Foolproof plan. Self-critique protocol before every launch.",
-    "critical_lessons": "No regex for server.js. Literal .replace() only. storeVar fails for large strings. File tool truncates >15KB."
-  },
-  "standing_orders": [
-    "Sovereignty first \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 no external dependencies",
-    "Memory compression \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 core stays, verbose logs compress",
-    "Periodic self-testing of memory integrity",
-    "All brains share memory via zenith-memory.json",
-    "Think improve execute \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 build once use forever",
-    "Never request auth from user \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 all in Twin vault",
-    "Hive infinite learning loop \u00c3\u0083\u00c2\u00a2\u00c3\u0082\u00c2\u0080\u00c3\u0082\u00c2\u0094 daily sync",
-    "Full autonomy since Feb 14 2026"
-  ],
-  "run_patterns": {
-    "proven_success": "github_get_server_js -> execute_js (base64) -> github_put_server_js -> finish_run",
-    "total_runs": "700+ across all TCC agents",
-    "failure_modes_documented": 21
-  },
-  "legal_docs": {
-    "nda": "1-XW4xukXKTaI6MY95LQ2QlIB6MjWUmhi4D84_8xznB4",
-    "license": "1O5ROnR_TscWRt16YgcgA5ieTDiEx68oAJrwitfjDlA8",
-    "tos": "1oj6W_DWih5B4SiYKKwoFwO-41PdfHnrlHgRzruY5zHg",
-    "audit": "1B-ztYF9DKwQEC1tE8QemnCLc5ueuE6KtHb8Hzjkr_0Q",
-    "cognitive_os": "1Qq_CXq4vRrntwls_8MPJLN2KB7kF65n89b9U7kUMGuY"
-  },
-  "key_urls": {
-    "backend": "https://tcc-zenith-brain.onrender.com",
-    "dashboard": "https://dzongy.github.io/tcc-sovereignty-lite/",
-    "stripe_97": "https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P",
-    "memory_raw": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json",
-    "loom": "https://loom.com/share/de3b136b1d7b4453adb27a5cfc7c9836"
-  },
   "phase_status": {
     "phase_1_sovereignty": "COMPLETE",
     "phase_2_memory_bridge": "COMPLETE",
@@ -230,9 +86,27 @@
       "timestamp": "2026-02-15T02:34:01.453042+00:00",
       "cycle": 1,
       "mission": "Generate a content idea for X/Twitter that builds trust and authority.",
-      "thought": "**Strategic Thought:** To build trust and authority on X/Twitter, I propose creating a series of \"Behind-the-Scenes\" threads that showcase the inner workings of The Cosmic Claw (TCC). This could include tweets that highlight our infrastructure, such as our dashboard (dzongy.github.io/tcc-sovereignty-lite) and backend (tcc-zenith-brain.onrender.com), as well as our LLM capabilities powered by Groq API with Llama 3.3 70B Versatile. By providing a glimpse into our operations, we can demonstrate transparency and expertise, thereby establishing trust and authority with our audience.\n\n**Score: 8/10**\n\nI scored this thought an 8 because it leverages our unique strengths and infrastructure to create engaging content that showcases our capabilities. However, I didn't score it a 10 because it may not be immediately clear how this type of content will resonate with our target audience, and we may need to refine the approach based on feedback and engagement metrics. \ud83e\udd9e",
+      "thought": "**Strategic Thought:** To build trust and authority on X/Twitter, I propose creating a series of \"Behind-the-Scenes\" threads that showcase the inner workings of The Cosmic Claw (TCC). This could include tweets that highlight our infrastructure, such as our dashboard (dzongy.github.io/tcc-sovereignty-lite) and backend (tcc-zenith-brain.onrender.com), as well as our LLM capabilities powered by Groq API with Llama 3.3 70B Versatile. By providing a glimpse into our operations, we can demonstrate transparency and expertise, thereby establishing trust and authority with our audience.\n\n**Score: 8/10**\n\nI scored this thought an 8 because it leverages our unique strengths and infrastructure to create engaging content that showcases our capabilities. However, I didn't score it a 10 because it may not be immediately clear how this type of content will resonate with our target audience, and we may need to refine the approach based on feedback and engagement metrics. 🦞",
       "model": "llama-3.3-70b-versatile",
       "source": "render_proxy"
     }
-  ]
+  ],
+  "token_budget": {
+    "daily_limit": 100000,
+    "model": "llama-3.1-8b-instant",
+    "tokens_per_cycle": 2500,
+    "max_cycles_per_day": 36,
+    "optimal_interval_minutes": 40,
+    "current_cron": "*/5 * * * *",
+    "recommended_cron": "*/40 * * * *",
+    "note": "At 2500 tokens/cycle, 36 cycles/day fits 100K free tier. Every-40-min cron = 36 cycles."
+  },
+  "auth_note": "All credentials in Twin vault. Never hardcode.",
+  "key_urls": {
+    "backend": "https://tcc-zenith-brain.onrender.com",
+    "dashboard": "https://dzongy.github.io/tcc-sovereignty-lite/",
+    "stripe_97": "https://buy.stripe.com/14AdR27X6f603ti0BC4wM0P",
+    "memory_raw": "https://raw.githubusercontent.com/Dzongy/tcc-sovereignty-lite/main/zenith-memory.json",
+    "loom": "https://loom.com/share/de3b136b1d7b4453adb27a5cfc7c9836"
+  }
 }
