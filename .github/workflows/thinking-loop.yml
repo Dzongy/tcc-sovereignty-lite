@@ -11,27 +11,74 @@ jobs:
         run: curl -s -o /dev/null -w "%{http_code}" https://tcc-zenith-brain.onrender.com/api/health || true
       - name: Wait for cold start
         run: sleep 20
-      - name: Trigger autopilot and save memory
+      - name: Think and accumulate memory
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Step 1: Call autopilot
           RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d '{}' -m 120 https://tcc-zenith-brain.onrender.com/api/zenith/autopilot)
-          echo "Response received: $(echo "$RESPONSE" | head -c 200)"
+          echo "Autopilot response: $(echo "$RESPONSE" | head -c 200)"
           SUCCESS=$(echo "$RESPONSE" | jq -r '.success // false')
           if [ "$SUCCESS" != "true" ]; then
             echo "Autopilot failed or no success field"
             exit 0
           fi
-          MEMORY=$(echo "$RESPONSE" | jq '.memory')
-          if [ "$MEMORY" = "null" ] || [ -z "$MEMORY" ]; then
-            echo "No memory in response, skipping write"
-            exit 0
+
+          # Step 2: Extract new thought from autopilot response
+          NEW_THOUGHT=$(echo "$RESPONSE" | jq '{
+            timestamp: .timestamp,
+            cycle_id: .cycle_id,
+            thought: .thought,
+            phase_awareness: .phase_awareness,
+            next_priority: .next_priority,
+            version: .meta.version
+          }')
+          echo "New thought: $(echo "$NEW_THOUGHT" | head -c 200)"
+
+          # Step 3: Fetch current zenith-memory.json from repo
+          MEMORY_RESP=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json)
+          MEMORY_SHA=$(echo "$MEMORY_RESP" | jq -r '.sha // empty')
+          MEMORY_B64=$(echo "$MEMORY_RESP" | jq -r '.content // empty' | tr -d '\n')
+
+          if [ -z "$MEMORY_SHA" ] || [ -z "$MEMORY_B64" ]; then
+            echo "Could not fetch current memory, creating fresh"
+            CURRENT_THOUGHTS="[]"
+          else
+            CURRENT_CONTENT=$(echo "$MEMORY_B64" | base64 -d)
+            CURRENT_THOUGHTS=$(echo "$CURRENT_CONTENT" | jq '.thoughts // []')
           fi
-          echo "$MEMORY" > /tmp/zenith-memory.json
-          SHA=$(curl -s -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json" | jq -r '.sha')
-          CONTENT=$(base64 -w 0 /tmp/zenith-memory.json)
-          curl -s -X PUT -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json" \
-            -d "{\"message\":\"Thinking loop: memory sync $(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"content\":\"$CONTENT\",\"sha\":\"$SHA\"}"
-          echo "Memory committed to GitHub"
+
+          # Step 4: Append new thought, trim to last 20
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          ACCUMULATED=$(echo "$CURRENT_THOUGHTS" | jq --argjson new "$NEW_THOUGHT" '. + [$new] | .[-20:]')
+
+          # Step 5: Build full memory object
+          FULL_MEMORY=$(jq -n \
+            --arg ver "v10.0.0-accumulator" \
+            --arg ts "$TIMESTAMP" \
+            --arg sov "SOVEREIGN" \
+            --argjson thoughts "$ACCUMULATED" \
+            '{
+              version: $ver,
+              last_updated: $ts,
+              sovereignty_status: $sov,
+              thoughts: $thoughts
+            }')
+
+          echo "Accumulated memory with $(echo "$ACCUMULATED" | jq 'length') thoughts"
+          echo "$FULL_MEMORY" > /tmp/zenith-memory.json
+
+          # Step 6: Commit accumulated memory back to repo
+          ENCODED=$(base64 -w 0 /tmp/zenith-memory.json)
+          COMMIT_RESP=$(curl -s -X PUT \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/Dzongy/tcc-sovereignty-lite/contents/zenith-memory.json \
+            -d "$(jq -n \
+              --arg msg "thinking-loop: accumulate thought $(date -u +%H:%M)" \
+              --arg content "$ENCODED" \
+              --arg sha "$MEMORY_SHA" \
+              '{message: $msg, content: $content, sha: $sha}')")
+          echo "Commit result: $(echo "$COMMIT_RESP" | jq -r '.commit.sha // .message // "unknown"' | head -c 100)"
