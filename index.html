@@ -45,12 +45,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 
 /* AMOS HERO */
 .amos-hero{text-align:center;padding:28px 0 8px;position:relative}
-.amos-name{font-size:4.5rem;font-weight:900;letter-spacing:18px;background:linear-gradient(180deg,#ffd700 0%,#ffaa00 40%,#ff8800 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(255,215,0,0.5)) drop-shadow(0 0 60px rgba(255,215,0,0.2));line-height:1;margin-bottom:6px}
+.amos-name{font-size:4.5rem;font-weight:900;letter-spacing:18px;background:linear-gradient(180deg,#00f0ff 0%,#00c8dd 40%,#0099bb 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(0,240,255,0.5)) drop-shadow(0 0 60px rgba(0,240,255,0.25));line-height:1;margin-bottom:6px}
 .amos-acronym{display:flex;justify-content:center;gap:4px;margin-bottom:6px}
 .amos-letter-group{display:flex;flex-direction:column;align-items:center}
-.amos-letter{font-size:1.6rem;font-weight:900;background:linear-gradient(180deg,#ffd700,#ff8800);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
-.amos-word{font-size:0.55rem;color:var(--gold);opacity:0.7;letter-spacing:1px;text-transform:uppercase;font-weight:600}
-.amos-divider{width:60%;height:1px;margin:8px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.4}
+.amos-letter{font-size:1.6rem;font-weight:900;background:linear-gradient(180deg,#00f0ff,#0099bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.amos-word{font-size:0.55rem;color:var(--cyan);opacity:0.7;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.amos-divider{width:60%;height:1px;margin:8px auto;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0.4}
 .amos-title{font-size:0.65rem;color:var(--text2);letter-spacing:3px;text-transform:uppercase}
 
 /* HEADER */
@@ -141,21 +141,46 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .soul-handshake.active{display:block;animation:borderPulse 1.5s ease-in-out infinite,soulGlowAnim 2s ease-in-out infinite}
 @keyframes soulGlowAnim{0%,100%{box-shadow:0 0 10px rgba(0,240,255,0.1)}50%{box-shadow:0 0 30px rgba(0,240,255,0.2),0 0 60px rgba(147,51,234,0.1)}}
 .soul-challenge{font-family:'Courier New',monospace;font-size:1.2rem;letter-spacing:4px;color:var(--cyan);margin:10px 0;text-shadow:0 0 10px rgba(0,240,255,0.5)}
-.soul-input{background:var(--bg);border:1px solid rgba(0,240,255,0.3);border-radius:8px;color:var(--gold);font-family:'Courier New',monospace;font-size:1rem;padding:10px;width:100%;text-align:center;letter-spacing:3px;outline:none;text-transform:uppercase}
+.soul-input{background:var(--bg);border:1px solid rgba(0,240,255,0.3);border-radius:8px;color:var(--cyan);font-family:'Courier New',monospace;font-size:1rem;padding:10px;width:100%;text-align:center;letter-spacing:3px;outline:none;text-transform:uppercase}
 .soul-input:focus{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,240,255,0.2)}
 .soul-timer{font-size:0.55rem;color:var(--red);margin-top:6px;font-family:'Courier New',monospace}
 
 /* FOOTER */
 .footer{text-align:center;padding:30px 0 20px;margin-top:20px}
-.footer-sacred{font-size:0.7rem;color:var(--gold);font-style:italic;text-shadow:0 0 15px rgba(255,215,0,0.4),0 0 30px rgba(255,215,0,0.15)}
+.footer-sacred{font-size:0.7rem;color:var(--cyan);font-style:italic;text-shadow:0 0 15px rgba(0,240,255,0.4),0 0 30px rgba(0,240,255,0.15)}
 .footer-lobster{font-size:1.2rem;margin:8px 0;animation:pulse 2s ease-in-out infinite}
 .footer-mantra{font-size:0.6rem;color:var(--text2);letter-spacing:2px;margin-top:4px}
+
+/* === ZENITH SIGNATURE TOUCHES === */
+
+/* CRT SCAN LINES OVERLAY */
+.crt-lines{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)}
+
+/* HEX STREAM */
+.hex-stream{position:fixed;right:4px;top:0;height:100%;width:18px;overflow:hidden;pointer-events:none;z-index:997;opacity:0.12;font-family:'Courier New',monospace;font-size:8px;color:var(--cyan);line-height:1.4;writing-mode:vertical-rl}
+
+/* VERSION TAG */
+.version-tag{position:fixed;top:6px;right:8px;font-size:0.45rem;font-family:'Courier New',monospace;color:var(--cyan);opacity:0.25;z-index:1000;letter-spacing:1px;pointer-events:none}
+
+/* CARD HOLOGRAPHIC SHIMMER */
+.card{transition:transform 0.2s,box-shadow 0.3s}
+.card:active{transform:scale(0.98);box-shadow:0 0 20px rgba(0,240,255,0.15)}
+
+/* DATA PULSE on metric values */
+@keyframes dataPulse{0%,100%{opacity:1}50%{opacity:0.7;text-shadow:0 0 12px currentColor}}
+.metric-value{animation:dataPulse 3s ease-in-out infinite}
+
+/* LINEAGE GLOW */
+.lineage-chain{text-shadow:0 0 8px rgba(0,240,255,0.3)}
 </style>
 </head>
 <body>
 
 <div class="scan-line"></div>
 <canvas id="neuralGrid"></canvas>
+<div class="crt-lines"></div>
+<div class="hex-stream" id="hexStream"></div>
+<div class="version-tag">ZENITH v11.0.0 // TCC</div>
 
 <div class="particles" id="particles"></div>
 
@@ -377,8 +402,8 @@ var soulToken = null;
       el.style.color='var(--green)';
       res.textContent='\u2713 Identity confirmed';
       document.getElementById('threatLevel').textContent='LOCKED IN';
-      document.getElementById('threatLevel').style.color='var(--gold)';
-      document.getElementById('threatLevel').style.textShadow='0 0 10px rgba(255,215,0,0.5)';
+      document.getElementById('threatLevel').style.color='var(--cyan)';
+      document.getElementById('threatLevel').style.textShadow='0 0 10px rgba(0,240,255,0.5)';
     } else {
       el.textContent='SOUL: UNVERIFIED';
       el.style.color='var(--red)';
@@ -435,7 +460,7 @@ document.getElementById('soulInput').addEventListener('keydown',function(e){
         document.getElementById('soulTimer').textContent='Soul handshake complete';
         document.getElementById('soulTimer').style.color='var(--green)';
         document.getElementById('threatLevel').textContent='LOCKED IN';
-        document.getElementById('threatLevel').style.color='var(--gold)';
+        document.getElementById('threatLevel').style.color='var(--cyan)';
       } else {
         document.getElementById('soulTimer').textContent='FAILED: '+(d.error||'Try again');
         document.getElementById('soulTimer').style.color='var(--red)';
@@ -623,6 +648,42 @@ micBtn.addEventListener('click',function(){
     }
     idx=(idx+1)%msgs.length;
   },8000);
+})();
+
+// === HEX DATA STREAM ===
+(function(){
+  var el=document.getElementById('hexStream');
+  if(!el)return;
+  var chars='0123456789ABCDEF';
+  function gen(){
+    var s='';
+    for(var i=0;i<200;i++){
+      s+=chars[Math.floor(Math.random()*16)];
+      if(i%2===1)s+=' ';
+      if(i%8===7)s+='\n';
+    }
+    return s;
+  }
+  el.textContent=gen();
+  setInterval(function(){el.textContent=gen();},800);
+})();
+
+// === TYPING EFFECT ON SUBTITLE ===
+(function(){
+  var el=document.querySelector('.subtitle');
+  if(!el)return;
+  var text=el.getAttribute('data-text')||el.textContent;
+  el.textContent='';
+  el.style.borderRight='2px solid var(--cyan)';
+  var i=0;
+  var iv=setInterval(function(){
+    if(i<text.length){
+      el.textContent+=text[i];i++;
+    }else{
+      clearInterval(iv);
+      setTimeout(function(){el.style.borderRight='none';},1500);
+    }
+  },60);
 })();
 </script>
 </body>
