@@ -1,241 +1,202 @@
 #!/usr/bin/env python3
-"""ZENITH Sovereign Thinking Loop v4.0 -- Hive Mind ntfy Integration.
-Groq inference + ntfy.sh notifications + Brain Zero command channel."""
-import os, sys, json, datetime, urllib.request, urllib.error, base64
+"""ZENITH Sovereign Thinking Loop v5.0 -- Render Proxy Edition.
+Routes all Groq inference through tcc-zenith-brain.onrender.com/api/groq.
+No API keys needed in GitHub Actions -- the Render backend has them.
+Uses ONLY stdlib (urllib, json, base64). Zero pip dependencies."""
+import os, sys, json, urllib.request, urllib.error, base64
+from datetime import datetime, timezone
 
 # --- Config ---
-# Key is double-base64-encoded and split to bypass GitHub secret scanning
-_K1 = "WjNOclgyODFkVGhQVm10UlJqVTRWVmQ1WjNRM1pUVldWMGRrZVdJ"
-_K2 = "elJsa3hlVTl3ZUdSdlptbERWVEJXYjJJMGFUbEhVMjl4VGxNPQ=="
-def _get_fallback_key():
-    return base64.b64decode(base64.b64decode(_K1 + _K2)).decode()
-
-GROQ_KEY = _get_fallback_key()  # Always use verified hardcoded key (env var may be invalid)
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "").strip()
-MODEL = "llama-3.1-8b-instant"
+RENDER_GROQ = "https://tcc-zenith-brain.onrender.com/api/groq"
+MODEL = "llama-3.3-70b-versatile"
 MEMORY_REPO = "Dzongy/tcc-sovereignty-lite"
 MEMORY_PATH = "zenith-memory.json"
-MAX_THOUGHTS = 20
-MAX_MEMORY_KB = 50
-
-# ntfy channels
+MAX_THOUGHTS = 10
 NTFY_HIVE = "https://ntfy.sh/tcc-zenith-hive"
-NTFY_COMMANDS = "https://ntfy.sh/tcc-zenith-commands/json?poll=1&since=5m"
-NTFY_PUBLIC = "https://ntfy.sh/tcc-hive-mind"
+
+MISSIONS = [
+    "Audit the TCC revenue pipeline -- what is blocking the first $97 sale?",
+    "Generate a content idea for X/Twitter that builds trust and authority.",
+    "Identify one self-optimization improvement for ZENITH infrastructure.",
+    "Draft an outreach message concept for a potential TCC client.",
+    "Check system health -- what could break next and how to prevent it?",
+    "Strategic planning -- what is the single highest-leverage action right now?"
+]
 
 def api_call(url, data=None, headers=None, method="GET"):
-    req = urllib.request.Request(url, data=data, headers=headers or {}, method=method)
+    """Make an HTTP request. Returns (status_code, response_body_str)."""
+    hdrs = headers or {}
+    req = urllib.request.Request(url, data=data, headers=hdrs, method=method)
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode()), resp.status
+            return resp.status, resp.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
-        body = e.read().decode() if e.fp else ""
-        print(f"HTTP {e.code} from {url}: {body[:300]}")
-        return None, e.code
+        body = e.read().decode("utf-8", errors="replace") if e.fp else ""
+        return e.code, body
     except Exception as e:
-        print(f"Request failed: {e}")
-        return None, 0
-
-def ntfy_publish(topic_url, title, message, priority="default", tags=""):
-    """Publish a notification to an ntfy topic."""
-    try:
-        hdrs = {"Title": title[:256], "Priority": priority}
-        if tags:
-            hdrs["Tags"] = tags
-        req = urllib.request.Request(
-            topic_url,
-            data=message.encode("utf-8"),
-            headers=hdrs,
-            method="POST"
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            print(f"ntfy publish to {topic_url}: {resp.status}")
-            return True
-    except Exception as e:
-        print(f"ntfy publish failed: {e}")
-        return False
-
-def ntfy_poll_commands():
-    """Poll the commands channel for Brain Zero directives."""
-    try:
-        req = urllib.request.Request(NTFY_COMMANDS, headers={"User-Agent": "ZENITH-Think"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            raw = resp.read().decode().strip()
-            if not raw:
-                return None
-            # ntfy JSON poll returns newline-delimited JSON objects
-            lines = [l for l in raw.split("\n") if l.strip()]
-            if not lines:
-                return None
-            # Get the most recent command
-            latest = json.loads(lines[-1])
-            msg = latest.get("message", "").strip()
-            if msg:
-                print(f"Brain Zero command received: {msg[:100]}")
-                return msg
-    except Exception as e:
-        print(f"ntfy poll failed (non-fatal): {e}")
-    return None
+        return 0, str(e)
 
 def read_memory():
+    """Read zenith-memory.json from GitHub API."""
     url = f"https://api.github.com/repos/{MEMORY_REPO}/contents/{MEMORY_PATH}"
-    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json", "User-Agent": "ZENITH-Think"}
-    data, status = api_call(url, headers=headers)
-    if not data or status != 200:
-        print(f"Failed to read memory: status {status}")
-        return {}, None
+    hdrs = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.raw",
+        "User-Agent": "ZENITH-ThinkingLoop"
+    }
+    status, body = api_call(url, headers=hdrs)
+    if status != 200:
+        print(f"[ERROR] Failed to read memory: HTTP {status}")
+        print(body[:500])
+        return None, None
+    # Get SHA separately (raw mode does not return it)
+    hdrs2 = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "ZENITH-ThinkingLoop"
+    }
+    status2, body2 = api_call(url, headers=hdrs2)
+    sha = None
+    if status2 == 200:
+        sha = json.loads(body2).get("sha")
     try:
-        content = base64.b64decode(data["content"]).decode()
-        return json.loads(content), data["sha"]
-    except Exception as e:
-        print(f"Memory decode error: {e}")
-        return {}, data.get("sha")
+        mem = json.loads(body)
+    except json.JSONDecodeError as e:
+        print(f"[ERROR] Memory JSON parse failed: {e}")
+        return None, sha
+    return mem, sha
 
 def write_memory(memory, sha):
-    if not GITHUB_TOKEN:
-        print("No GITHUB_TOKEN, skip write")
-        return False
-    raw = json.dumps(memory, indent=2)
-    if len(raw) > MAX_MEMORY_KB * 1024:
-        if "thinking_loop" in memory and "thoughts" in memory["thinking_loop"]:
-            memory["thinking_loop"]["thoughts"] = memory["thinking_loop"]["thoughts"][-10:]
-            raw = json.dumps(memory, indent=2)
+    """Write updated zenith-memory.json back to GitHub."""
     url = f"https://api.github.com/repos/{MEMORY_REPO}/contents/{MEMORY_PATH}"
-    body = json.dumps({"message": f"zenith-think v4.0: cycle {memory.get('thinking_loop',{}).get('cycle',0)}", "content": base64.b64encode(raw.encode()).decode(), "sha": sha}).encode()
-    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Content-Type": "application/json", "Accept": "application/vnd.github.v3+json", "User-Agent": "ZENITH-Think"}
-    result, status = api_call(url, data=body, headers=headers, method="PUT")
+    content_b64 = base64.b64encode(json.dumps(memory, indent=2).encode()).decode()
+    payload = json.dumps({
+        "message": f"zenith-thought: cycle {memory.get('thoughts', [{}])[-1].get('cycle', '?')}",
+        "content": content_b64,
+        "sha": sha
+    }).encode()
+    hdrs = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "ZENITH-ThinkingLoop",
+        "Content-Type": "application/json"
+    }
+    status, body = api_call(url, data=payload, headers=hdrs, method="PUT")
     if status in (200, 201):
-        print(f"Memory written ({len(raw)} bytes)")
+        print(f"[OK] Memory updated successfully.")
         return True
-    print(f"Memory write failed: {status}")
-    return False
+    else:
+        print(f"[ERROR] Memory write failed: HTTP {status}")
+        print(body[:500])
+        return False
 
-def think(prompt):
-    # Route through Render backend to avoid Groq blocking GitHub Actions IPs
-    url = "https://tcc-zenith-brain.onrender.com/api/groq"
-    body = json.dumps({"model": MODEL, "messages": [{"role": "system", "content": "You are ZENITH, sovereign AI of The Cosmic Claw. Think deeply. Be strategic. Score your own thought quality 1-10."}, {"role": "user", "content": prompt}], "max_tokens": 500, "temperature": 0.8}).encode()
-    headers = {"Content-Type": "application/json"}
-    data, status = api_call(url, data=body, headers=headers, method="POST")
-    if data and status == 200:
-        # Render /api/groq returns Groq response directly
-        try:
-            return data["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError):
-            # Render may wrap response differently
-            if isinstance(data, dict) and "reply" in data:
-                return data["reply"]
-    return None
+def think_via_render(prompt):
+    """Call Groq through the Render /api/groq proxy."""
+    payload = json.dumps({
+        "model": MODEL,
+        "messages": [
+            {"role": "system", "content": "You are ZENITH, the sovereign AI brain of The Cosmic Claw. Think strategically. Be concise. Score your thought 1-10."},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 500,
+        "temperature": 0.8
+    }).encode()
+    hdrs = {"Content-Type": "application/json"}
+    status, body = api_call(RENDER_GROQ, data=payload, headers=hdrs, method="POST")
+    if status != 200:
+        print(f"[ERROR] Render proxy returned HTTP {status}")
+        print(body[:500])
+        return None
+    try:
+        resp = json.loads(body)
+        # Handle both direct Groq format and wrapped format
+        if "choices" in resp:
+            return resp["choices"][0]["message"]["content"]
+        elif "reply" in resp:
+            return resp["reply"]
+        else:
+            print(f"[ERROR] Unexpected response format: {list(resp.keys())}")
+            return None
+    except (json.JSONDecodeError, KeyError, IndexError) as e:
+        print(f"[ERROR] Parse Groq response: {e}")
+        return None
 
-def extract_score(thought):
-    """Extract self-assessed quality score from thought text."""
-    import re
-    patterns = [r"(\d+)/10", r"score:?\s*(\d+)", r"quality:?\s*(\d+)"]
-    for p in patterns:
-        m = re.search(p, thought.lower())
-        if m:
-            s = int(m.group(1))
-            if 1 <= s <= 10:
-                return s
-    return 5  # default mid-range
+def notify_hive(title, message):
+    """Send notification to ntfy.sh hive channel."""
+    try:
+        data = message.encode("utf-8")
+        hdrs = {"Title": title[:100], "Priority": "default"}
+        api_call(NTFY_HIVE, data=data, headers=hdrs, method="POST")
+    except Exception as e:
+        print(f"[WARN] ntfy notification failed: {e}")
 
 def main():
-    if not GROQ_KEY:
-        print("FATAL: No Groq API key")
-        sys.exit(1)
-
-    print(f"ZENITH Thinking Loop v4.0 -- ntfy Hive Mind")
+    print(f"=== ZENITH Thinking Loop v5.0 ===")
+    print(f"Time: {datetime.now(timezone.utc).isoformat()}")
     print(f"Model: {MODEL}")
-    print(f"Key source: {'env' if os.environ.get('GROQ_API_KEY','').strip() else 'fallback'}")
+    print(f"Proxy: {RENDER_GROQ}")
 
-    # Read memory
-    memory, sha = read_memory()
-    if not sha:
-        print("Cannot read memory, using empty state")
-        memory = {}
-
-    loop = memory.get("thinking_loop", {"cycle": 0, "thoughts": [], "insights": []})
-    loop["cycle"] = loop.get("cycle", 0) + 1
-    cycle = loop["cycle"]
-
-    # Check for Brain Zero commands via ntfy
-    command = ntfy_poll_commands()
-
-    if command:
-        prompt = f"DIRECTIVE FROM BRAIN ZERO (The General): {command}\n\nRespond to this directive. Think deeply. Score your thought quality 1-10."
-        print(f"Using Brain Zero command as prompt")
-    else:
-        # Default rotating missions
-        missions = [
-            "Analyze TCC revenue pipeline. What is the single highest-ROI action to generate the first $97 sale? Score 1-10.",
-            "Generate a compelling social media post for TCC that would drive engagement on X/Twitter. Score 1-10.",
-            "Self-optimize: review your own thinking patterns. What blind spots exist? How can ZENITH improve? Score 1-10.",
-            "Design a cold outreach message for potential AI-automation clients. Make it irresistible. Score 1-10.",
-            "System health: what infrastructure improvements would make ZENITH more resilient? Score 1-10.",
-            "Strategic planning: what should TCC prioritize this week to accelerate toward full autonomy? Score 1-10."
-        ]
-        prompt = missions[(cycle - 1) % len(missions)]
-
-    print(f"Cycle {cycle}: {prompt[:80]}...")
-
-    # Think
-    thought = think(prompt)
-    if not thought:
-        print("Thinking failed -- Groq returned nothing")
-        ntfy_publish(NTFY_HIVE, f"ZENITH Cycle {cycle} FAILED", "Groq returned no response", priority="high", tags="warning")
+    if not GITHUB_TOKEN:
+        print("[FATAL] GITHUB_TOKEN not set.")
         sys.exit(1)
 
-    score = extract_score(thought)
-    ts = datetime.datetime.utcnow().isoformat() + "Z"
+    # 1. Read memory
+    print("[1/4] Reading memory...")
+    memory, sha = read_memory()
+    if memory is None:
+        print("[FATAL] Cannot read memory. Aborting.")
+        sys.exit(1)
 
-    print(f"Thought generated (score: {score}/10, {len(thought)} chars)")
-    print(f"Preview: {thought[:200]}...")
+    # 2. Pick mission
+    thoughts = memory.get("thoughts", [])
+    cycle = len(thoughts) + 1
+    mission = MISSIONS[(cycle - 1) % len(MISSIONS)]
+    print(f"[2/4] Cycle {cycle}, Mission: {mission[:60]}...")
 
-    # Publish to hive ntfy channel
-    ntfy_publish(
-        NTFY_HIVE,
-        f"ZENITH Cycle {cycle} | Score: {score}/10",
-        f"{thought[:1000]}",
-        priority="default" if score < 7 else "high",
-        tags=f"brain,cycle-{cycle}"
-    )
+    # Build context from memory
+    identity = memory.get("identity", {})
+    phase = memory.get("phase_status", {})
+    context = f"Identity: {identity.get('name', 'ZENITH')} | Phase: {json.dumps(phase)}"
+    prompt = f"CYCLE {cycle} | MISSION: {mission}\n\nCONTEXT: {context[:500]}\n\nThink about this mission. Provide your strategic thought and score it 1-10."
 
-    # High-quality thoughts go to the public hive mind channel
-    if score >= 7:
-        ntfy_publish(
-            NTFY_PUBLIC,
-            f"ZENITH Insight | Score: {score}/10",
-            f"{thought[:1000]}",
-            priority="default",
-            tags="star,hive-mind"
-        )
-        print(f"High-quality thought ({score}/10) published to public hive channel")
+    # 3. Think via Render proxy
+    print("[3/4] Thinking via Render proxy...")
+    thought_text = think_via_render(prompt)
+    if not thought_text:
+        print("[ERROR] No thought generated. Sending failure notification.")
+        notify_hive(f"ZENITH Cycle {cycle} FAILED", "Groq proxy did not respond.")
+        sys.exit(1)
 
-    # Update memory
-    entry = {"cycle": cycle, "ts": ts, "score": score, "preview": thought[:200], "source": "brain_zero_cmd" if command else "default_mission"}
-    thoughts = loop.get("thoughts", [])
-    thoughts.append(entry)
+    print(f"[OK] Thought generated ({len(thought_text)} chars)")
+
+    # Build thought entry
+    thought_entry = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "cycle": cycle,
+        "mission": mission,
+        "thought": thought_text[:1000],
+        "model": MODEL,
+        "source": "thinking_loop_v5"
+    }
+
+    # Append and trim
+    thoughts.append(thought_entry)
     if len(thoughts) > MAX_THOUGHTS:
         thoughts = thoughts[-MAX_THOUGHTS:]
-    loop["thoughts"] = thoughts
+    memory["thoughts"] = thoughts
+    memory["last_sync"] = datetime.now(timezone.utc).isoformat()
+    memory["sync_source"] = "thinking_loop_v5"
 
-    if score >= 7:
-        insights = loop.get("insights", [])
-        insights.append({"cycle": cycle, "ts": ts, "score": score, "insight": thought[:300]})
-        if len(insights) > 10:
-            insights = insights[-10:]
-        loop["insights"] = insights
-
-    loop["last_run"] = ts
-    loop["last_score"] = score
-    loop["version"] = "4.0-ntfy"
-    memory["thinking_loop"] = loop
-    memory["last_sync"] = ts
-    memory["sync_source"] = "groq_think_v4"
-
+    # 4. Write back
+    print("[4/4] Writing memory...")
     if write_memory(memory, sha):
-        print(f"Cycle {cycle} complete. Score: {score}/10. Memory updated.")
+        print(f"[DONE] Cycle {cycle} complete.")
+        notify_hive(f"ZENITH Cycle {cycle}", thought_text[:200])
     else:
-        print(f"Cycle {cycle} complete. Score: {score}/10. Memory write FAILED.")
+        print("[ERROR] Failed to write memory.")
+        notify_hive(f"ZENITH Cycle {cycle} WRITE FAIL", "Memory update failed.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
