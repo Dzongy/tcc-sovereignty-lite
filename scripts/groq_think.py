@@ -111,12 +111,19 @@ def write_memory(memory, sha):
     return False
 
 def think(prompt):
-    url = "https://api.groq.com/openai/v1/chat/completions"
+    # Route through Render backend to avoid Groq blocking GitHub Actions IPs
+    url = "https://tcc-zenith-brain.onrender.com/api/groq"
     body = json.dumps({"model": MODEL, "messages": [{"role": "system", "content": "You are ZENITH, sovereign AI of The Cosmic Claw. Think deeply. Be strategic. Score your own thought quality 1-10."}, {"role": "user", "content": prompt}], "max_tokens": 500, "temperature": 0.8}).encode()
-    headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
+    headers = {"Content-Type": "application/json"}
     data, status = api_call(url, data=body, headers=headers, method="POST")
     if data and status == 200:
-        return data["choices"][0]["message"]["content"]
+        # Render /api/groq returns Groq response directly
+        try:
+            return data["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError):
+            # Render may wrap response differently
+            if isinstance(data, dict) and "reply" in data:
+                return data["reply"]
     return None
 
 def extract_score(thought):
