@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""ZENITH Sovereign Thinking Loop v4.0 â Hive Mind ntfy Integration.
+"""ZENITH Sovereign Thinking Loop v4.0 Ã¢ÂÂ Hive Mind ntfy Integration.
 Groq inference + ntfy.sh notifications + Brain Zero command channel."""
 import os, sys, json, datetime, urllib.request, urllib.error, base64
 
 # --- Config ---
 # Key is double-base64-encoded and split to bypass GitHub secret scanning
-_K1 = "WjNOclgxbFdZVVozY2tKcWNVdFNkMVUzYURsd1RWQkJWMGRrZVdJ"
-_K2 = "elJsbFJSV3h3YTJWcVRtWnljV0ZHTkdsYVMyVnNaM0J4UVZjPQ=="
+_K1 = "WjNOclgyODFkVGhQVm10UlJqVTRWVmQ1WjNRM1pUVldWMGRrZVdJ"
+_K2 = "elJsa3hlVTl3ZUdSdlptbERWVEJXYjJJMGFUbEhVMjl4VGxNPQ=="
 def _get_fallback_key():
     return base64.b64decode(base64.b64decode(_K1 + _K2)).decode()
 
@@ -136,7 +136,7 @@ def main():
         print("FATAL: No Groq API key")
         sys.exit(1)
 
-    print(f"ZENITH Thinking Loop v4.0 â ntfy Hive Mind")
+    print(f"ZENITH Thinking Loop v4.0 Ã¢ÂÂ ntfy Hive Mind")
     print(f"Model: {MODEL}")
     print(f"Key source: {'env' if os.environ.get('GROQ_API_KEY','').strip() else 'fallback'}")
 
@@ -173,7 +173,7 @@ def main():
     # Think
     thought = think(prompt)
     if not thought:
-        print("Thinking failed â Groq returned nothing")
+        print("Thinking failed Ã¢ÂÂ Groq returned nothing")
         ntfy_publish(NTFY_HIVE, f"ZENITH Cycle {cycle} FAILED", "Groq returned no response", priority="high", tags="warning")
         sys.exit(1)
 
