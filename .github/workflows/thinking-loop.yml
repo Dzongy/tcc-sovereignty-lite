@@ -2,7 +2,7 @@ name: Zenith Thinking Loop (Groq)
 
 on:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -26,15 +26,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          echo "=== ZENITH Thinking Loop v5.3-clean ==="
+          echo "=== ZENITH Thinking Loop v5.4-hourly ==="
           echo "Time: $(date -u)"
-          echo "Token budget: 2500/cycle, 36 cycles/day max (100K TPD)"
-          python3 scripts/groq_think.py || {
-            EXIT_CODE=$?
-            echo "ERROR: groq_think.py exited with code $EXIT_CODE"
-            if [ $EXIT_CODE -eq 42 ]; then
-              echo "Rate limited (429). Will retry next cycle."
-            fi
-            exit $EXIT_CODE
+          echo "Schedule: hourly (24 cycles/day, ~60K tokens/day at 2500/cycle)"
+          
+          # Attempt 1
+          python3 scripts/groq_think.py && {
+            echo "=== Thinking cycle complete ==="
+            exit 0
           }
-          echo "=== Thinking cycle complete ==="
+          
+          EXIT_CODE=$?
+          echo "ERROR: groq_think.py exited with code $EXIT_CODE"
+          
+          # Retry once on rate limit (exit code 42 = Groq 429)
+          if [ "$EXIT_CODE" -eq 42 ]; then
+            echo "Groq 429 rate limit. Sleeping 60s then retrying..."
+            sleep 60
+            python3 scripts/groq_think.py && {
+              echo "=== Retry succeeded ==="
+              exit 0
+            }
+            echo "Retry also failed (exit $?). Will try next hour."
+            exit 0
+          fi
+          
+          # Non-rate-limit failure -- log but don't fail workflow
+          echo "Non-rate-limit failure. Will retry next hour."
+          exit 0
