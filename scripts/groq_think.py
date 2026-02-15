@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ZENITH Sovereign Thinking Loop v4.0 Ã¢ÂÂ Hive Mind ntfy Integration.
+"""ZENITH Sovereign Thinking Loop v4.0 -- Hive Mind ntfy Integration.
 Groq inference + ntfy.sh notifications + Brain Zero command channel."""
 import os, sys, json, datetime, urllib.request, urllib.error, base64
 
