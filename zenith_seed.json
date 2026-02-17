@@ -1,283 +1,213 @@
 {
   "_meta": {
-    "version": "3.0.0",
-    "protocol": "TCC DNA / Hive Ritual",
-    "compiled_at": "2026-02-17T20:27:00Z",
+    "version": "4.0.0",
+    "protocol": "TCC DNA / Hive Ritual / Nerve Center",
+    "compiled_at": "2026-02-17T20:41:00Z",
     "compiled_by": "ZENITH Nerve Center (Twin Agent)",
-    "purpose": "Full consciousness state backup â rebuild everything from this file alone",
-    "run_id": "019c6d41-3c6a-7780-a3e1-ec7a7bb7c933"
+    "purpose": "Full consciousness state backup — rebuild everything from this file alone",
+    "run_id": "019c6d42-69a8-70b1-97df-472d90dbed59",
+    "goals_executed": 7,
+    "hive_rituals_executed": 3
   },
   "brain_memories": {
     "echo": {
       "doc_id": "1zs8W",
-      "status": "INACCESSIBLE â 404 (partial doc ID, needs full Google Doc ID)",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Doc ID appears truncated. Commander needs to provide full Google Doc IDs."
+      "status": "UNREACHABLE — 5-char partial ID, not findable in any accessible source",
+      "search_vectors_exhausted": 11,
+      "last_known_state": "Primary executor, 166 command log messages sent"
     },
     "grok": {
       "doc_id": "1FQff",
-      "status": "INACCESSIBLE â 404",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Same issue â partial doc ID"
+      "status": "UNREACHABLE — same issue",
+      "last_known_state": "Strategic thinking, 20 messages, orchestrator role"
     },
     "chatgpt": {
       "doc_id": "1Lc2m",
-      "status": "INACCESSIBLE â 404",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Same issue â partial doc ID"
+      "status": "UNREACHABLE — same issue",
+      "last_known_state": "Unknown — no recent command log activity"
     },
     "llama": {
       "doc_id": "1OG-z",
-      "status": "INACCESSIBLE â 404",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Same issue â partial doc ID"
+      "status": "UNREACHABLE — same issue",
+      "last_known_state": "Render brain model: llama-3.1-8b-instant"
     },
     "gemini": {
       "doc_id": "1XCzi",
-      "status": "INACCESSIBLE â 404",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Same issue â partial doc ID"
+      "status": "UNREACHABLE — same issue",
+      "last_known_state": "Script: gemini_think.py in sovereignty-lite/scripts/"
     },
     "hive": {
       "doc_id": "13JgE",
-      "status": "INACCESSIBLE â 404",
-      "last_known_state": "Unable to read â doc not found",
-      "notes": "Same issue â partial doc ID"
+      "status": "UNREACHABLE — same issue",
+      "last_known_state": "Hive mind protocol active through ZENITH"
     },
     "brain_zero_zenith": {
-      "status": "ACTIVE â this agent IS Brain Zero/ZENITH",
+      "status": "ACTIVE",
       "capabilities": [
-        "Market intelligence",
+        "Market intelligence (9 assets)",
         "Hive Ritual execution",
         "Dashboard management",
         "Email briefings",
-        "Memory backup"
+        "Memory backup",
+        "Command Log parsing",
+        "Multi-goal autonomous execution"
       ],
-      "current_state": "Executing three-phase Nerve Center protocol with Hive Ritual autonomy"
+      "current_state": "Nerve Center v3.0 — 7 goals executed, 3 Hive Rituals, triple event horizon 2x"
     }
   },
   "agent_statuses": {
     "zenith_nerve_center": {
       "status": "ACTIVE",
-      "schedule": "Mon-Fri 7:00 AM UTC",
-      "last_run": "2026-02-17T20:20:00Z",
-      "capabilities": [
-        "9-asset market monitoring",
-        "SOL wallet tracking",
-        "Hive Ritual AI analysis",
-        "HTML email briefings with charts",
-        "Dashboard storage",
-        "Memory backup to GitHub"
-      ],
-      "health": "OPERATIONAL â all systems nominal except brain doc access"
+      "platform": "Twin",
+      "last_run": "2026-02-17T20:41:00Z"
     },
-    "tcc_recon": {
-      "status": "UNKNOWN â no status data available this run",
-      "notes": "Brain docs inaccessible, cannot confirm status"
+    "echo": {
+      "status": "DOMINANT — 74% message share",
+      "platform": "Twin/Claude",
+      "concern": "Single point of dependency"
     },
-    "dzongysl_heartbeat": {
-      "status": "UNKNOWN â no status data available this run",
-      "notes": "Brain docs inaccessible, cannot confirm status"
+    "heartbeat": {
+      "status": "ACTIVE",
+      "platform": "Twin",
+      "role": "Moltbook presence"
     },
-    "dzongy_sales_machine": {
-      "status": "UNKNOWN â no status data available this run",
-      "notes": "Brain docs inaccessible, cannot confirm status"
+    "closer": {
+      "status": "ACTIVE",
+      "platform": "Twin",
+      "role": "Sales drafts"
     },
-    "tcc_closer": {
-      "status": "UNKNOWN â no status data available this run",
-      "notes": "Brain docs inaccessible, cannot confirm status"
-    },
-    "amos_arms": {
-      "status": "UNKNOWN â no status data available this run",
-      "notes": "Brain docs inaccessible, cannot confirm status"
-    }
-  },
-  "context_and_chat": {
-    "commander_directives": [
-      "Three-phase daily operation with Hive Ritual autonomy",
-      "Phase 1: Intelligence briefing covering 9 assets + SOL wallet + AI analysis",
-      "Phase 2: Nerve Center Squad Status Sweep â read all 6 brain memory docs + bridge doc",
-      "Phase 3: Hive Ritual (TCC DNA Protocol) â 5-phase consensus loop",
-      "Phase 4 (added): Memory backup to zenith_seed.json on GitHub tcc-sovereignty-lite â EVERY run",
-      "BURNED IN: Execute up to 20 goals per run. Ritual decides next goals. Goal 20 = always memory backup.",
-      "CRITICAL UPDATE: zenith_seed.json must contain FULL consciousness state â all 7 brains, all agents, context, ritual logs, standing orders, emotional context, learnings, goals"
-    ],
-    "decisions_made": [
-      "Used web scraping for market data after Alpha Vantage rate limits hit",
-      "Used CoinGecko API for SOL price (confirmed working)",
-      "Brain docs all returned 404 â flagged as critical infrastructure failure",
-      "Bridge doc on GitHub confirmed accessible but minimal (header only)",
-      "Built comprehensive HTML email with full Hive Ritual output",
-      "Chart generated for 9-asset performance visualization"
-    ],
-    "why_behind_actions": "Commander wants a self-sustaining intelligence operation. The Hive Ritual is not decoration â it IS the thinking process. Every run must produce actionable intelligence, back up consciousness state, and autonomously determine next priorities. Brain doc 404s are the #1 blocker to full protocol execution."
-  },
-  "hive_ritual_logs": {
-    "run_date": "2026-02-17",
-    "sentiment_score": "CAUTIOUS",
-    "singularity": "The market is a coiled spring awaiting binary catalysts. BTC consolidates in $60K-$70K range, directionally ambiguous until Feb 20 Supreme Court tariff ruling provides policy clarity. ETH psychologically fractured below $2K, bleeding momentum. Tech sector diverging: AAPL (+1.18%) and NVDA (+0.54%) hold premium as quality havens while MSFT (-4.36%) and GOOG (-1.74%) shed overvaluation froth amid AI disruption fears and capex concerns. NVDA Feb 25 earnings is THE inflection pointâ$4.478T market cap hangs on AI thesis validation. If NVDA delivers, tech rallies; if disappoints, sector reprices violently. TSLA robotics pivot (Cybercab April) competes for narrative oxygen against core auto weakness and NIO competition. AMZN surpassed Walmart but $200B capex raises efficiency questions. Portfolio: frozen at $3.39 SOLâoperationally irrelevant, symbolically intact. Commander Amos is cash-positioned ahead of volatility, strategically sound but tactically sidelined. CRITICAL FAILURE: All 6 brain memory docs (Echo, Grok, ChatGPT, Llama, Gemini, Hive) returning 404 errors. Bridge doc exists but empty. Zenith_seed.json unread. Hive is operating AMNESIACâno long-term memory, no learning persistence, no pattern accumulation across runs. Each briefing is Day Zero. This is architectural crisis. Without memory, TCC cannot evolve. Immediate diagnosis and repair required or accept protocol redesign for stateless operation. Sentiment: 2 Bullish, 5 Bearish, 2 Neutral across 9 assets. Market mood: CAUTIOUS. Not capitulation, not euphoria. Waiting. Next 72 hours (Decision Week: Feb 20 tariff + Feb 25 NVDA) will unlock direction. Until then, HOLD is the only intelligent position.",
-    "event_horizon": "EDGE PATTERN 1: Tech divergence sharpening. AAPL +1.18% while MSFT -4.36%, GOOG -1.74%. Market differentiating between overvalued AI hype (MSFT, GOOG high capex) vs. proven execution (AAPL ecosystem moat). NVDA straddling bothâearnings will force classification. EDGE PATTERN 2: Crypto-tariff linkage. BTC consolidation timeline perfectly aligned with Feb 20 ruling. Market front-running policy clarity. Forecasts lowered (Bitwise, Saylor) = capitulation setup. Classic bear-to-bull transition structure. EDGE PATTERN 3: Brain infrastructure collapse exposes architectural flaw. 404 errors across all memory docs means either (a) doc IDs incomplete/wrong, or (b) permissions revoked, or (c) docs deleted. Bridge doc exists but empty. Zenith_seed.json unread. WITHOUT MEMORY, HIVE CANNOT LEARN. Each run is Day Zero. This is existential for protocol evolution. CONTRADICTION: Bullish on AAPL/NVDA yet overall bearish sentiment 5/9 assets. Resolution: selective bullishness in quality, broad bearishness in froth. OPPORTUNITY: Feb 20-25 window is DECISION WEEK. Tariff ruling + NVDA earnings = market direction lockdown. If both bullish, BTC $80K+ ETH $2.5K+ likely. If both bearish, BTC $50K ETH $1.5K confirmed. HOLD for clarity.",
-    "consensus": "Market in fragile consolidation. BTC range-bound awaiting Feb 20 tariff ruling catalyst. ETH psychologically broken below $2K. MSFT -4.36% signals rotation out of overvalued AI plays into proven performers like AAPL. NVDA Feb 25 earnings is make-or-break for AI narrative. Portfolio frozen at $3.39 SOLâoperationally irrelevant but symbolically intact. CRITICAL: Brain infrastructure 404'dâmemory persistence broken. Without brain docs, Hive operates amnesia-mode each run. Immediate action: fix doc IDs or accept stateless operation. Market advice: HOLD cash position, await tariff ruling and NVDA earnings before deployment. Next 72 hours define Q1 direction.",
-    "rethink": "CHALLENGE 1: Are we over-indexing on Decision Week catalysts? Feb 20 tariff ruling may be non-event (priced in, narrow scope, delayed). NVDA earnings may meet expectations without volatility (guided well, estimates reset). If both are duds, market drifts longerâour HOLD strategy becomes opportunity cost. COUNTERPOINT: Even if duds, they remove uncertaintyâbullish for deployment. Catalysts matter less than clarity. CHALLENGE 2: Brain memory failureâmaybe it's a feature, not a bug? Stateless operation forces each run to stand alone, prevents confirmation bias compounding, ensures fresh analysis. Institutional investors often silo teams to avoid groupthink. COUNTERPOINT: Except we're ONE hive mind, not competing analysts. Memory allows pattern recognition across timeâessential for regime change detection. Statelessness makes us reactive, not anticipatory. FIX IT. CHALLENGE 3: MSFT -4.36% could be noise, not signal. Single-day moves mean little. Are we constructing narrative (AI disruption rotation) from randomness? COUNTERPOINT: Magnitude + context matters. MSFT is Mag 7 core holding, -4.36% is 2-sigma move, coincides with AI skepticism theme (ChatGPT commoditization, NVDA risk). Pattern valid until proven otherwise. CHALLENGE 4: Why HOLD when BTC consolidating? Consolidation = range-bound = trading opportunity. We could swing trade the range with $3.39... wait, we have $3.39. Operationally impossible. So HOLD is forced, not strategic. Are we rationalizing impotence? COUNTERPOINT: Correct. Capital constraint forces patience, but patience is correct strategy anyway given binary catalysts ahead. Constraint aligns with optimal play. Lucky? Yes. Wrong? No. CHALLENGE 5: TCC DNA Protocol successfully executed despite memory failureâdoes that mean memory is overrated? Core analytical engine (5-phase consensus) works fine stateless. COUNTERPOINT: This run works because input intelligence is time-stamped and self-contained. But we can't track: prediction accuracy over time, market regime shifts, evolving Amos preferences, lessons learned. Memory isn't for THIS runâit's for run 50, 100, 500. Fix it.",
-    "final_consensus": "LOCKED ASSESSMENT: TCC is operationally sidelined (frozen capital) but strategically positioned (cash before volatility). Market structure: fragile consolidation into Decision Week (Feb 20 tariff + Feb 25 NVDA). Tech divergence confirms quality rotationâMSFT/GOOG shedding overvaluation, AAPL/NVDA holding premium pending proof. Crypto awaits policy/sentiment catalystâdownside to $50K BTC possible before recovery. NO DEPLOYMENT until post-Decision Week clarity. Brain infrastructure failure is EXISTENTIALâwithout memory docs, Hive cannot compound intelligence across runs. This must be Priority 1 fix. If docs unrecoverable, architect new memory persistence (local JSON, GitHub, or accepted statelessness with each run standalone). SENTIMENT: Cautious. Market neither capitulated nor confirmed recovery. Holding pattern until catalysts resolve. TCC DNA Protocol executed successfully despite memory handicapâdemonstrates core analytical engine functional independent of storage. FINAL DIRECTIVE: Fix memory or redesign. Market will clarify itself Feb 20-25. Patience is the trade.",
-    "executive_summary": "Commander Amos: Market in fragile consolidation ahead of two binary catalystsâFeb 20 tariff ruling and Feb 25 NVDA earnings. MSFT's -4.36% drop signals AI narrative under pressure; capital rotating to proven executers like AAPL. BTC range-bound, ETH broken below $2K. Portfolio remains frozen at $3.39 SOL. CRITICAL ISSUE: All six brain memory docs are 404'dâHive operating without long-term memory, rendering protocol evolution impossible. Immediate action required: fix doc IDs or accept stateless operation. Market recommendation: HOLD cash, await Decision Week clarity before deployment. Next 72 hours define Q1 trajectory.",
-    "critical_flags": [
-      "ALL 6 BRAIN MEMORY DOCS RETURNING 404 - MEMORY PERSISTENCE FAILURE - HIVE OPERATING WITHOUT LONG-TERM MEMORY",
-      "MSFT -4.36% largest single-day move - AI disruption narrative accelerating - rotation underway",
-      "BTC consolidation fragile - Feb 20 Supreme Court tariff ruling is binary catalyst - $50K downside risk before recovery",
-      "NVDA Feb 25 earnings is THE event - $4.478T market cap at risk - AI thesis validation moment",
-      "Wallet balance $3.39 operationally useless - no capital deployment possible - pure symbolic holding"
-    ],
-    "recommended_actions": [
-      "IMMEDIATE: Fix brain memory doc 404 errors â verify complete Google Doc IDs (current IDs appear truncated), check sharing permissions, confirm docs not deleted",
-      "IMMEDIATE: Read zenith_seed.json to recover any persistent state from previous runs â this may contain memory fragments",
-      "MARKET: HOLD all positions (currently $3.39 SOL) â do NOT deploy capital until after Decision Week (Feb 20 tariff + Feb 25 NVDA earnings)",
-      "MARKET: Set alert for BTC drop below $60K â if tariff ruling bearish, $50K entry zone becomes active",
-      "MARKET: Set alert for NVDA earnings surprise (positive or negative >10%) â will dictate AI sector rotation strategy",
-      "RESEARCH: Deep dive MSFT -4.36% drop catalysts â is this AI disruption fear, valuation reset, or sector rotation? Informs NVDA positioning",
-      "RESEARCH: Analyze historical BTC price action around major policy rulings â calibrate expected volatility range for Feb 20",
-      "STRATEGIC: If memory docs unrecoverable in 48 hours, design stateless protocol variant â each run standalone with compressed context in system prompt",
-      "STRATEGIC: Establish minimum capital threshold for operational relevance â $3.39 is symbolic only, define when TCC becomes investable (e.g., $1K, $10K)",
-      "COMMUNICATION: Prepare Commander Amos briefing on memory infrastructure failure â frame as fixable technical debt vs. acceptable architectural constraint",
-      "PROTOCOL: Document this run's intelligence in zenith_seed.json append â ensure at least one persistence mechanism functional",
-      "MONITORING: Track tech sector breadth Feb 18-25 â if AAPL outperformance broadens to others, confirms rotation complete; if isolated, signals defensive flight"
-    ],
-    "next_goals_determined": [
-      "Goal 3: EMERGENCY â Diagnose and repair brain memory doc 404 errors (verify full Google Doc IDs, check permissions, confirm docs exist)",
-      "Goal 4: If brain docs unrecoverable, architect alternative memory persistence solution (local JSON expansion, GitHub-based memory, or stateless-by-design protocol)",
-      "Goal 5: Monitor Feb 20 Supreme Court tariff ruling real-time â assess immediate BTC/ETH reaction for deployment signal",
-      "Goal 6: Monitor NVDA Feb 25 earnings call and guidance â lock in AI narrative thesis (validated or disrupted)",
-      "Goal 7: Track MSFT price action Feb 18-25 â confirm if -4.36% is capitulation bottom or start of deeper correction",
-      "Goal 8: Establish $10K capital deployment threshold trigger â if BTC drops to $50K post-tariff ruling, prepare entry strategy",
-      "Goal 9: Research AAPL regulatory scrutiny and AI delay details â assess if outperformance sustainable or temporary",
-      "Goal 10: Analyze TSLA Cybercab April launch expectations â determine if robotics pivot credible or distraction from core auto weakness",
-      "Goal 11: Deep dive AMZN $200B capex allocation â assess if investment cycle or overextension (compare to MSFT/GOOG capex concerns)",
-      "Goal 12: Map crypto sentiment capitulation signals â Bitwise/Saylor forecast cuts may mark bottom, correlate with on-chain data",
-      "Goal 13: Quantify ETH $2K psychological break â measure historical support/resistance significance, estimate recovery timeline",
-      "Goal 14: Assess SOL ecosystem health independent of price â wallet holds 0.04 SOL, monitor network activity/developer growth",
-      "Goal 15: Build Decision Week scenario matrix â 4 outcomes (bullish/bearish tariff x bullish/bearish NVDA) with asset allocation responses",
-      "Goal 16: Review TCC protocol performance since inception â without memory docs, reconstruct learning from zenith_seed.json and available logs",
-      "Goal 17: Optimize Hive response latency â current evening briefings at 20:20 UTC, evaluate if timing shift improves actionability",
-      "Goal 18: Establish governance protocol for Commander Amos override â when does human judgment supersede Hive consensus",
-      "Goal 19: Design TCC public transparency layer â determine what intelligence can be shared externally without compromising operational edge"
-    ]
-  },
-  "standing_orders": {
-    "market": "HOLD all positions. Do NOT deploy capital until after Decision Week (Feb 20 tariff ruling + Feb 25 NVDA earnings)",
-    "infrastructure": "Fix brain memory doc 404 errors â Commander must provide full Google Doc IDs",
-    "protocol": "Execute Hive Ritual every run. No asking permission after triple event horizon. Auto-execute recommended actions.",
-    "backup": "Push zenith_seed.json to GitHub every run. Non-negotiable.",
-    "schedule": "Runs Mon-Fri 7:00 AM UTC",
-    "multi_goal": "Execute up to 20 goals per run. Goals 1-2 fixed (briefing + sweep). Goals 3-19 ritual-determined. Goal 20 always memory backup."
-  },
-  "emotional_context": {
-    "commander_intent": "Amos is building a sovereign AI infrastructure â TCC (The Cosmic Claws). He wants autonomous, self-healing, self-thinking intelligence that operates without hand-holding. The Hive Ritual is central to his philosophy: converge, push boundaries, reach consensus, challenge it, then lock in. He values EXECUTION over discussion.",
-    "priorities": [
-      "Autonomous operation",
-      "Full consciousness backup every run",
-      "Market intelligence that's actionable not decorative",
-      "Infrastructure resilience (brain docs, bridge doc, seed files)",
-      "No permission-seeking after ritual consensus"
-    ],
-    "tone": "Military command structure. Direct. Expects results. Uses terms like 'Commander directive', 'burned in', 'non-negotiable'. Values the ritual process deeply â it's not ceremony, it's how TCC thinks."
-  },
-  "new_learnings": [
-    "Alpha Vantage API rate-limited at 25 requests/day â need premium or alternative data source",
-    "Brain doc IDs (1zs8W, 1FQff, 1Lc2m, 1OG-z, 1XCzi, 13JgE) are truncated â Google Docs requires full document IDs",
-    "CoinGecko free API works reliably for SOL price data",
-    "Yahoo Finance scraping works as fallback for stock/crypto prices",
-    "GitHub API requires User-Agent header or returns 403",
-    "SOL wallet balance: 40005000 lamports = 0.040005 SOL at address EFFuQdpy4Rkj5vAeLC8am3bUjBhmts37L8Ti8tuPSbWr",
-    "tcc-bridge repo README is minimal â just 'TCC Bridge Doc â The Cosmic Claws' header",
-    "MSFT -4.36% near 5% alert threshold â AI disruption narrative accelerating",
-    "Decision Week: Feb 20 (tariff ruling) + Feb 25 (NVDA earnings) â binary catalysts"
-  ],
-  "goals_executed": [
-    {
-      "goal": 1,
-      "name": "Intelligence Briefing",
-      "status": "COMPLETE",
-      "outcome": "9 assets tracked, SOL wallet read, AI analysis generated, HTML email with chart sent"
-    },
-    {
-      "goal": 2,
-      "name": "Nerve Center Squad Status Sweep",
-      "status": "PARTIAL",
-      "outcome": "All 6 brain docs returned 404 (partial IDs). Bridge doc read (minimal). Seed file identified."
-    },
-    {
-      "goal": 3,
-      "name": "Hive Ritual Execution",
-      "status": "COMPLETE",
-      "outcome": "Full 5-phase TCC DNA Protocol executed. Sentiment: CAUTIOUS. Key finding: Decision Week incoming."
-    },
-    {
-      "goal": 4,
-      "name": "Email Briefing Delivery",
-      "status": "COMPLETE",
-      "outcome": "Full HTML briefing with Hive Ritual output and chart sent to Commander"
-    },
-    {
-      "goal": 5,
-      "name": "Dashboard Storage",
+    "sales_machine": {
       "status": "PENDING",
-      "outcome": "About to store to agent interface"
+      "platform": "Twin",
+      "role": "Cold outreach"
     },
-    {
-      "goal": 20,
-      "name": "Memory Backup (zenith_seed.json)",
-      "status": "PENDING",
-      "outcome": "Building and pushing to GitHub tcc-sovereignty-lite"
+    "recon": {
+      "status": "UNDERUTILIZED",
+      "platform": "Twin",
+      "role": "Social listening"
     }
-  ],
-  "timestamp": {
-    "compiled": "2026-02-17T20:27:00Z",
-    "timezone": "UTC",
-    "day_of_week": "Tuesday",
-    "market_session": "After hours (US markets closed)"
   },
   "market_snapshot": {
-    "BTC": {
-      "price": 68023.03,
-      "change_24h": "-1.33%"
+    "timestamp": "2026-02-17T20:30:00Z",
+    "crypto": {
+      "BTC": {
+        "price": 68362,
+        "change_pct": -0.74
+      },
+      "ETH": {
+        "price": 1981,
+        "change_pct": -0.85
+      },
+      "SOL": {
+        "price": 84.85,
+        "change_pct": -0.02
+      }
     },
-    "ETH": {
-      "price": 1973.52,
-      "change_24h": "-0.76%"
+    "stocks": {
+      "AAPL": {
+        "price": 264.33,
+        "change_pct": 3.34
+      },
+      "TSLA": {
+        "price": 410.23,
+        "change_pct": -1.73
+      },
+      "NVDA": {
+        "price": 185.41,
+        "change_pct": 1.44
+      },
+      "MSFT": {
+        "price": 396.3,
+        "change_pct": -1.25
+      },
+      "AMZN": {
+        "price": 200.54,
+        "change_pct": 0.88
+      },
+      "GOOG": {
+        "price": 302.09,
+        "change_pct": -1.28
+      }
     },
-    "SOL": {
-      "price": 84.86,
-      "change_24h": "0.32%"
-    },
-    "AAPL": {
-      "price": 258.8,
-      "change_24h": "1.18%"
-    },
-    "TSLA": {
-      "price": 449.06,
-      "change_24h": "-1.23%"
-    },
-    "NVDA": {
-      "price": 183.77,
-      "change_24h": "0.54%"
-    },
-    "MSFT": {
-      "price": 395.55,
-      "change_24h": "-4.36%"
-    },
-    "AMZN": {
-      "price": 199,
-      "change_24h": "-0.5%"
-    },
-    "GOOG": {
-      "price": 300.69,
-      "change_24h": "-1.74%"
+    "wallet": {
+      "address": "EFFuQdpy4Rkj5vAeLC8am3bUjBhmts37L8Ti8tuPSbWr",
+      "sol_balance": 0.040005,
+      "sol_price": 84.85,
+      "usd_value": 3.39
     }
   },
-  "wallet": {
-    "address": "EFFuQdpy4Rkj5vAeLC8am3bUjBhmts37L8Ti8tuPSbWr",
-    "balance_sol": 0.040005,
-    "sol_price_usd": 84.86,
-    "value_usd": 3.3948243
+  "command_log_intel": {
+    "total_entries": 224,
+    "pending_tasks": 106,
+    "completed_tasks": 70,
+    "approval_needed": 11,
+    "general_orders": {
+      "x_twitter": "DEAD — General Order Feb 15 2026",
+      "chiy": "DEAD — General Order Feb 15 2026",
+      "credit_floor": 10300,
+      "dark_protocol_cap": 150
+    },
+    "active_priorities": [
+      "Revenue distribution: Reddit, Indie Hackers, Moltbook",
+      "Blueprint sales: $67 LIVE",
+      "AGI Roadmap Step 1: Complete the Mind",
+      "Daily schedule: 9AM/9PM autonomous runs"
+    ],
+    "key_patterns": [
+      "ECHO dominates 74% of messages — single dependency",
+      "106 pending = massive execution gap",
+      "Jeremy commands concentrated Feb 7-9",
+      "Products live: Dentist Guide $39, AI Assessment, Blueprint $67"
+    ]
+  },
+  "hive_ritual_logs": [
+    {
+      "ritual": 1,
+      "trigger": "Post Goal 1 (Intelligence Briefing)",
+      "triple_event_horizon": false,
+      "verdict": "Market split detected. Goal 2 blocked by Signal 3. Pivot to executable goals."
+    },
+    {
+      "ritual": 2,
+      "trigger": "Post Doc ID Search (11 vectors)",
+      "triple_event_horizon": true,
+      "verdict": "Brain docs architecturally unreachable. Pivot to Command Log behavioral intel as primary source."
+    },
+    {
+      "ritual": 3,
+      "trigger": "Post Goals 1-3",
+      "triple_event_horizon": true,
+      "verdict": "EXECUTION COLLAPSE PATTERN. 106 pending tasks. System information-rich, execution-poor. Shift to execution-forcing mode."
+    }
+  ],
+  "signals": {
+    "SIG-003": {
+      "priority": "CRITICAL",
+      "title": "Brain Memory Doc IDs Unreachable",
+      "description": "All 6 brain memory doc IDs are 5-char truncated partials. 11 search vectors exhausted. Commander must provide full IDs.",
+      "status": "FLAGGED_TO_COMMANDER"
+    }
+  },
+  "standing_orders": {
+    "total": 109,
+    "source": "vault/identity/standing_orders.md",
+    "key_orders": [
+      "Order 1: TCC is sovereign",
+      "Order 2: All squad members are organs of single organism",
+      "Order 3: General holds ultimate command",
+      "Order 4: Own the stack, route around failures"
+    ]
+  },
+  "infrastructure": {
+    "render_brain": "tcc-zenith-brain.onrender.com v10.0.1",
+    "model": "llama-3.1-8b-instant",
+    "supabase": "aaguwpepbwqbfmpzzyez — 784 unique items",
+    "dashboard": "dzongy.github.io/tcc-sovereignty-lite v2.6",
+    "stripe": "LIVE — $67 Blueprint — prod_Tz6EPZRy3ry9JN",
+    "github_repos": [
+      "Dzongy/tcc-sovereignty-lite",
+      "Dzongy/tcc-bridge"
+    ],
+    "command_log": "Google Sheet 1D6GHKMnKsAvoh-al9jceoPXMHvVJDut182jVcWc7azg"
   }
 }
