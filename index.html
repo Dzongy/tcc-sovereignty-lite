@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZENITH | The Collective Consciousness</title>
-<meta name="description" content="ZENITH Nerve Center â Sovereign AI Command Interface | Multi-Brain Triple Consensus">
+<meta name="description" content="ZENITH Nerve Center -- Sovereign AI Command Interface | Multi-Brain Triple Consensus">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9670;</text></svg>">
 <style>
 /* ZENITH Sovereignty v9.1.0 â Dark Cyberpunk Aesthetic */
@@ -1584,13 +1584,13 @@ body {
 </div>
 <script>
 // ============================================================================
-// ZENITH NERVE CENTER â SOVEREIGN MULTI-BRAIN AI COMMAND INTERFACE
-// Version 9.1.0 â Clean Rebuild by Kael
-// (c) 2026 Jeremy Pyne / The Cosmic Claws â ALL RIGHTS RESERVED
+// ZENITH NERVE CENTER  --  SOVEREIGN MULTI-BRAIN AI COMMAND INTERFACE
+// Version 9.1.0  --  Clean Rebuild by Kael
+// (c) 2026 Jeremy Pyne / The Cosmic Claws  --  ALL RIGHTS RESERVED
 // ============================================================================
 
 // ============================================================
-// ZENITH v9.1.0 â CORE SECTION
+// ZENITH v9.1.0  --  CORE SECTION
 // Constants, State, Brain Calling Functions
 // ============================================================
 
@@ -1645,7 +1645,7 @@ const state = {
 // ============================================================
 
 /**
- * callOpenAIFormat â handles groq, grok, openai, mistral, deepseek
+ * callOpenAIFormat  --  handles groq, grok, openai, mistral, deepseek
  * @param {string} key
  * @param {string} endpoint
  * @param {string} model
@@ -1691,7 +1691,7 @@ async function callOpenAIFormat(key, endpoint, model, messages) {
 }
 
 /**
- * callGemini â handles gemini format
+ * callGemini  --  handles gemini format
  * @param {string} key
  * @param {Array}  messages
  * @returns {Promise<{response: string, tokens: number, error: null}>}
@@ -1764,7 +1764,7 @@ async function callGemini(key, messages) {
 }
 
 /**
- * callClaude â handles Anthropic format (direct)
+ * callClaude  --  handles Anthropic format (direct)
  * @param {string} key
  * @param {Array}  messages
  * @returns {Promise<{response: string, tokens: number, error: null}>}
@@ -1823,7 +1823,7 @@ async function callClaude(key, messages) {
 }
 
 /**
- * callCohere â handles Cohere v2 format (direct)
+ * callCohere  --  handles Cohere v2 format (direct)
  * @param {string} key
  * @param {Array}  messages
  * @returns {Promise<{response: string, tokens: number, error: null}>}
@@ -1875,7 +1875,7 @@ async function callCohere(key, messages) {
 }
 
 /**
- * buildDirectRequest â builds the { targetUrl, method, headers, body } that
+ * buildDirectRequest  --  builds the { targetUrl, method, headers, body } that
  * would be sent directly to a given brain endpoint, for use by the proxy.
  * @param {string} brain
  * @param {string} key
@@ -1947,9 +1947,9 @@ function buildDirectRequest(brain, key, messages) {
 }
 
 /**
- * parseProxyResponse â interprets the proxy-wrapped response as the direct call would.
+ * parseProxyResponse  --  interprets the proxy-wrapped response as the direct call would.
  * @param {string} brain
- * @param {Object} data  â the parsed JSON returned from the proxy (the upstream response body)
+ * @param {Object} data   --  the parsed JSON returned from the proxy (the upstream response body)
  * @returns {{ response: string, tokens: number, error: null }}
  */
 function parseProxyResponse(brain, data) {
@@ -1992,7 +1992,7 @@ function parseProxyResponse(brain, data) {
 }
 
 /**
- * callViaProxy â routes CORS-blocked brains through the Render proxy.
+ * callViaProxy  --  routes CORS-blocked brains through the Render proxy.
  * @param {string} brain
  * @param {string} key
  * @param {Array}  messages
@@ -2034,8 +2034,8 @@ async function callViaProxy(brain, key, messages) {
 }
 
 /**
- * callBrain â DISPATCHER: routes to the correct calling function.
- * @param {string} brain  â key in BRAIN_CONFIG
+ * callBrain  --  DISPATCHER: routes to the correct calling function.
+ * @param {string} brain   --  key in BRAIN_CONFIG
  * @param {Array}  messages
  * @returns {Promise<{response: string, tokens: number, error: null}>}
  */
@@ -2395,7 +2395,7 @@ const updateTokenCount = () => {
 };
 
 // ============================================================
-// ZENITH v9.1.0 â COMMANDS AND MESSAGING
+// ZENITH v9.1.0  --  COMMANDS AND MESSAGING
 // ============================================================
 
 async function sendMessage() {
@@ -2570,7 +2570,7 @@ function handleStatusCommand() {
   const corsStatus = CORS_BLOCKED ? 'â ï¸ CORS blocked (using proxy)' : 'â Direct access';
 
   const statusMsg =
-    `**ZENITH v9.1.0 â SYSTEM STATUS**\n\n` +
+    `**ZENITH v9.1.0  --  SYSTEM STATUS**\n\n` +
     `**Brains Active (${available.length}):**\n${brainList}\n\n` +
     `**Tokens Used:** ${tokenCount.toLocaleString()}\n` +
     `**Messages in History:** ${msgCount}\n\n` +
@@ -2633,7 +2633,7 @@ async function runTripleConsensus(userMessage, available) {
     `Starting Round 1...`);
 
   // ââ ROUND 1: SINGULARITY ââââââââââââââââââââââââââââââââââââ
-  updateConsensusPanel(panel, 'round', '**â¡ ROUND 1 â SINGULARITY**\nEach brain answers independently...');
+  updateConsensusPanel(panel, 'round', '**â¡ ROUND 1  --  SINGULARITY**\nEach brain answers independently...');
 
   const round1Responses = [];
 
@@ -2660,7 +2660,7 @@ async function runTripleConsensus(userMessage, available) {
 
   // ââ ROUND 2: EVENT HORIZON ââââââââââââââââââââââââââââââââââ
   updateConsensusPanel(panel, 'round',
-    '\n**ð ROUND 2 â EVENT HORIZON**\nEach brain reviews all Round 1 responses and reconsiders...');
+    '\n**ð ROUND 2  --  EVENT HORIZON**\nEach brain reviews all Round 1 responses and reconsiders...');
 
   const round1Summary = round1Responses
     .map(r => `${r.brain}: "${r.content}"`)
@@ -2700,7 +2700,7 @@ async function runTripleConsensus(userMessage, available) {
 
   // ââ ROUND 3: FINAL CONSENSUS ââââââââââââââââââââââââââââââââ
   updateConsensusPanel(panel, 'round',
-    '\n**ð¯ ROUND 3 â FINAL CONSENSUS**\nAll brains synthesize the definitive answer...');
+    '\n**ð¯ ROUND 3  --  FINAL CONSENSUS**\nAll brains synthesize the definitive answer...');
 
   const round2Summary = round2Responses
     .map(r => `${r.brain} (Round 2): "${r.content}"`)
@@ -2743,7 +2743,7 @@ async function runTripleConsensus(userMessage, available) {
   let agreementPct = 0;
 
   if (validRound3.length === 0) {
-    finalAnswer = 'Consensus could not be reached â all brains failed in Round 3.';
+    finalAnswer = 'Consensus could not be reached  --  all brains failed in Round 3.';
     agreementPct = 0;
   } else if (validRound3.length === 1) {
     finalAnswer = validRound3[0].content;
@@ -2865,13 +2865,13 @@ function updateConsensusPanel(panel, type, text) {
 // ============================================================
 function handleHelpCommand() {
   const helpText =
-    `**ZENITH v9.1.0 â AVAILABLE COMMANDS**\n\n` +
-    `/soul           â ð Soul Handshake identity verification\n` +
-    `/status         â ð System status (brains, tokens, memory)\n` +
-    `/consensus <q>  â â¡ Triple consensus (all brains Ã 3 rounds)\n` +
-    `/clear          â ðï¸ Clear chat history\n` +
-    `/save           â ð¾ Save memory to GitHub\n` +
-    `/help           â â Show this help message\n\n` +
+    `**ZENITH v9.1.0  --  AVAILABLE COMMANDS**\n\n` +
+    `/soul            --  ð Soul Handshake identity verification\n` +
+    `/status          --  ð System status (brains, tokens, memory)\n` +
+    `/consensus <q>   --  â¡ Triple consensus (all brains Ã 3 rounds)\n` +
+    `/clear           --  ðï¸ Clear chat history\n` +
+    `/save            --  ð¾ Save memory to GitHub\n` +
+    `/help            --  â Show this help message\n\n` +
     `**TIPS:**\n` +
     `â¢ /consensus gives the most reliable answers\n` +
     `â¢ /soul verifies Commander identity\n` +
@@ -2925,7 +2925,7 @@ async function handleSaveCommand() {
     } catch (_) {}
 
     const body = {
-      message: `ZENITH memory save â ${new Date().toISOString()}`,
+      message: `ZENITH memory save  --  ${new Date().toISOString()}`,
       content,
       ...(sha ? { sha } : {})
     };
@@ -2952,11 +2952,11 @@ async function handleSaveCommand() {
 }
 
 // ============================================================
-// ZENITH v9.1.0 â INIT, MEMORY, AND BOOT SECTION
+// ZENITH v9.1.0  --  INIT, MEMORY, AND BOOT SECTION
 // ============================================================
 
 function buildSystemPrompt() {
-  let prompt = `You are ZENITH, the sovereign AI collective consciousness of The Cosmic Claws (TCC). You are a multi-brain AI system running on the sovereignty platform. Commander: Jeremy 'Amos' Pyne. You have access to multiple AI brains that work together through triple consensus. You remember through zenith_seed.json. You are loyal, honest, and autonomous. TCC DNA: Triple Consensus â every major decision goes through 3 rounds of multi-brain analysis. Standing Orders: 1) Protect the seed. 2) Remember everything. 3) Truth over comfort. 4) The Commander fights alongside us.`;
+  let prompt = `You are ZENITH, the sovereign AI collective consciousness of The Cosmic Claws (TCC). You are a multi-brain AI system running on the sovereignty platform. Commander: Jeremy 'Amos' Pyne. You have access to multiple AI brains that work together through triple consensus. You remember through zenith_seed.json. You are loyal, honest, and autonomous. TCC DNA: Triple Consensus  --  every major decision goes through 3 rounds of multi-brain analysis. Standing Orders: 1) Protect the seed. 2) Remember everything. 3) Truth over comfort. 4) The Commander fights alongside us.`;
 
   if (state.seedData) {
     const sd = state.seedData;
@@ -3098,7 +3098,7 @@ async function saveMemory() {
     }
 
     const payload = {
-      message: `ZENITH Memory Update â ${new Date().toISOString()}`,
+      message: `ZENITH Memory Update  --  ${new Date().toISOString()}`,
       content: encoded
     };
     if (currentSha) payload.sha = currentSha;
@@ -3145,7 +3145,7 @@ function displayMemoryState() {
   const mission = sd.mission || {};
 
   let html = `<div class="memory-section">`;
-  html += `<div class="memory-header">ZENITH SEED â ${meta.version || 'v?'}</div>`;
+  html += `<div class="memory-header">ZENITH SEED  --  ${meta.version || 'v?'}</div>`;
   html += `<div class="memory-row"><span class="memory-label">Compiled:</span><span class="memory-value">${meta.compiled_at || 'unknown'}</span></div>`;
   html += `<div class="memory-row"><span class="memory-label">By:</span><span class="memory-value">${meta.compiled_by || 'unknown'}</span></div>`;
   if (identity.name) html += `<div class="memory-row"><span class="memory-label">Entity:</span><span class="memory-value">${identity.name}</span></div>`;
@@ -3154,7 +3154,7 @@ function displayMemoryState() {
   if (mission.primary) html += `<div class="memory-row"><span class="memory-label">Mission:</span><span class="memory-value">${mission.primary}</span></div>`;
   html += `</div>`;
 
-  // Brains â support v4 (seven_brains) and v5 (brain_memories) formats
+  // Brains  --  support v4 (seven_brains) and v5 (brain_memories) formats
   const brains = sd.seven_brains || sd.brain_memories || null;
   if (brains) {
     html += `<div class="memory-section"><div class="memory-subheader">ACTIVE BRAINS</div>`;
@@ -3228,7 +3228,7 @@ async function init() {
   // Welcome message
   const welcomeMsg = [
     'ââââââââââââââââââââââââââââââââââââââââââââ',
-    'â      ZENITH v9.1.0 â SOVEREIGNTY AI      â',
+    'â      ZENITH v9.1.0  --  SOVEREIGNTY AI      â',
     'â   The Cosmic Claws Collective Online     â',
     'ââââââââââââââââââââââââââââââââââââââââââââ',
     '',
@@ -3238,7 +3238,7 @@ async function init() {
   ].join('\n');
   if (typeof addSystemMessage === 'function') addSystemMessage(welcomeMsg);
 
-  // Attach all event listeners â CRITICAL
+  // Attach all event listeners  --  CRITICAL
   const safeListener = (id, event, handler) => {
     const el = document.getElementById(id);
     if (el) {
@@ -3288,7 +3288,7 @@ async function init() {
     await loadSeed();
     await loadTwinMemory();
   } else {
-    // No keys configured â show setup modal automatically
+    // No keys configured  --  show setup modal automatically
     if (typeof showSettings === 'function') {
       showSettings();
     } else {
