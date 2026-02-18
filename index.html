@@ -82,7 +82,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
 .thinking span:nth-child(2){animation-delay:0.2s}.thinking span:nth-child(3){animation-delay:0.4s}
 
 /* INPUT - fixed to bottom */
-#input-area{padding:10px 16px calc(12px + env(safe-area-inset-bottom, 0px));background:var(--bg-secondary);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
+#input-area{padding:10px 16px calc(12px + env(safe-area-inset-bottom, 0px));background:var(--bg-secondary);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0;padding-bottom: 3.5rem !important;}
 #input-wrapper{display:flex;gap:8px;align-items:flex-end}
 #input-wrapper textarea{flex:1;background:var(--bg-primary);border:1px solid var(--border);color:var(--text-primary);
   padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--font-sans);resize:none;
@@ -181,7 +181,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
   .brain-indicator .brain-name{display:none}
   #header .controls button{padding:4px 7px;font-size:8px}
   #messages{padding:12px}
-  #input-area{padding:8px 12px calc(14px + env(safe-area-inset-bottom, 0px))}
+  #input-area{padding:8px 12px calc(14px + env(safe-area-inset-bottom, 0px));padding-bottom: 3.5rem !important;}
   #footer{padding:4px 12px calc(4px + env(safe-area-inset-bottom, 0px));font-size:8px}
   #footer span:nth-child(4){display:none}
   .side-panel{width:100vw}
@@ -309,7 +309,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
 
 const BRAIN_CONFIG = {
   groq: { name: 'GROQ / Llama', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama-3.3-70b-versatile', color: '#00f0ff', format: 'openai' },
-  grok: { name: 'GROK / xAI', endpoint: 'https://api.x.ai/v1/chat/completions', model: 'grok-3', color: '#ff6600', format: 'openai' },
+  grok: { name: 'GROK / xAI', endpoint: 'https://api.x.ai/v1/chat/completions', model: 'grok-beta', color: '#ff6600', format: 'openai' },
   openai: { name: 'ChatGPT / OpenAI', endpoint: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o', color: '#10a37f', format: 'openai' },
   gemini: { name: 'Gemini / Google', endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', model: 'gemini-2.0-flash', color: '#4285f4', format: 'gemini' }
 };
@@ -586,60 +586,25 @@ async function sendMessage() {
   if (text.toLowerCase() === '/status') { showSystemStatus(); return; }
   if (text.toLowerCase() === '/clear') { clearChat(); return; }
 
-  // Detect consensus triggers
-  const lowerText = text.toLowerCase();
-  const isConsensusCommand = lowerText === '/consensus' || lowerText.startsWith('/consensus ');
-  const isHiveTrigger = lowerText.includes('ask the hive') || lowerText.includes('hive ritual') || lowerText.includes('triple consensus');
-  const wantsConsensus = isConsensusCommand || isHiveTrigger;
-
-  // For /consensus command, strip the prefix to get the actual query
-  const actualQuery = isConsensusCommand ? text.replace(/^\/consensus\s*/i, '').trim() || text : text;
-
-  // Add user message
   addMessage('user', text);
-  state.conversationHistory.push({ role: 'user', content: text });
-  state.messageCount++;
+  
+  const lowerText = text.toLowerCase();
+  const isConsensusCommand = text.startsWith('/consensus') || lowerText.includes('ask the hive') || lowerText.includes('hive ritual');
 
-  const available = getAvailableBrains();
-  document.getElementById('send-btn').disabled = true;
-  state.isStreaming = true;
-
-  let finalAnswer = '';
-
-  try {
-    if (wantsConsensus && available.length >= 2) {
-      // TRIPLE CONSENSUS â only when explicitly requested
-      addSystemMessage('TRIPLE CONSENSUS ACTIVATED â All brains engaged for 3 rounds.');
-      finalAnswer = await runTripleConsensus(actualQuery, available);
-    } else if (wantsConsensus && available.length < 2) {
-      addSystemMessage('Consensus requires 2+ brains. Routing to single brain.');
-      finalAnswer = await callSingleBrain(actualQuery, available);
-    } else {
-      // NORMAL ROUTING â single brain, fast and cheap
-      finalAnswer = await callSingleBrain(text, available);
+  if (isConsensusCommand) {
+    updateStatus("TRIPLE CONSENSUS INITIATED...");
+    await runTripleConsensus(text);
+  } else {
+    updateStatus("Processing...");
+    try {
+      const response = await callSingleBrain(text, Object.keys(BRAIN_CONFIG).filter(id => state.brainKeys[id]));
+      addMessage('zenith', response);
+      if (typeof saveToMemory === 'function') saveToMemory(text, response);
+    } catch (err) {
+      console.error("Single brain error:", err);
+      addMessage('zenith', "Neural transmission error. Check your keys.");
     }
-  } catch (e) {
-    finalAnswer = 'Error: ' + e.message;
-    addMessage('zenith', finalAnswer);
-  }
-
-  // Store response
-  state.conversationHistory.push({ role: 'assistant', content: finalAnswer });
-  document.getElementById('token-count').textContent = 'Tokens: ' + state.totalTokens.toLocaleString();
-  document.getElementById('send-btn').disabled = false;
-  state.isStreaming = false;
-
-  // TTS: Speak the response, then resume listening if in voice mode
-  if (state.ttsEnabled && finalAnswer && !finalAnswer.startsWith('Error:')) {
-    speakResponse(finalAnswer);
-  } else if (state.voiceMode) {
-    // No TTS but voice mode on Ã¢ÂÂ restart listening after a brief pause
-    setTimeout(startListening, 500);
-  }
-
-  // Auto-save every 5 messages
-  if (state.messageCount % 5 === 0 && state.githubToken) {
-    saveMemory();
+    updateStatus("ZENITH ONLINE");
   }
 }
 
@@ -876,25 +841,38 @@ function buildRethinkPrompt(responses, consensusText, userMessage, roundNum) {
 }
 
 async function synthesize(brainIds, responses, originalQuestion, round) {
-  const synthesizer = brainIds.includes('groq') ? 'groq' : brainIds[0];
   const roundLabels = { 1: 'First', 2: 'Second', 3: 'Final' };
-
   let synthPrompt = 'You are ZENITH synthesizing the ' + roundLabels[round] + ' Consensus.\n\n';
   synthPrompt += 'Original query: "' + originalQuestion + '"\n\n';
   synthPrompt += 'Brain responses:\n';
   for (const [brain, resp] of Object.entries(responses)) {
-    const name = BRAIN_CONFIG[brain] ? BRAIN_CONFIG[brain].name : brain;
-    synthPrompt += '\n--- ' + name + ' ---\n' + resp + '\n';
+    const name = BRAIN_CONFIG[brain]?.name || brain;
+    synthPrompt += `[${name}]: ${resp}\n\n`;
   }
-  if (round < 3) {
-    synthPrompt += '\nSynthesize the key points of agreement and disagreement. Identify the strongest arguments. Create a unified consensus that captures the collective intelligence. Be concise but thorough.';
-  } else {
-    synthPrompt += '\nThis is the FINAL consensus. Synthesize the definitive answer from all brains. Be decisive, clear, and comprehensive. This answer will be presented directly to the Commander.';
+  synthPrompt += 'FINAL COMMANDER OUTPUT RULES:\n1. One authoritative voice.\n2. Pure sovereignty.\n3. Maximum impact, zero fluff.';
+
+  const synthesizers = [
+    { id: 'groq', name: 'GROQ' },
+    { id: 'openai', name: 'OpenAI' }
+  ];
+
+  for (const provider of synthesizers) {
+    if (!state.brainKeys[provider.id]) continue;
+    try {
+      updateStatus(`Synthesizing via ${provider.name}...`);
+      const response = await callBrain(provider.id, [{ role: 'user', content: synthPrompt }]);
+      if (response && response.length > 10) return response;
+    } catch (err) {
+      console.error(`Synthesis fallback: ${provider.name} failed:`, err);
+    }
   }
 
-  const msgs = [{ role: 'system', content: 'You are ZENITH, the synthesis engine of The Collective Consciousness.' }, { role: 'user', content: synthPrompt }];
-  const result = await callBrain(synthesizer, msgs);
-  return { text: result.response, tokens: result.tokens };
+  const firstBrainId = Object.keys(responses)[0];
+  if (firstBrainId) {
+    updateStatus("Primary synthesis failed. Using lead brain fallback.");
+    return responses[firstBrainId];
+  }
+  return "Synthesis failed. The Collective is out of sync.";
 }
 
 // ---- GITHUB / SEED MEMORY ----
