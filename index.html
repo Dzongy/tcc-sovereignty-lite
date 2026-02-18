@@ -3213,12 +3213,12 @@ async function init() {
   state.brainKeys = state.brainKeys || {};
   state.brainKeys.groq = localStorage.getItem('zenith_groq_key') || '';
   state.brainKeys.openai = localStorage.getItem('zenith_openai_key') || '';
-  state.brainKeys.anthropic = localStorage.getItem('zenith_anthropic_key') || '';
+  state.brainKeys.grok = localStorage.getItem('zenith_grok_key') || '';
   state.brainKeys.gemini = localStorage.getItem('zenith_gemini_key') || '';
   state.brainKeys.mistral = localStorage.getItem('zenith_mistral_key') || '';
   state.brainKeys.cohere = localStorage.getItem('zenith_cohere_key') || '';
-  state.brainKeys.together = localStorage.getItem('zenith_together_key') || '';
-  state.brainKeys.perplexity = localStorage.getItem('zenith_perplexity_key') || '';
+  state.brainKeys.claude = localStorage.getItem('zenith_claude_key') || '';
+  state.brainKeys.deepseek = localStorage.getItem('zenith_deepseek_key') || '';
   state.githubToken = localStorage.getItem('zenith_github_token') || '';
 
   // Update indicators and build initial system prompt
