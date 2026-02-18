@@ -303,7 +303,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
     <input type="password" id="setup-gemini-key" placeholder="AIza..." autocomplete="off">
     <label><span class="brain-label"><span class="dot" style="background:var(--claude-color)"></span> CLAUDE API KEY (Anthropic)</span></label>
     <input type="password" id="setup-claude-key" placeholder="sk-ant-..." autocomplete="off">
-    <label><span class="brain-label"><span class="dot" style="background:var(--cohere-color)"></span> COHERE API KEY (Command R+)</span></label>
+    <label><span class="brain-label"><span class="dot" style="background:var(--cohere-color)"></span> COHERE API KEY (Command A)</span></label>
     <input type="password" id="setup-cohere-key" placeholder="Enter Cohere key..." autocomplete="off">
     <label><span class="brain-label"><span class="dot" style="background:var(--mistral-color)"></span> MISTRAL API KEY (EU Reasoning)</span></label>
     <input type="password" id="setup-mistral-key" placeholder="Enter Mistral key..." autocomplete="off">
@@ -329,7 +329,7 @@ const BRAIN_CONFIG = {
   openai: { name: 'ChatGPT / OpenAI', endpoint: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o', color: '#10a37f', format: 'openai' },
   gemini: { name: 'Gemini / Google', endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', model: 'gemini-2.0-flash', color: '#4285f4', format: 'gemini' },
   claude: { name: 'Claude / Anthropic', endpoint: 'https://api.anthropic.com/v1/messages', model: 'claude-sonnet-4-20250514', color: '#d97706', format: 'anthropic' },
-  cohere: { name: 'Cohere / Command R+', endpoint: 'https://api.cohere.com/v2/chat', model: 'command-r-plus', color: '#39d353', format: 'cohere' },
+  cohere: { name: 'Cohere / Command A', endpoint: 'https://api.cohere.com/v2/chat', model: 'command-a-03-2025', color: '#39d353', format: 'cohere' },
   mistral: { name: 'Mistral / EU', endpoint: 'https://api.mistral.ai/v1/chat/completions', model: 'mistral-large-latest', color: '#ff4500', format: 'openai' },
   deepseek: { name: 'DeepSeek', endpoint: 'https://api.deepseek.com/v1/chat/completions', model: 'deepseek-chat', color: '#7c3aed', format: 'openai' }
 };
