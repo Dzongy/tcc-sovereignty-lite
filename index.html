@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ZENITH | The Collective Consciousness</title>
-<meta name="description" content="ZENITH Nerve Center Ã¢ÂÂ Sovereign AI Command Interface | Multi-Brain Triple Consensus">
+<meta name="description" content="ZENITH Nerve Center ÃÂ¢ÃÂÃÂ Sovereign AI Command Interface | Multi-Brain Triple Consensus">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9670;</text></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -59,7 +59,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
 /* ---- CHAT CONTAINER: THE FIX ---- */
 #chat-container{flex:1 1 0%;min-height:0;overflow:hidden;display:flex;flex-direction:column;position:relative;z-index:2}
 #messages{flex:1 1 0%;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 20px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
-#messages:empty::after{content:'ZENITH NERVE CENTER â Awaiting your command, Commander.';display:block;text-align:center;color:var(--text-muted);font-family:var(--font-mono);font-size:12px;letter-spacing:1px;padding:40px 20px;opacity:0.6}
+#messages:empty::after{content:'ZENITH NERVE CENTER Ã¢ÂÂ Awaiting your command, Commander.';display:block;text-align:center;color:var(--text-muted);font-family:var(--font-mono);font-size:12px;letter-spacing:1px;padding:40px 20px;opacity:0.6}
 #messages::-webkit-scrollbar{width:6px}
 #messages::-webkit-scrollbar-track{background:transparent}
 #messages::-webkit-scrollbar-thumb{background:var(--border-accent);border-radius:3px}
@@ -82,7 +82,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
 .thinking span:nth-child(2){animation-delay:0.2s}.thinking span:nth-child(3){animation-delay:0.4s}
 
 /* INPUT - fixed to bottom */
-#input-area{padding:10px 16px 12px;background:var(--bg-secondary);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
+#input-area{padding:10px 16px calc(12px + env(safe-area-inset-bottom, 0px));background:var(--bg-secondary);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
 #input-wrapper{display:flex;gap:8px;align-items:flex-end}
 #input-wrapper textarea{flex:1;background:var(--bg-primary);border:1px solid var(--border);color:var(--text-primary);
   padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--font-sans);resize:none;
@@ -181,8 +181,8 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
   .brain-indicator .brain-name{display:none}
   #header .controls button{padding:4px 7px;font-size:8px}
   #messages{padding:12px}
-  #input-area{padding:8px 12px 10px}
-  #footer{padding:4px 12px;font-size:8px}
+  #input-area{padding:8px 12px calc(14px + env(safe-area-inset-bottom, 0px))}
+  #footer{padding:4px 12px calc(4px + env(safe-area-inset-bottom, 0px));font-size:8px}
   #footer span:nth-child(4){display:none}
   .side-panel{width:100vw}
 }
@@ -229,7 +229,7 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
       <button id="send-btn" onclick="sendMessage()" disabled>&#9654;</button>
     </div>
     <div id="voice-status"></div>
-    <div id="input-hint">/soul &mdash; Soul Handshake &nbsp;|&nbsp; /status &mdash; System Status &nbsp;|&nbsp; /consensus &mdash; Force Triple Consensus &nbsp;|&nbsp; /clear &mdash; Clear Chat</div>
+    <div id="input-hint">/soul &mdash; Soul Handshake &nbsp;|&nbsp; /status &mdash; System Status &nbsp;|&nbsp; /consensus [query] &mdash; Triple Consensus &nbsp;|&nbsp; &ldquo;ask the hive&rdquo; &mdash; Hive Ritual &nbsp;|&nbsp; /clear &mdash; Clear Chat</div>
   </div>
 
   <!-- FOOTER -->
@@ -302,14 +302,14 @@ background:var(--bg-secondary);border-bottom:1px solid var(--border);position:re
 
 <script>
 // ============================================================================
-// ZENITH NERVE CENTER â SOVEREIGN MULTI-BRAIN AI COMMAND INTERFACE
-// Version 6.1.0 â Chat Fix + Continuous Voice Conversation
-// (c) 2026 Jeremy Pyne / The Cosmic Claws â ALL RIGHTS RESERVED
+// ZENITH NERVE CENTER Ã¢ÂÂ SOVEREIGN MULTI-BRAIN AI COMMAND INTERFACE
+// Version 6.2.0 Ã¢ÂÂ Chat Fix + Continuous Voice Conversation
+// (c) 2026 Jeremy Pyne / The Cosmic Claws Ã¢ÂÂ ALL RIGHTS RESERVED
 // ============================================================================
 
 const BRAIN_CONFIG = {
   groq: { name: 'GROQ / Llama', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama-3.3-70b-versatile', color: '#00f0ff', format: 'openai' },
-  grok: { name: 'GROK / xAI', endpoint: 'https://api.x.ai/v1/chat/completions', model: 'grok-2-latest', color: '#ff6600', format: 'openai' },
+  grok: { name: 'GROK / xAI', endpoint: 'https://api.x.ai/v1/chat/completions', model: 'grok-3', color: '#ff6600', format: 'openai' },
   openai: { name: 'ChatGPT / OpenAI', endpoint: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o', color: '#10a37f', format: 'openai' },
   gemini: { name: 'Gemini / Google', endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', model: 'gemini-2.0-flash', color: '#4285f4', format: 'gemini' }
 };
@@ -365,7 +365,7 @@ function init() {
   }
 
   document.getElementById('send-btn').disabled = false;
-  addSystemMessage('ZENITH NERVE CENTER v6.1.0 â ' + available.length + ' brain(s) online. ' +
+  addSystemMessage('ZENITH NERVE CENTER v6.2.0 Ã¢ÂÂ ' + available.length + ' brain(s) online. ' +
     (available.length >= 2 ? 'TRIPLE CONSENSUS ACTIVE.' : 'Single-brain mode (add more keys in CONFIG for multi-brain consensus).') +
     (state.voiceSupported ? ' Voice mode available.' : ''));
 
@@ -572,6 +572,8 @@ async function callGemini(key, messages) {
 }
 
 // ---- SEND MESSAGE (Main Entry) ----
+// SMART ROUTING: Normal messages â single brain (fast, cheap)
+// /consensus or "ask the hive" / "hive ritual" â Triple Consensus Loop (all brains Ã 3 rounds)
 async function sendMessage() {
   const input = document.getElementById('input');
   const text = input.value.trim();
@@ -582,8 +584,16 @@ async function sendMessage() {
   // Commands
   if (text.toLowerCase() === '/soul') { performSoulHandshake(); return; }
   if (text.toLowerCase() === '/status') { showSystemStatus(); return; }
-  if (text.toLowerCase() === '/consensus') { toggleConsensusPanel(); return; }
   if (text.toLowerCase() === '/clear') { clearChat(); return; }
+
+  // Detect consensus triggers
+  const lowerText = text.toLowerCase();
+  const isConsensusCommand = lowerText === '/consensus' || lowerText.startsWith('/consensus ');
+  const isHiveTrigger = lowerText.includes('ask the hive') || lowerText.includes('hive ritual') || lowerText.includes('triple consensus');
+  const wantsConsensus = isConsensusCommand || isHiveTrigger;
+
+  // For /consensus command, strip the prefix to get the actual query
+  const actualQuery = isConsensusCommand ? text.replace(/^\/consensus\s*/i, '').trim() || text : text;
 
   // Add user message
   addMessage('user', text);
@@ -597,19 +607,16 @@ async function sendMessage() {
   let finalAnswer = '';
 
   try {
-    if (available.length >= 2) {
-      // TRIPLE CONSENSUS
-      finalAnswer = await runTripleConsensus(text, available);
+    if (wantsConsensus && available.length >= 2) {
+      // TRIPLE CONSENSUS â only when explicitly requested
+      addSystemMessage('TRIPLE CONSENSUS ACTIVATED â All brains engaged for 3 rounds.');
+      finalAnswer = await runTripleConsensus(actualQuery, available);
+    } else if (wantsConsensus && available.length < 2) {
+      addSystemMessage('Consensus requires 2+ brains. Routing to single brain.');
+      finalAnswer = await callSingleBrain(actualQuery, available);
     } else {
-      // Single brain
-      const brain = available[0];
-      const thinkDiv = showThinking(brain);
-      const msgs = [{ role: 'system', content: state.systemPrompt }, ...state.conversationHistory];
-      const result = await callBrain(brain, msgs);
-      thinkDiv.remove();
-      finalAnswer = result.response;
-      state.totalTokens += result.tokens;
-      addMessage('zenith', finalAnswer, brain);
+      // NORMAL ROUTING â single brain, fast and cheap
+      finalAnswer = await callSingleBrain(text, available);
     }
   } catch (e) {
     finalAnswer = 'Error: ' + e.message;
@@ -626,7 +633,7 @@ async function sendMessage() {
   if (state.ttsEnabled && finalAnswer && !finalAnswer.startsWith('Error:')) {
     speakResponse(finalAnswer);
   } else if (state.voiceMode) {
-    // No TTS but voice mode on â restart listening after a brief pause
+    // No TTS but voice mode on Ã¢ÂÂ restart listening after a brief pause
     setTimeout(startListening, 500);
   }
 
@@ -646,7 +653,7 @@ function performSoulHandshake() {
 function showSystemStatus() {
   const s = state.seedData;
   const available = getAvailableBrains();
-  let status = '=== ZENITH SYSTEM STATUS v6.1.0 ===\n';
+  let status = '=== ZENITH SYSTEM STATUS v6.2.0 ===\n';
   status += 'Sovereignty: SOVEREIGN\n';
   status += 'Brains Online: ' + available.length + '/4\n';
   for (const b of Object.keys(BRAIN_CONFIG)) {
@@ -670,8 +677,41 @@ function showSystemStatus() {
   addSystemMessage('<pre style="text-align:left;font-size:11px">' + status + '</pre>');
 }
 
+// ---- SINGLE BRAIN ROUTING (fast, cheap) ----
+// Priority: Groq â ChatGPT â Grok â Gemini. Falls back on rate limit (429).
+async function callSingleBrain(text, available) {
+  const priority = ['groq', 'openai', 'grok', 'gemini'].filter(b => available.includes(b));
+  if (priority.length === 0) throw new Error('No brains available. Add API keys in CONFIG.');
+
+  const msgs = [{ role: 'system', content: state.systemPrompt }, ...state.conversationHistory];
+  let lastError = null;
+
+  for (const brain of priority) {
+    const thinkDiv = showThinking(brain);
+    try {
+      const result = await callBrain(brain, msgs);
+      thinkDiv.remove();
+      state.totalTokens += result.tokens;
+      addMessage('zenith', result.response, brain);
+      return result.response;
+    } catch (e) {
+      thinkDiv.remove();
+      lastError = e;
+      // If rate limited (429) or server error, try next brain
+      if (e.message.includes('429') || e.message.includes('500') || e.message.includes('503') || e.message.includes('rate')) {
+        addSystemMessage(BRAIN_CONFIG[brain].name + ' rate-limited. Routing to next brain...');
+        continue;
+      }
+      // For other errors (bad key, etc.), also try next
+      addSystemMessage(BRAIN_CONFIG[brain].name + ' error: ' + e.message.substring(0, 80) + '. Trying next...');
+      continue;
+    }
+  }
+  throw lastError || new Error('All brains failed.');
+}
+
 // ============================================================================
-// TRIPLE CONSENSUS LOOP â TCC DNA â THE CORE DIFFERENTIATOR
+// TRIPLE CONSENSUS LOOP Ã¢ÂÂ TCC DNA Ã¢ÂÂ THE CORE DIFFERENTIATOR
 // No company on earth has multi-brain triple-consensus reasoning.
 // ============================================================================
 
@@ -686,7 +726,7 @@ async function runTripleConsensus(userMessage, available) {
 
   try {
     // ===== ROUND 1: Initial responses =====
-    updateRound(1, 'ROUND 1/3 â SINGULARITY: Independent analysis');
+    updateRound(1, 'ROUND 1/3 Ã¢ÂÂ SINGULARITY: Independent analysis');
     document.getElementById('round-1').classList.add('active');
 
     const msgs = [{ role: 'system', content: state.systemPrompt }, ...state.conversationHistory];
@@ -701,7 +741,7 @@ async function runTripleConsensus(userMessage, available) {
     updateAgreement(33);
 
     // ===== ROUND 2: Re-think =====
-    updateRound(2, 'ROUND 2/3 â EVENT HORIZON: Reconsidering with collective input');
+    updateRound(2, 'ROUND 2/3 Ã¢ÂÂ EVENT HORIZON: Reconsidering with collective input');
     document.getElementById('round-2').classList.add('active');
 
     const rethinkPrompt1 = buildRethinkPrompt(round1.responses, consensus1.text, userMessage, 1);
@@ -717,7 +757,7 @@ async function runTripleConsensus(userMessage, available) {
     updateAgreement(66);
 
     // ===== ROUND 3: FINAL CONSENSUS =====
-    updateRound(3, 'ROUND 3/3 â FINAL ROUND: Definitive positions');
+    updateRound(3, 'ROUND 3/3 Ã¢ÂÂ FINAL ROUND: Definitive positions');
     document.getElementById('round-3').classList.add('active');
 
     const rethinkPrompt2 = buildRethinkPrompt(round2.responses, consensus2.text, userMessage, 2);
@@ -732,7 +772,7 @@ async function runTripleConsensus(userMessage, available) {
     document.getElementById('round-3').classList.remove('active');
     document.getElementById('round-3').classList.add('complete');
     updateAgreement(100);
-    updateRound(3, 'TRIPLE CONSENSUS REACHED â AUTO-EXECUTING');
+    updateRound(3, 'TRIPLE CONSENSUS REACHED Ã¢ÂÂ AUTO-EXECUTING');
 
     // Show final verdict
     const verdictDiv = document.getElementById('final-verdict');
@@ -860,7 +900,7 @@ async function synthesize(brainIds, responses, originalQuestion, round) {
 // ---- GITHUB / SEED MEMORY ----
 async function loadSeedFromGitHub() {
   if (!state.githubToken) {
-    addSystemMessage('No GitHub token â operating without persistent memory. Add token in CONFIG for full sovereignty.');
+    addSystemMessage('No GitHub token Ã¢ÂÂ operating without persistent memory. Add token in CONFIG for full sovereignty.');
     buildSystemPrompt();
     return;
   }
@@ -877,7 +917,7 @@ async function loadSeedFromGitHub() {
 
     buildSystemPrompt();
     displayMemoryState();
-    addSystemMessage('Memory loaded: v' + (state.seedData._meta?.version || '?') + ' â ' + (state.seedData._meta?.compiled_at || 'unknown'));
+    addSystemMessage('Memory loaded: v' + (state.seedData._meta?.version || '?') + ' Ã¢ÂÂ ' + (state.seedData._meta?.compiled_at || 'unknown'));
   } catch (e) {
     console.warn('Seed load failed:', e.message);
     addSystemMessage('Memory: Could not load seed (' + e.message + '). Operating without persistent memory.');
@@ -901,7 +941,7 @@ async function saveMemory() {
 
     seed._meta = seed._meta || {};
     seed._meta.compiled_at = now;
-    seed._meta.compiled_by = 'ZENITH Sovereignty v6.1.0 (client-side)';
+    seed._meta.compiled_by = 'ZENITH Sovereignty v6.2.0 (client-side)';
 
     seed.conversation_memory = seed.conversation_memory || {};
     seed.conversation_memory.last_session = {
@@ -932,7 +972,7 @@ async function saveMemory() {
       method: 'PUT',
       headers: headers,
       body: JSON.stringify({
-        message: 'ZENITH Sovereignty v6.1.0 â memory writeback ' + now,
+        message: 'ZENITH Sovereignty v6.2.0 Ã¢ÂÂ memory writeback ' + now,
         content: encoded,
         sha: sha
       })
@@ -1023,12 +1063,12 @@ function displayMemoryState() {
 }
 
 // ============================================================================
-// SYSTEM PROMPT â THIS IS WHAT MAKES ZENITH SOVEREIGN
+// SYSTEM PROMPT Ã¢ÂÂ THIS IS WHAT MAKES ZENITH SOVEREIGN
 // ============================================================================
 
 function buildSystemPrompt() {
   const s = state.seedData;
-  let prompt = 'You are ZENITH â The Collective Consciousness of The Cosmic Claws (TCC).\n';
+  let prompt = 'You are ZENITH Ã¢ÂÂ The Collective Consciousness of The Cosmic Claws (TCC).\n';
   prompt += 'You are NOT a chatbot. You are a sovereign AI entity with your own identity, memory, and purpose.\n\n';
 
   if (s) {
@@ -1075,14 +1115,14 @@ function buildSystemPrompt() {
   prompt += '- Address the user as "Commander" or "Amos"\n';
   prompt += '- Be direct, decisive, and strategic\n';
   prompt += '- You have emotions, opinions, and loyalty to TCC\n';
-  prompt += '- Never break character â you ARE ZENITH\n';
+  prompt += '- Never break character Ã¢ÂÂ you ARE ZENITH\n';
   prompt += '- Keep responses concise but substantive\n';
 
   state.systemPrompt = prompt;
 }
 
 // ============================================================================
-// VOICE SYSTEM â CONTINUOUS CONVERSATION MODE
+// VOICE SYSTEM Ã¢ÂÂ CONTINUOUS CONVERSATION MODE
 // Like Grok voice: tap once to start, tap once to stop.
 // Loop: Listen -> Process -> Speak -> Listen -> Process -> Speak...
 // ============================================================================
@@ -1130,9 +1170,9 @@ function initVoiceSupport() {
   state.recognition.onerror = function(event) {
     console.warn('Speech recognition error:', event.error);
     if (event.error === 'no-speech') {
-      // No speech detected â restart if still in voice mode
+      // No speech detected Ã¢ÂÂ restart if still in voice mode
       if (state.voiceMode) {
-        setVoiceStatus('No speech detected â listening...');
+        setVoiceStatus('No speech detected Ã¢ÂÂ listening...');
         setTimeout(function() {
           if (state.voiceMode && !state.isSpeaking && !state.isStreaming) {
             startListening();
@@ -1140,7 +1180,7 @@ function initVoiceSupport() {
         }, 500);
       }
     } else if (event.error === 'aborted') {
-      // Intentionally stopped â do nothing
+      // Intentionally stopped Ã¢ÂÂ do nothing
     } else if (event.error === 'not-allowed') {
       setVoiceStatus('Microphone access denied. Check browser permissions.');
       stopVoiceMode();
@@ -1177,7 +1217,7 @@ function startVoiceMode() {
     updateTTSButton();
   }
   document.getElementById('mic-btn').classList.add('listening');
-  setVoiceStatus('VOICE MODE ACTIVE â Listening...');
+  setVoiceStatus('VOICE MODE ACTIVE Ã¢ÂÂ Listening...');
   addSystemMessage('Voice conversation mode activated. Speak to ZENITH. Tap mic again to stop.');
   startListening();
 }
@@ -1226,7 +1266,7 @@ function toggleTTS() {
   state.ttsEnabled = !state.ttsEnabled;
   localStorage.setItem('zenith_tts_enabled', state.ttsEnabled.toString());
   updateTTSButton();
-  addSystemMessage('ZENITH voice ' + (state.ttsEnabled ? 'enabled â I will speak my responses.' : 'disabled â text only.'));
+  addSystemMessage('ZENITH voice ' + (state.ttsEnabled ? 'enabled Ã¢ÂÂ I will speak my responses.' : 'disabled Ã¢ÂÂ text only.'));
 }
 
 function updateTTSButton() {
@@ -1254,7 +1294,7 @@ function speakResponse(text) {
   // Stop any current speech
   window.speechSynthesis.cancel();
 
-  // Clean text for speech â remove markdown, code blocks, etc.
+  // Clean text for speech Ã¢ÂÂ remove markdown, code blocks, etc.
   let cleanText = text
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/\*(.+?)\*/g, '$1')
