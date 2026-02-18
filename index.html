@@ -2067,34 +2067,37 @@ async function callViaProxy(brain, key, messages) {
  */
 async function callBrain(brain, messages) {
   const cfg = BRAIN_CONFIG[brain];
-  if (!cfg) {
-    throw new Error(`callBrain: unknown brain '${brain}'`);
-  }
-
+  if (!cfg) throw new Error('callBrain: unknown brain "' + brain + '"');
+  
   const key = state.brainKeys[brain];
-  if (!key || key.trim() === '') {
-    throw new Error(`callBrain: no API key configured for brain '${brain}' (${cfg.name})`);
-  }
-
+  if (!key || key.trim() === '') throw new Error('callBrain: no API key for "' + brain + '"');
+  
+  // Strategy: try direct API call first. If CORS blocks it, fall back to Render proxy.
+  // This way brains work immediately if their API supports CORS,
+  // and the proxy catches the rest once Render deploys.
+  
   try {
-    // CORS-blocked brains must go through the proxy
-    if (CORS_BLOCKED.includes(brain)) {
-      return await callViaProxy(brain, key, messages);
-    }
-
-    // Gemini uses its own format
+    // Try direct call first
+    let result;
     if (cfg.format === 'gemini') {
-      return await callGemini(key, messages);
+      result = await callGemini(key, messages);
+    } else if (cfg.format === 'anthropic') {
+      result = await callClaude(key, messages);
+    } else if (cfg.format === 'cohere') {
+      result = await callCohere(key, messages);
+    } else {
+      result = await callOpenAIFormat(key, cfg.endpoint, cfg.model, messages);
     }
-
-    // All other brains use OpenAI-compatible format
-    if (cfg.format === 'openai') {
-      return await callOpenAIFormat(key, cfg.endpoint, cfg.model, messages);
+    return result;
+  } catch (directErr) {
+    // If direct call failed, try proxy fallback
+    console.warn('[ZENITH] Direct call to ' + brain + ' failed: ' + directErr.message + '. Trying proxy...');
+    try {
+      return await callViaProxy(brain, key, messages);
+    } catch (proxyErr) {
+      // Both failed - throw combined error
+      throw new Error('callBrain [' + brain + '] (' + cfg.name + '): Direct: ' + directErr.message + ' | Proxy: ' + proxyErr.message);
     }
-
-    throw new Error(`callBrain: unsupported format '${cfg.format}' for brain '${brain}'`);
-  } catch (err) {
-    throw new Error(`callBrain [${brain}] (${cfg.name}): ${err.message}`);
   }
 }
 
