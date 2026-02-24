@@ -45,7 +45,6 @@ function add(who,txt,ts){
 async function send(){
  let t=inp.value.trim();if(!t)return;
  inp.value="";
- add("Commander",t,new Date().toISOString());
  await fetch(U+"/rest/v1/zenith_messages",{method:"POST",headers:H,body:JSON.stringify({sender:"Commander",content:t})});
 }
 inp.addEventListener("keydown",function(e){if(e.key=="Enter")send()});
