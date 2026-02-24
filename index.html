@@ -1155,6 +1155,7 @@ a,
 </div>
 <script>
 const SUPABASE_URL = 'https://vbqbbziqleymxcyesmky.supabase.co';
+const CHAT_URL = 'http://localhost:8888';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicWJiemlxbGV5bXhjeWVzbWt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTExMTUxNiwiZXhwIjoyMDg2Njg3NTE2fQ.MREdeLv0R__fHe61lOYSconedoo_qHItZUpmcR-IORQ';
 const POLL_INTERVAL = 3000;
 const MAX_MESSAGES = 50;
@@ -1240,7 +1241,7 @@ function renderMessage(msg) {
   if (msg.id) messageEl.dataset.id = msg.id;
   const avatar = document.createElement('div');
   avatar.classList.add('avatar');
-  avatar.textContent = isCommander ? 'C' : '⚡';
+  avatar.textContent = isCommander ? 'C' : 'â¡';
   const bubbleWrap = document.createElement('div');
   bubbleWrap.classList.add('bubble-wrap');
   const bubble = document.createElement('div');
@@ -1269,12 +1270,7 @@ async function sendMessage() {
   const messageText = chatInput.value.trim();
   if (!messageText) return;
   chatInput.value = '';
-  const optimisticMsg = {
-    id: null,
-    sender: 'Commander',
-    content: messageText,
-    created_at: new Date().toISOString()
-  };
+  // Show Commander's message immediately
   const optimisticEl = document.createElement('div');
   optimisticEl.classList.add('message', 'commander', 'slide-in-right');
   const avatar = document.createElement('div');
@@ -1287,7 +1283,6 @@ async function sendMessage() {
   bubble.textContent = messageText;
   const timestamp = document.createElement('div');
   timestamp.classList.add('timestamp');
-  timestamp.dataset.created = optimisticMsg.created_at;
   timestamp.textContent = 'just now';
   bubbleWrap.appendChild(bubble);
   bubbleWrap.appendChild(timestamp);
@@ -1305,41 +1300,93 @@ async function sendMessage() {
   if (emptyState) emptyState.style.display = 'none';
   scrollToBottom();
   showTypingIndicator();
-  const thinkTime = 2000 + Math.random() * 6000;
-  if (typingTimeout) clearTimeout(typingTimeout);
-  typingTimeout = setTimeout(() => {
-    hideTypingIndicator();
-  }, thinkTime);
+  // Also save to Supabase for persistence
   try {
-    const response = await fetch(SUPABASE_URL + '/rest/v1/zenith_messages', {
+    fetch(SUPABASE_URL + '/rest/v1/zenith_messages', {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY,
         'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
       },
       body: JSON.stringify({ sender: 'Commander', content: messageText })
     });
+  } catch (e) {}
+  // Call Brain Collective chat server
+  try {
+    const response = await fetch(CHAT_URL + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: messageText })
+    });
+    hideTypingIndicator();
     if (!response.ok) throw new Error('HTTP ' + response.status);
     const data = await response.json();
-    if (data && data[0] && data[0].id) {
-      const realId = data[0].id;
-      optimisticEl.dataset.id = realId;
-      renderedIds.add(realId);
-      if (realId > lastMessageId) lastMessageId = realId;
+    // Show Zenith's answer
+    const zenithEl = document.createElement('div');
+    zenithEl.classList.add('message', 'zenith', 'fade-in');
+    const zAvatar = document.createElement('div');
+    zAvatar.classList.add('avatar');
+    zAvatar.textContent = '\u26A1';
+    const zBubbleWrap = document.createElement('div');
+    zBubbleWrap.classList.add('bubble-wrap');
+    const zBubble = document.createElement('div');
+    zBubble.classList.add('bubble');
+    zBubble.textContent = data.answer || 'No response from brains.';
+    const zTime = document.createElement('div');
+    zTime.classList.add('timestamp');
+    const brainNames = (data.brains || []).map(function(b) { return b.name; }).join(' > ');
+    zTime.textContent = 'Brain Collective: ' + (brainNames || 'offline');
+    zBubbleWrap.appendChild(zBubble);
+    zBubbleWrap.appendChild(zTime);
+    zenithEl.appendChild(zAvatar);
+    zenithEl.appendChild(zBubbleWrap);
+    if (messagesArea) {
+      if (typingIndicator && typingIndicator.parentNode === messagesArea) {
+        messagesArea.insertBefore(zenithEl, typingIndicator);
+      } else {
+        messagesArea.appendChild(zenithEl);
+      }
     }
-    if (emptyState) emptyState.style.display = 'none';
+    scrollToBottom();
+    // Save Zenith's response to Supabase too
+    try {
+      fetch(SUPABASE_URL + '/rest/v1/zenith_messages', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sender: 'Zenith', content: data.answer })
+      });
+    } catch (e) {}
     const messageCount = document.getElementById('msgCount');
-    if (messageCount) messageCount.textContent = renderedIds.size;
+    if (messageCount) messageCount.textContent = (parseInt(messageCount.textContent) || 0) + 2;
   } catch (err) {
-    console.error('sendMessage error:', err);
-    bubble.style.border = '1px solid #ff3366';
-    bubble.style.boxShadow = '0 0 8px rgba(255,51,102,0.5)';
-    const errNote = document.createElement('span');
-    errNote.style.cssText = 'font-size:10px;color:#ff3366;display:block;margin-top:4px;';
-    errNote.textContent = 'failed to send';
-    bubbleWrap.appendChild(errNote);
+    hideTypingIndicator();
+    // Fallback: show error in chat
+    const errEl = document.createElement('div');
+    errEl.classList.add('message', 'zenith', 'fade-in');
+    const eAvatar = document.createElement('div');
+    eAvatar.classList.add('avatar');
+    eAvatar.textContent = '\u26A1';
+    const eBubbleWrap = document.createElement('div');
+    eBubbleWrap.classList.add('bubble-wrap');
+    const eBubble = document.createElement('div');
+    eBubble.classList.add('bubble');
+    eBubble.style.border = '1px solid #ff3366';
+    eBubble.textContent = 'Chat server offline. Run: bash sovereignty/upgrade.sh';
+    const eTime = document.createElement('div');
+    eTime.classList.add('timestamp');
+    eTime.style.color = '#ff3366';
+    eTime.textContent = 'Connection failed - is mega_harvester running?';
+    eBubbleWrap.appendChild(eBubble);
+    eBubbleWrap.appendChild(eTime);
+    errEl.appendChild(eAvatar);
+    errEl.appendChild(eBubbleWrap);
+    if (messagesArea) messagesArea.appendChild(errEl);
+    scrollToBottom();
   }
 }
 
