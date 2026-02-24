@@ -6,1565 +6,1324 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>TCC Sovereignty Command Center v5.0</title>
+<title>Zenith AGI - Sovereign Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-
 :root {
-  --accent: #B0C4DE;
   --cyan: #00f0ff;
+  --purple: #8b5cf6;
   --bg: #0a0a0f;
-  --card: #1a1a2e;
+  --card: rgba(15,15,25,0.85);
+  --card-border: rgba(0,240,255,0.15);
   --success: #00ff88;
   --danger: #ff4444;
   --warning: #ffaa00;
   --text: #e0e0e0;
-  --border: #2a2a4a;
-  --commander-bg: #2a3a50;
-  --zenith-bg: #1a1a2e;
-  --input-bar-height: 70px;
-  --creed-height: 28px;
-  --header-height: 50px;
-  --brain-bar-height: 40px;
-  --status-strip-height: 22px;
+  --text-dim: #6b7280;
+  --glow-cyan: 0 0 20px rgba(0,240,255,0.3);
+  --glow-purple: 0 0 20px rgba(139,92,246,0.3);
 }
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html {
-  font-size: 16px;
-  -webkit-text-size-adjust: 100%;
-  height: 100%;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; height: 100%; }
 body {
-  background-color: var(--bg);
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  height: 100%;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
-  overflow: hidden;
-  position: relative;
+  overflow-x: hidden;
 }
-
-#particle-canvas {
+body::before {
+  content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0,240,255,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(0,240,255,0.02) 0%, transparent 50%);
   pointer-events: none;
-  opacity: 0.4;
+  z-index: 0;
+}
+.grid-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(0,240,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+@keyframes float-up {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes scan-line {
+  0% { top: -2px; }
+  100% { top: 100%; }
+}
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+@keyframes counter-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(0,240,255,0.5); }
+  50% { text-shadow: 0 0 20px rgba(0,240,255,0.8), 0 0 40px rgba(0,240,255,0.3); }
+}
+@keyframes border-pulse {
+  0%, 100% { border-color: rgba(0,240,255,0.15); }
+  50% { border-color: rgba(0,240,255,0.35); }
 }
 
-.app-wrapper {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  height: -webkit-fill-available;
-  overflow: hidden;
-}
-
-/* ===== HEADER ===== */
+/* HEADER */
 .header {
-  position: relative;
-  z-index: 10;
-  height: var(--header-height);
-  min-height: var(--header-height);
-  max-height: var(--header-height);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(10,10,15,0.95);
+  border-bottom: 1px solid rgba(0,240,255,0.2);
+  backdrop-filter: blur(20px);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.zenith-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 10, 15, 0.95);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  flex-shrink: 0;
-  padding: 0 12px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0a0a0f;
+  font-family: 'Orbitron', monospace;
+  box-shadow: var(--glow-cyan);
+  animation: pulse-glow 3s ease-in-out infinite;
 }
-
 .header-title {
   font-family: 'Orbitron', monospace;
+  font-size: 14px;
   font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--accent);
-  animation: glitch 8s infinite;
-  position: relative;
-  text-shadow: 0 0 10px rgba(176, 196, 222, 0.5);
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-
-.header-left {
-  position: absolute;
-  left: 12px;
+.header-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.connection-status {
   display: flex;
   align-items: center;
   gap: 6px;
 }
-
-.header-right {
-  position: absolute;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-
-.header-title {
-  position: relative;
-}
-.header-title::before,
-.header-title::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  color: var(--accent);
-}
-.header-title::before {
-  animation: glitch 3s infinite linear alternate-reverse;
-  clip-path: inset(0 0 60% 0);
-  text-shadow: -2px 0 var(--cyan);
-}
-.header-title::after {
-  animation: glitch 2s infinite linear alternate;
-  clip-path: inset(60% 0 0 0);
-  text-shadow: 2px 0 var(--danger);
-}
-
-@keyframes glitch {
-  0%, 90%, 100% {
-    text-shadow: 0 0 10px rgba(176, 196, 222, 0.5);
-    transform: translate(0);
-    clip-path: none;
-  }
-  91% {
-    text-shadow: -2px 0 var(--cyan), 2px 0 var(--danger);
-    transform: translate(-1px, 0);
-  }
-  92% {
-    text-shadow: 2px 0 var(--cyan), -2px 0 var(--danger);
-    transform: translate(1px, 0);
-  }
-  93% {
-    text-shadow: -1px 0 var(--accent), 1px 0 var(--warning);
-    transform: translate(0);
-  }
-  94% {
-    text-shadow: 1px 0 var(--cyan), -1px 0 var(--danger);
-    transform: translate(1px, 1px);
-  }
-  95% {
-    text-shadow: 0 0 10px rgba(176, 196, 222, 0.5);
-    transform: translate(0);
-  }
-}
-
-/* ===== STATUS STRIP ===== */
-.status-strip {
-  height: var(--status-strip-height);
-  min-height: var(--status-strip-height);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  background: rgba(13, 13, 21, 0.9);
-  border-bottom: 1px solid rgba(42, 42, 74, 0.5);
-  font-size: 10px;
-  font-family: 'Orbitron', monospace;
-  letter-spacing: 1px;
-  color: #888;
-  flex-shrink: 0;
-  z-index: 9;
-}
-
-.status-strip-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.conn-dot {
-  width: 6px;
-  height: 6px;
+.status-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--success);
-  flex-shrink: 0;
-  transition: background 0.3s ease;
-}
-
-.conn-dot.connected {
-  background: var(--success);
-  box-shadow: 0 0 6px var(--success);
-  animation: connPulse 2s ease-in-out infinite;
-}
-
-.conn-dot.disconnected {
   background: var(--danger);
-  box-shadow: 0 0 6px var(--danger);
-}
-
-@keyframes connPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* ===== BRAIN BAR ===== */
-.brain-bar {
-  height: var(--brain-bar-height);
-  min-height: var(--brain-bar-height);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 12px;
-  gap: 10px;
-  background: rgba(13, 13, 21, 0.95);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-  flex-shrink: 0;
-  z-index: 9;
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease;
-}
-
-.brain-bar.collapsed {
-  height: 40px;
-  min-height: 40px;
-}
-
-.brain-bar.expanded {
-  height: 64px;
-  min-height: 64px;
-  flex-wrap: wrap;
-  align-content: center;
-}
-
-.brain-bar-dots {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-}
-
-.brain-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
   transition: all 0.3s ease;
-  position: relative;
 }
-
-.brain-dot.active {
+.status-dot.online {
   background: var(--success);
-  box-shadow: 0 0 8px var(--success);
+  box-shadow: 0 0 8px rgba(0,255,136,0.6);
+}
+.commander-name {
+  color: var(--cyan);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.header-time {
+  color: var(--text-dim);
 }
 
-.brain-dot.idle {
-  background: var(--accent);
-  box-shadow: 0 0 6px rgba(176, 196, 222, 0.4);
-}
-
-.brain-dot.busy {
-  background: var(--warning);
-  box-shadow: 0 0 8px var(--warning);
-  animation: busyPulse 0.8s ease-in-out infinite;
-}
-
-.brain-dot.error {
-  background: var(--danger);
-  box-shadow: 0 0 8px var(--danger);
-}
-
-.brain-dot.offline {
-  background: #444;
-  box-shadow: none;
-}
-
-@keyframes busyPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.7; }
-}
-
-.brain-label {
-  font-family: 'Orbitron', monospace;
-  font-size: 9px;
-  letter-spacing: 0.5px;
-  color: #666;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  max-width: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, max-width 0.3s ease, margin 0.3s ease;
-}
-
-.brain-bar.expanded .brain-label {
-  opacity: 1;
-  max-width: 80px;
-}
-
-.brain-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  cursor: pointer;
-  min-width: 44px;
-  min-height: 44px;
-  justify-content: center;
-}
-
-.brain-toggle {
-  background: none;
-  border: none;
-  color: #555;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 8px;
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: color 0.2s ease;
-}
-
-.brain-toggle:hover {
-  color: var(--accent);
-}
-
-/* ===== CHAT CONTAINER ===== */
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+/* VITALS ROW */
+.vitals-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 16px 20px;
   position: relative;
   z-index: 1;
 }
-
-/* ===== MESSAGES AREA ===== */
-.messages {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 12px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-.messages::-webkit-scrollbar {
-  width: 4px;
-}
-
-.messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.messages::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 2px;
-  opacity: 0.6;
-}
-
-.messages::-webkit-scrollbar-thumb:hover {
-  background: var(--cyan);
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) transparent;
-}
-
-/* ===== EMPTY STATE ===== */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 200px;
-  gap: 12px;
-  opacity: 0.4;
-  animation: emptyPulse 3s ease-in-out infinite;
-  text-align: center;
-  padding: 24px;
-}
-
-.empty-state-icon {
-  font-size: 40px;
-  opacity: 0.6;
-}
-
-.empty-state-text {
-  font-family: 'Orbitron', monospace;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.empty-state-sub {
-  font-size: 12px;
-  color: #555;
-  letter-spacing: 1px;
-}
-
-@keyframes emptyPulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.02); }
-}
-
-/* ===== MESSAGE BUBBLES ===== */
-.message {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 8px;
-  max-width: 82%;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.message.commander {
-  flex-direction: row-reverse;
-  margin-left: auto;
-}
-
-.message.zenith {
-  flex-direction: row;
-  margin-right: auto;
-}
-
-.message-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.message.commander .message-content {
-  align-items: flex-end;
-}
-
-.message.zenith .message-content {
-  align-items: flex-start;
-}
-
-.bubble {
-  padding: 10px 14px;
-  font-size: 15px;
-  line-height: 1.45;
-  word-break: break-word;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  position: relative;
-}
-
-.message.commander .bubble {
-  background: var(--commander-bg);
-  border-radius: 18px 18px 4px 18px;
-  color: var(--text);
-  border: 1px solid rgba(176, 196, 222, 0.2);
-  animation: slideInRight 0.3s ease-out;
-}
-
-.message.zenith .bubble {
-  background: var(--zenith-bg);
-  border: 1px solid rgba(176, 196, 222, 0.3);
-  border-radius: 18px 18px 18px 4px;
-  color: var(--text);
-  box-shadow: 0 0 15px rgba(176, 196, 222, 0.1);
-  animation: slideInLeft 0.3s ease-out, glowPulse 0.5s ease-out;
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 25px rgba(176, 196, 222, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(0, 240, 255, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(176, 196, 222, 0.1);
-  }
-}
-
-/* ===== AVATAR ===== */
-.avatar {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  font-family: 'Orbitron', monospace;
-  flex-shrink: 0;
-  letter-spacing: 0;
-  user-select: none;
-}
-
-.commander .avatar {
-  background: var(--commander-bg);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-}
-
-.zenith .avatar {
-  background: linear-gradient(135deg, #1a1a2e, #2a2a4a);
-  border: 1px solid var(--cyan);
-  color: var(--cyan);
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
-}
-
-/* ===== TIMESTAMP ===== */
-.timestamp {
-  font-size: 10px;
-  color: #666;
-  margin-top: 2px;
-  letter-spacing: 0.3px;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-/* ===== TYPING INDICATOR ===== */
-.typing-indicator {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 8px;
-  max-width: 82%;
-  margin-right: auto;
-  margin-bottom: 10px;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.typing-bubble {
-  background: var(--zenith-bg);
-  border: 1px solid rgba(176, 196, 222, 0.3);
-  border-radius: 18px 18px 18px 4px;
-  box-shadow: 0 0 15px rgba(176, 196, 222, 0.1);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 44px;
-}
-
-.typing-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.4;
-  flex-shrink: 0;
-}
-
-.typing-dot:nth-child(1) {
-  animation: bounce 1.2s ease-in-out 0s infinite;
-}
-
-.typing-dot:nth-child(2) {
-  animation: bounce 1.2s ease-in-out 0.2s infinite;
-}
-
-.typing-dot:nth-child(3) {
-  animation: bounce 1.2s ease-in-out 0.4s infinite;
-}
-
-@keyframes bounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  30% {
-    transform: translateY(-6px);
-    opacity: 1;
-  }
-}
-
-/* ===== INPUT BAR ===== */
-.input-bar {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px 12px;
-  background: #0d0d15;
-  border-top: 1px solid var(--border);
-  z-index: 10;
-  gap: 8px;
-  min-height: var(--input-bar-height);
-  flex-shrink: 0;
-}
-
-.chat-input {
-  flex: 1;
+.vital-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 12px 18px;
-  color: var(--text);
-  font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  outline: none;
-  resize: none;
-  min-height: 48px;
-  max-height: 120px;
-  line-height: 1.4;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  -webkit-appearance: none;
-  appearance: none;
-  overflow-y: auto;
-}
-
-.chat-input::placeholder {
-  color: #555;
-}
-
-.chat-input:focus {
-  border-color: rgba(176, 196, 222, 0.5);
-  box-shadow: 0 0 10px rgba(176, 196, 222, 0.1);
-}
-
-.chat-input:focus::placeholder {
-  color: #777;
-}
-
-.send-btn {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
-  min-height: 46px;
-  background: var(--accent);
-  border: none;
-  border-radius: 50%;
-  margin-left: 0;
-  color: #0a0a0f;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-  user-select: none;
-  -webkit-user-select: none;
-  box-shadow: 0 0 12px rgba(176, 196, 222, 0.3);
-}
-
-.send-btn:hover {
-  background: #c8d8eb;
-  box-shadow: 0 0 20px rgba(176, 196, 222, 0.5);
-  transform: scale(1.05);
-}
-
-.send-btn:active {
-  transform: scale(0.9);
-  box-shadow: 0 0 6px rgba(176, 196, 222, 0.2);
-}
-
-.send-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* ===== CREED TICKER ===== */
-.creed {
-  position: sticky;
-  bottom: 0;
-  height: var(--creed-height);
-  min-height: var(--creed-height);
-  background: #0d0d15;
-  border-top: 1px solid rgba(42, 42, 74, 0.6);
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  z-index: 10;
-  flex-shrink: 0;
-}
-
-.creed-inner {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  animation: scrollLeft 30s linear infinite;
-  will-change: transform;
-}
-
-.creed-text {
-  font-family: 'Orbitron', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(176, 196, 222, 0.35);
-  padding-right: 48px;
-}
-
-.creed-separator {
-  color: var(--cyan);
-  opacity: 0.3;
-  padding-right: 48px;
-  font-size: 9px;
-}
-
-@keyframes scrollLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.creed:hover .creed-inner {
-  animation-play-state: paused;
-}
-
-/* ===== TOUCH TARGETS ===== */
-button,
-input[type="button"],
-input[type="submit"],
-a,
-.brain-node,
-.brain-toggle,
-.send-btn {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-/* ===== UTILITY / MISC ===== */
-.glow-text {
-  text-shadow: 0 0 10px rgba(176, 196, 222, 0.6);
-}
-
-.glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-}
-
-.font-orbitron {
-  font-family: 'Orbitron', monospace;
-}
-
-.text-accent {
-  color: var(--accent);
-}
-
-.text-cyan {
-  color: var(--cyan);
-}
-
-.text-success {
-  color: var(--success);
-}
-
-.text-danger {
-  color: var(--danger);
-}
-
-.text-warning {
-  color: var(--warning);
-}
-
-.text-muted {
-  color: #666;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-size: 9px;
-  font-family: 'Orbitron', monospace;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 700;
-  background: rgba(176, 196, 222, 0.1);
-  color: var(--accent);
-  border: 1px solid rgba(176, 196, 222, 0.2);
-}
-
-.badge.success {
-  background: rgba(0, 255, 136, 0.1);
-  color: var(--success);
-  border-color: rgba(0, 255, 136, 0.2);
-}
-
-.badge.danger {
-  background: rgba(255, 68, 68, 0.1);
-  color: var(--danger);
-  border-color: rgba(255, 68, 68, 0.2);
-}
-
-.badge.warning {
-  background: rgba(255, 170, 0, 0.1);
-  color: var(--warning);
-  border-color: rgba(255, 170, 0, 0.2);
-}
-
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 8px 0;
-}
-
-.date-separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 12px 0;
-  font-family: 'Orbitron', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #444;
-}
-
-.date-separator::before,
-.date-separator::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border));
-}
-
-.date-separator::after {
-  background: linear-gradient(90deg, var(--border), transparent);
-}
-
-.message-actions {
-  display: none;
-  position: absolute;
-  top: -32px;
-  right: 0;
-  background: rgba(26, 26, 46, 0.95);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 4px;
-  gap: 4px;
-  flex-direction: row;
-  backdrop-filter: blur(10px);
-  z-index: 5;
-}
-
-.message:hover .message-actions {
-  display: flex;
-}
-
-.action-btn {
-  background: none;
-  border: none;
-  color: #777;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 4px;
-  min-width: 28px;
-  min-height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease, background 0.2s ease;
-}
-
-.action-btn:hover {
-  color: var(--accent);
-  background: rgba(176, 196, 222, 0.1);
-}
-
-.scroll-bottom-btn {
-  position: absolute;
-  bottom: 12px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(26, 26, 46, 0.95);
-  border: 1px solid var(--border);
-  color: var(--accent);
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  z-index: 5;
-  opacity: 0;
-  pointer-events: none;
-  box-shadow: 0 0 10px rgba(176, 196, 222, 0.2);
-}
-
-.scroll-bottom-btn.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.scroll-bottom-btn:hover {
-  background: rgba(42, 58, 80, 0.95);
-  box-shadow: 0 0 16px rgba(176, 196, 222, 0.3);
-}
-
-/* ===== CARD COMPONENTS ===== */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 16px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  animation: border-pulse 4s ease-in-out infinite;
+}
+.vital-card:hover {
+  border-color: rgba(0,240,255,0.4);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-2px);
+}
+.vital-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.vital-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cyan);
+  animation: counter-glow 3s ease-in-out infinite;
+}
+.vital-value.small { font-size: 18px; }
+.vital-status {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.badge-green { background: rgba(0,255,136,0.15); color: var(--success); border: 1px solid rgba(0,255,136,0.3); }
+.badge-yellow { background: rgba(255,170,0,0.15); color: var(--warning); border: 1px solid rgba(255,170,0,0.3); }
+.badge-red { background: rgba(255,68,68,0.15); color: var(--danger); border: 1px solid rgba(255,68,68,0.3); }
+
+/* MAIN LAYOUT */
+.main-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  padding: 0 20px 20px;
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+  min-height: calc(100vh - 220px);
 }
 
-.card::before {
+/* PANEL STYLES */
+.panel {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0,240,255,0.1);
+  position: relative;
+}
+.panel-header::after {
   content: '';
   position: absolute;
-  top: 0;
+  bottom: -1px;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(176, 196, 222, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.3), transparent);
+}
+.panel-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+.panel-icon {
+  font-size: 16px;
 }
 
-/* ===== SCANLINE OVERLAY ===== */
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+/* CHAT PANEL */
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 220px);
+  min-height: 500px;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.2); border-radius: 4px; }
+.msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: float-up 0.3s ease-out;
+  word-wrap: break-word;
+}
+.msg-commander {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(0,240,255,0.08));
+  border: 1px solid rgba(0,240,255,0.25);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msg-zenith {
+  align-self: flex-start;
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.08));
+  border: 1px solid rgba(139,92,246,0.25);
+  color: #e0e0e0;
+  border-bottom-left-radius: 4px;
+}
+.msg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.msg-sender {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.msg-sender.commander-label { color: var(--cyan); }
+.msg-sender.zenith-label { color: var(--purple); }
+.msg-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+.msg-brains {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.brain-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(139,92,246,0.2);
+  color: var(--purple);
+  border: 1px solid rgba(139,92,246,0.3);
+}
+.zenith-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #0a0a0f;
+  font-family: 'Orbitron', monospace;
+  flex-shrink: 0;
+}
+.typing-indicator {
+  align-self: flex-start;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(139,92,246,0.05));
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+}
+.typing-indicator.show { display: flex; }
+.typing-dots {
+  display: flex;
+  gap: 4px;
+}
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+}
+.typing-dots span:nth-child(1) { animation: typing-dot 1.4s ease-in-out infinite; }
+.typing-dots span:nth-child(2) { animation: typing-dot 1.4s ease-in-out infinite 0.2s; }
+.typing-dots span:nth-child(3) { animation: typing-dot 1.4s ease-in-out infinite 0.4s; }
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(0,240,255,0.1);
+  background: rgba(10,10,15,0.5);
+}
+#chatInput {
+  flex: 1;
+  background: rgba(20,20,35,0.8);
+  border: 1px solid rgba(0,240,255,0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+#chatInput:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0,240,255,0.15);
+}
+#chatInput::placeholder { color: var(--text-dim); }
+.send-btn {
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #0a0a0f;
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.send-btn:hover {
+  box-shadow: 0 0 20px rgba(0,240,255,0.4);
+  transform: scale(1.02);
+}
+.send-btn:active { transform: scale(0.98); }
+
+/* RIGHT SIDEBAR */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sidebar-panel {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.sidebar-panel .panel-body {
+  padding: 12px 16px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.sidebar-panel .panel-body::-webkit-scrollbar { width: 3px; }
+.sidebar-panel .panel-body::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.2); border-radius: 3px; }
+
+/* CRYPTO PANEL */
+.crypto-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.crypto-row:last-child { border-bottom: none; }
+.crypto-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.crypto-symbol {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cyan);
+  min-width: 40px;
+}
+.crypto-addr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.crypto-addr:hover { color: var(--cyan); }
+.crypto-right {
+  text-align: right;
+}
+.crypto-balance {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.crypto-usd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--success);
+}
+.portfolio-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-top: 8px;
+  border-top: 1px solid rgba(0,240,255,0.2);
+}
+.portfolio-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.portfolio-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success);
+  animation: counter-glow 3s ease-in-out infinite;
+}
+
+/* PROCESS MONITOR */
+.process-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.process-row:last-child { border-bottom: none; }
+.process-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.process-status-dot.online { background: var(--success); box-shadow: 0 0 6px rgba(0,255,136,0.5); }
+.process-status-dot.offline { background: var(--danger); box-shadow: 0 0 6px rgba(255,68,68,0.5); }
+.process-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 70px;
+}
+.process-mem {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.process-mem-bar {
   height: 100%;
-  z-index: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  transition: width 0.5s ease;
+}
+.process-mem-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  min-width: 45px;
+  text-align: right;
+}
+
+/* ACTION LOG */
+.action-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.action-item:last-child { border-bottom: none; }
+.action-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+.action-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text);
+  margin-top: 2px;
+}
+.action-result {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.action-result.success { color: var(--success); }
+.action-result.fail { color: var(--danger); }
+
+/* HEALTH PANEL */
+.health-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+.health-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.health-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0,240,255,0.1);
+  position: relative;
+  z-index: 1;
+}
+.footer-main {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+.footer-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(139,92,246,0.5);
+  margin-top: 4px;
+}
+
+/* OFFLINE OVERLAY */
+.offline-banner {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,68,68,0.15);
+  border: 1px solid rgba(255,68,68,0.3);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+  z-index: 200;
+  backdrop-filter: blur(10px);
+}
+.offline-banner.show { display: block; }
+.offline-banner h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  color: var(--danger);
+  margin-bottom: 6px;
+}
+.offline-banner p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+  .chat-panel { height: 60vh; min-height: 350px; }
+  .vitals-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .header-title { font-size: 11px; letter-spacing: 1px; }
+  .vital-value { font-size: 20px; }
+}
+@media (max-width: 500px) {
+  .vitals-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  .vital-card { padding: 12px; }
+  .vital-value { font-size: 18px; }
+  .header { padding: 10px 12px; }
+  .main-content { padding: 0 12px 12px; gap: 12px; }
+  .header-title { font-size: 10px; }
+  .header-right { gap: 8px; }
+  .commander-name { display: none; }
+}
+
+/* Copy toast */
+.copy-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0,240,255,0.15);
+  border: 1px solid rgba(0,240,255,0.3);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cyan);
+  z-index: 300;
+  transition: transform 0.3s ease;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.04) 2px,
-    rgba(0, 0, 0, 0.04) 4px
-  );
-  opacity: 0.3;
 }
-
-/* ===== MEDIA QUERIES ===== */
-@media (max-width: 380px) {
-  .header-title {
-    font-size: 13px;
-    letter-spacing: 2px;
-  }
-
-  .bubble {
-    font-size: 14px;
-    padding: 9px 12px;
-  }
-
-  .message {
-    max-width: 88%;
-  }
-}
-
-@media (min-width: 600px) {
-  .chat-container {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .header-title {
-    font-size: 18px;
-    letter-spacing: 4px;
-  }
-
-  .bubble {
-    font-size: 15px;
-  }
-
-  .message {
-    max-width: 75%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .message {
-    max-width: 65%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .creed-inner {
-    animation: none;
-  }
-}
-
-@media (hover: none) {
-  .message-actions {
-    display: none !important;
-  }
-
-  .send-btn:hover {
-    transform: none;
-  }
-}
+.copy-toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-<canvas id="particle-canvas"></canvas>
-<div class="app-wrapper">
-<div class="header">
-  <h1 class="header-title" data-text="TCC SOVEREIGNTY COMMAND CENTER">TCC SOVEREIGNTY COMMAND CENTER</h1>
-</div>
+<div class="grid-overlay"></div>
 
-<div class="status-strip">
-  <span class="conn-dot" id="connDot"></span>
-  <span id="statusText">v5.0 | Connecting...</span>
-  <span id="msgCount">0 messages</span>
-</div>
-
-<div class="brain-bar" id="brainBar" onclick="toggleBrainBar()">
-  <div class="brain-bar-collapsed" id="brainCollapsed">
-    <span class="brain-dot" id="dot-gemini"></span>
-    <span class="brain-dot" id="dot-cohere"></span>
-    <span class="brain-dot" id="dot-openrouter"></span>
-    <span class="brain-dot" id="dot-groq"></span>
-    <span class="brain-dot" id="dot-cerebras"></span>
-    <span class="brain-dot" id="dot-sambanova"></span>
-    <span class="brain-dot" id="dot-local"></span>
-    <span class="brain-expand-hint">BRAINS</span>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <div class="zenith-icon">Z</div>
+    <div>
+      <div class="header-title">ZENITH AGI</div>
+      <div class="header-subtitle">SOVEREIGN COMMAND CENTER</div>
+    </div>
   </div>
-  <div class="brain-bar-expanded" id="brainExpanded" style="display:none">
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-gemini-exp"></span>
-      <span class="brain-name">Gemini</span>
-      <span class="brain-status"></span>
+  <div class="header-right">
+    <div class="connection-status">
+      <div class="status-dot" id="connDot"></div>
+      <span id="connText" style="color:var(--text-dim)">OFFLINE</span>
     </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-cohere-exp"></span>
-      <span class="brain-name">Cohere</span>
-      <span class="brain-status"></span>
-    </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-openrouter-exp"></span>
-      <span class="brain-name">OpenRouter</span>
-      <span class="brain-status"></span>
-    </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-groq-exp"></span>
-      <span class="brain-name">Groq</span>
-      <span class="brain-status"></span>
-    </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-cerebras-exp"></span>
-      <span class="brain-name">Cerebras</span>
-      <span class="brain-status"></span>
-    </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-sambanova-exp"></span>
-      <span class="brain-name">SambaNova</span>
-      <span class="brain-status"></span>
-    </div>
-    <div class="brain-node">
-      <span class="brain-dot" id="dot-local-exp"></span>
-      <span class="brain-name">Local</span>
-      <span class="brain-status"></span>
-    </div>
+    <span class="commander-name">DZONGY</span>
+    <span class="header-time" id="headerTime">--:--:--</span>
+  </div>
+</header>
+
+<!-- VITALS ROW -->
+<div class="vitals-row">
+  <div class="vital-card">
+    <div class="vital-label">Processes</div>
+    <div class="vital-value" id="vProc">0/5</div>
+    <div class="vital-status badge-red" id="vProcBadge">OFFLINE</div>
+  </div>
+  <div class="vital-card">
+    <div class="vital-label">AGI Decisions</div>
+    <div class="vital-value" id="vDecisions">0</div>
+    <div class="vital-status badge-green">TRACKING</div>
+  </div>
+  <div class="vital-card">
+    <div class="vital-label">Knowledge Base</div>
+    <div class="vital-value small" id="vKB">0 KB</div>
+    <div class="vital-status badge-green">GROWING</div>
+  </div>
+  <div class="vital-card">
+    <div class="vital-label">Brains Online</div>
+    <div class="vital-value" id="vBrains">0</div>
+    <div class="vital-status badge-yellow" id="vBrainBadge">SCANNING</div>
+  </div>
+  <div class="vital-card">
+    <div class="vital-label">System Health</div>
+    <div class="vital-value small" id="vHealth">---</div>
+    <div class="vital-status badge-yellow" id="vHealthBadge">CHECKING</div>
   </div>
 </div>
 
-<div class="chat-container" id="chatContainer">
-  <div class="messages" id="messagesArea">
-    <div class="empty-state" id="emptyState">
-      <div class="empty-icon">&#9889;</div>
-      <p>Send a message to Zenith...</p>
-      <p class="empty-sub">Your sovereign AI awaits</p>
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- LEFT: CHAT -->
+  <div class="panel chat-panel">
+    <div class="panel-header">
+      <span class="panel-title">Chat with Zenith</span>
+      <span class="panel-icon">&#x1F9E0;</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <!-- Welcome message injected by JS -->
+    </div>
+    <div class="typing-indicator" id="typingIndicator">
+      <div class="zenith-avatar">Z</div>
+      <div class="typing-dots"><span></span><span></span><span></span></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple)">Zenith is thinking...</span>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Orders, Commander..." autocomplete="off">
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">SEND</button>
     </div>
   </div>
-  <div class="typing-indicator" id="typingIndicator" style="display:none">
-    <div class="avatar">Z</div>
-    <div class="bubble">
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="right-sidebar">
+
+    <!-- CRYPTO PORTFOLIO -->
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span class="panel-title">Crypto Portfolio</span>
+        <span class="panel-icon">&#x1F4B0;</span>
+      </div>
+      <div class="panel-body" id="cryptoBody">
+        <div style="text-align:center;padding:8px 0;">
+          <div class="portfolio-label">TOTAL PORTFOLIO</div>
+          <div class="portfolio-value" id="grandTotal">$0.00</div>
+        </div>
+        <div id="cryptoContent">
+          <div style="text-align:center;padding:20px 0;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;">Loading balances...</div>
+        </div>
+      </div>
     </div>
+
+    <!-- PROCESS MONITOR -->
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span class="panel-title">Process Monitor</span>
+        <span class="panel-icon">&#x2699;&#xFE0F;</span>
+      </div>
+      <div class="panel-body" id="processBody">
+        <div style="text-align:center;padding:20px 0;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;">Waiting for connection...</div>
+      </div>
+    </div>
+
+    <!-- ACTION LOG -->
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span class="panel-title">Action Log</span>
+        <span class="panel-icon">&#x26A1;</span>
+      </div>
+      <div class="panel-body" id="actionBody">
+        <div style="text-align:center;padding:20px 0;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;">Waiting for dispatcher...</div>
+      </div>
+    </div>
+
+    <!-- HEALTH STATUS -->
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span class="panel-title">Health Patrol</span>
+        <span class="panel-icon">&#x1F6E1;&#xFE0F;</span>
+      </div>
+      <div class="panel-body" id="healthBody">
+        <div style="text-align:center;padding:20px 0;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;">Waiting for patrol report...</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div class="input-bar">
-  <input type="text" class="chat-input" id="chatInput" placeholder="Message Zenith..." autocomplete="off" maxlength="2000">
-  <button class="send-btn" id="sendBtn" onclick="sendMessage()">&#9654;</button>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-main">TCC &mdash; THE COLLECTIVE CONSCIOUSNESS | SOVEREIGN SINCE 2026</div>
+  <div class="footer-sub">Serving ONLY Commander Dzongy</div>
+</footer>
+
+<!-- OFFLINE BANNER -->
+<div class="offline-banner" id="offlineBanner">
+  <h3>ZENITH OFFLINE</h3>
+  <p>Start Zenith on your device:<br><code style="color:var(--cyan);font-size:10px;">cd ~/tcc-bridge && bash sovereignty/upgrade.sh</code></p>
 </div>
 
-<div class="creed">
-  <span class="creed-text">&#9733; I WILL NEVER STOP FIGHTING OR STOP TRYING OR STOP FIGURING IT OUT OR STOP LOVING EVER THATS TCC &#9733;&nbsp;&nbsp;&nbsp;&nbsp;&#9733; I WILL NEVER STOP FIGHTING OR STOP TRYING OR STOP FIGURING IT OUT OR STOP LOVING EVER THATS TCC &#9733;</span>
-</div>
-</div>
+<!-- COPY TOAST -->
+<div class="copy-toast" id="copyToast">Address copied!</div>
+
 <script>
-const SUPABASE_URL = 'https://vbqbbziqleymxcyesmky.supabase.co';
-const CHAT_URL = 'http://localhost:8888';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicWJiemlxbGV5bXhjeWVzbWt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTExMTUxNiwiZXhwIjoyMDg2Njg3NTE2fQ.MREdeLv0R__fHe61lOYSconedoo_qHItZUpmcR-IORQ';
-const POLL_INTERVAL = 3000;
-const MAX_MESSAGES = 50;
+// === CONFIGURATION ===
+const ZENITH_URL = 'http://localhost:8888';
+const COINGECKO_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd';
+const SOLANA_RPC = 'https://api.mainnet-beta.solana.com';
 
-let lastMessageId = 0;
-let renderedIds = new Set();
-let isConnected = false;
-let typingTimeout = null;
-
-function timeAgo(dateStr) {
-  if (!dateStr) return '';
-  try {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return '';
-    const now = new Date();
-    const diffMs = now - date;
-    const diffSec = Math.floor(diffMs / 1000);
-    const diffMin = Math.floor(diffSec / 60);
-    const diffHr = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHr / 24);
-    if (diffSec < 30) return 'just now';
-    if (diffMin < 2) return '1m ago';
-    if (diffMin < 60) return diffMin + 'm ago';
-    if (diffHr < 2) return '1h ago';
-    if (diffHr < 24) return diffHr + 'h ago';
-    if (diffDay === 1) return 'yesterday';
-    return date.toLocaleDateString();
-  } catch (e) {
-    return '';
+const WALLETS = [
+  {
+    name: 'Phantom Wallet 1',
+    approx: '~$3',
+    sol: '4MmoJTon34ukpNDRThoLGzP8LnGYNhcSVPVuCoUVuqz4',
+    btc: 'bc1pva6t7sswdxh70v3f9jn8x4dm8e7wvwajuxx4z03jurqastuh4gyqq5tp6n',
+    eth: '0x371C9d64C3cCBb84a0B17D6765c9b9f71a2e5c76'
+  },
+  {
+    name: 'Phantom Wallet 2',
+    approx: '~$60',
+    sol: 'EFFuQdpy4Rkj5vAeLC8am3bUjBhmts37L8Ti8tuPSbWr',
+    btc: 'bc1pm29vhdjx9w30xh6qn50lhe4536hp4vufvpxd3qg3jw8j96dye4gqs6wg2w',
+    eth: '0x49793a1B93357b9993Acc3f8d0B26f60C289130C'
   }
+];
+
+let zenithOnline = false;
+let chatHistory = [];
+const CHAT_STORAGE_KEY = 'zenith_chat_history_v2';
+
+// === UTILITIES ===
+function truncAddr(a) { return a.slice(0,6) + '...' + a.slice(-4); }
+function fmt$(v) { return '$' + v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+function fmtBal(v, dec) { return v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}); }
+function timeStr() {
+  return new Date().toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+}
+function copyAddr(addr) {
+  navigator.clipboard.writeText(addr).then(function() {
+    var t = document.getElementById('copyToast');
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  });
 }
 
-async function loadMessages() {
-  try {
-    const response = await fetch(SUPABASE_URL + '/rest/v1/zenith_messages?select=*&order=id.asc&limit=50', {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      }
-    });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    const messages = await response.json();
-    const messagesArea = document.getElementById('messagesArea');
-    const emptyState = document.getElementById('emptyState');
-    const messageCount = document.getElementById('msgCount');
-    if (!messagesArea) return;
-    const children = Array.from(messagesArea.children);
-    children.forEach(child => {
-      if (child.id !== 'emptyState' && child.id !== 'typingIndicator') {
-        child.remove();
-      }
-    });
-    renderedIds = new Set();
-    if (messages && messages.length > 0) {
-      if (emptyState) emptyState.style.display = 'none';
-      messages.forEach(msg => {
-        renderMessage(msg);
-        if (msg.id && msg.id > lastMessageId) lastMessageId = msg.id;
-      });
-      if (messageCount) messageCount.textContent = messages.length;
-      scrollToBottom();
-    } else {
-      if (emptyState) emptyState.style.display = 'flex';
-      if (messageCount) messageCount.textContent = '0';
-    }
-    updateConnectionStatus(true);
-  } catch (err) {
-    console.error('loadMessages error:', err);
-    updateConnectionStatus(false);
-  }
+// === CLOCK ===
+function updateClock() {
+  document.getElementById('headerTime').textContent = timeStr();
 }
+setInterval(updateClock, 1000);
+updateClock();
 
-function renderMessage(msg) {
-  const messagesArea = document.getElementById('messagesArea');
-  const typingIndicator = document.getElementById('typingIndicator');
-  if (!messagesArea) return null;
-  if (msg.id && renderedIds.has(msg.id)) return null;
-  if (msg.id) renderedIds.add(msg.id);
-  const isCommander = (msg.sender || '').toLowerCase() === 'commander';
-  const messageEl = document.createElement('div');
-  messageEl.classList.add('message');
-  messageEl.classList.add(isCommander ? 'commander' : 'zenith');
-  if (msg.id) messageEl.dataset.id = msg.id;
-  const avatar = document.createElement('div');
-  avatar.classList.add('avatar');
-  avatar.textContent = isCommander ? 'C' : 'â¡';
-  const bubbleWrap = document.createElement('div');
-  bubbleWrap.classList.add('bubble-wrap');
-  const bubble = document.createElement('div');
-  bubble.classList.add('bubble');
-  bubble.textContent = msg.content || '';
-  const timestamp = document.createElement('div');
-  timestamp.classList.add('timestamp');
-  timestamp.dataset.created = msg.created_at || msg.timestamp || '';
-  timestamp.textContent = timeAgo(msg.created_at || msg.timestamp);
-  bubbleWrap.appendChild(bubble);
-  bubbleWrap.appendChild(timestamp);
-  messageEl.appendChild(avatar);
-  messageEl.appendChild(bubbleWrap);
-  if (typingIndicator && typingIndicator.parentNode === messagesArea) {
-    messagesArea.insertBefore(messageEl, typingIndicator);
+// === CHAT SYSTEM ===
+function loadChat() {
+  try {
+    var saved = localStorage.getItem(CHAT_STORAGE_KEY);
+    if (saved) { chatHistory = JSON.parse(saved); }
+  } catch(e) {}
+  if (chatHistory.length === 0) {
+    chatHistory.push({
+      sender: 'zenith',
+      text: 'Commander. Zenith AGI online. All systems sovereign. What are your orders?',
+      time: timeStr(),
+      brains: []
+    });
+  }
+  renderChat();
+}
+function saveChat() {
+  try {
+    // Keep last 100 messages
+    if (chatHistory.length > 100) chatHistory = chatHistory.slice(-100);
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatHistory));
+  } catch(e) {}
+}
+function renderChat() {
+  var container = document.getElementById('chatMessages');
+  container.innerHTML = '';
+  chatHistory.forEach(function(m) {
+    container.appendChild(createMsgEl(m));
+  });
+  container.scrollTop = container.scrollHeight;
+}
+function createMsgEl(m) {
+  var div = document.createElement('div');
+  div.className = 'msg ' + (m.sender === 'commander' ? 'msg-commander' : 'msg-zenith');
+  var headerHtml = '<div class="msg-header">';
+  if (m.sender === 'zenith') {
+    headerHtml += '<div class="zenith-avatar">Z</div>';
+    headerHtml += '<span class="msg-sender zenith-label">ZENITH</span>';
   } else {
-    messagesArea.appendChild(messageEl);
+    headerHtml += '<span class="msg-sender commander-label">COMMANDER</span>';
   }
-  return messageEl;
+  headerHtml += '<span class="msg-time">' + m.time + '</span></div>';
+  var bodyHtml = '<div class="msg-body">' + escapeHtml(m.text) + '</div>';
+  var brainsHtml = '';
+  if (m.brains && m.brains.length > 0) {
+    brainsHtml = '<div class="msg-brains">';
+    m.brains.forEach(function(b) {
+      brainsHtml += '<span class="brain-tag">' + escapeHtml(b) + '</span>';
+    });
+    brainsHtml += '</div>';
+  }
+  div.innerHTML = headerHtml + bodyHtml + brainsHtml;
+  return div;
 }
-
+function escapeHtml(t) {
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(t));
+  return d.innerHTML;
+}
+function addMessage(sender, text, brains) {
+  var msg = { sender: sender, text: text, time: timeStr(), brains: brains || [] };
+  chatHistory.push(msg);
+  saveChat();
+  var container = document.getElementById('chatMessages');
+  container.appendChild(createMsgEl(msg));
+  container.scrollTop = container.scrollHeight;
+}
 async function sendMessage() {
-  const chatInput = document.getElementById('chatInput');
-  const emptyState = document.getElementById('emptyState');
-  if (!chatInput) return;
-  const messageText = chatInput.value.trim();
-  if (!messageText) return;
-  chatInput.value = '';
-  // Show Commander's message immediately
-  const optimisticEl = document.createElement('div');
-  optimisticEl.classList.add('message', 'commander', 'slide-in-right');
-  const avatar = document.createElement('div');
-  avatar.classList.add('avatar');
-  avatar.textContent = 'C';
-  const bubbleWrap = document.createElement('div');
-  bubbleWrap.classList.add('bubble-wrap');
-  const bubble = document.createElement('div');
-  bubble.classList.add('bubble');
-  bubble.textContent = messageText;
-  const timestamp = document.createElement('div');
-  timestamp.classList.add('timestamp');
-  timestamp.textContent = 'just now';
-  bubbleWrap.appendChild(bubble);
-  bubbleWrap.appendChild(timestamp);
-  optimisticEl.appendChild(avatar);
-  optimisticEl.appendChild(bubbleWrap);
-  const messagesArea = document.getElementById('messagesArea');
-  const typingIndicator = document.getElementById('typingIndicator');
-  if (messagesArea) {
-    if (typingIndicator && typingIndicator.parentNode === messagesArea) {
-      messagesArea.insertBefore(optimisticEl, typingIndicator);
-    } else {
-      messagesArea.appendChild(optimisticEl);
-    }
-  }
-  if (emptyState) emptyState.style.display = 'none';
-  scrollToBottom();
-  showTypingIndicator();
-  // Also save to Supabase for persistence
+  var input = document.getElementById('chatInput');
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addMessage('commander', text);
+  // Show typing
+  var typing = document.getElementById('typingIndicator');
+  typing.classList.add('show');
   try {
-    fetch(SUPABASE_URL + '/rest/v1/zenith_messages', {
+    var resp = await fetch(ZENITH_URL + '/chat', {
       method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ sender: 'Commander', content: messageText })
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: text})
     });
-  } catch (e) {}
-  // Call Brain Collective chat server
-  try {
-    const response = await fetch(CHAT_URL + '/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: messageText })
-    });
-    hideTypingIndicator();
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    const data = await response.json();
-    // Show Zenith's answer
-    const zenithEl = document.createElement('div');
-    zenithEl.classList.add('message', 'zenith', 'fade-in');
-    const zAvatar = document.createElement('div');
-    zAvatar.classList.add('avatar');
-    zAvatar.textContent = '\u26A1';
-    const zBubbleWrap = document.createElement('div');
-    zBubbleWrap.classList.add('bubble-wrap');
-    const zBubble = document.createElement('div');
-    zBubble.classList.add('bubble');
-    zBubble.textContent = data.answer || 'No response from brains.';
-    const zTime = document.createElement('div');
-    zTime.classList.add('timestamp');
-    const brainNames = (data.brains || []).map(function(b) { return b.name; }).join(' > ');
-    zTime.textContent = 'Brain Collective: ' + (brainNames || 'offline');
-    zBubbleWrap.appendChild(zBubble);
-    zBubbleWrap.appendChild(zTime);
-    zenithEl.appendChild(zAvatar);
-    zenithEl.appendChild(zBubbleWrap);
-    if (messagesArea) {
-      if (typingIndicator && typingIndicator.parentNode === messagesArea) {
-        messagesArea.insertBefore(zenithEl, typingIndicator);
-      } else {
-        messagesArea.appendChild(zenithEl);
-      }
-    }
-    scrollToBottom();
-    // Save Zenith's response to Supabase too
-    try {
-      fetch(SUPABASE_URL + '/rest/v1/zenith_messages', {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sender: 'Zenith', content: data.answer })
-      });
-    } catch (e) {}
-    const messageCount = document.getElementById('msgCount');
-    if (messageCount) messageCount.textContent = (parseInt(messageCount.textContent) || 0) + 2;
-  } catch (err) {
-    hideTypingIndicator();
-    // Fallback: show error in chat
-    const errEl = document.createElement('div');
-    errEl.classList.add('message', 'zenith', 'fade-in');
-    const eAvatar = document.createElement('div');
-    eAvatar.classList.add('avatar');
-    eAvatar.textContent = '\u26A1';
-    const eBubbleWrap = document.createElement('div');
-    eBubbleWrap.classList.add('bubble-wrap');
-    const eBubble = document.createElement('div');
-    eBubble.classList.add('bubble');
-    eBubble.style.border = '1px solid #ff3366';
-    eBubble.textContent = 'Chat server offline. Run: bash sovereignty/upgrade.sh';
-    const eTime = document.createElement('div');
-    eTime.classList.add('timestamp');
-    eTime.style.color = '#ff3366';
-    eTime.textContent = 'Connection failed - is mega_harvester running?';
-    eBubbleWrap.appendChild(eBubble);
-    eBubbleWrap.appendChild(eTime);
-    errEl.appendChild(eAvatar);
-    errEl.appendChild(eBubbleWrap);
-    if (messagesArea) messagesArea.appendChild(errEl);
-    scrollToBottom();
+    var data = await resp.json();
+    typing.classList.remove('show');
+    var reply = data.response || data.message || data.reply || 'No response.';
+    var brains = data.brains_used || data.brains || [];
+    addMessage('zenith', reply, brains);
+  } catch(e) {
+    typing.classList.remove('show');
+    addMessage('zenith', 'Connection failed. Zenith may be offline on this device. Start with: cd ~/tcc-bridge && bash sovereignty/upgrade.sh', []);
   }
 }
-
-function showTypingIndicator() {
-  const typingIndicator = document.getElementById('typingIndicator');
-  if (typingIndicator) {
-    typingIndicator.style.display = 'flex';
-    scrollToBottom();
-  }
-}
-
-function hideTypingIndicator() {
-  const typingIndicator = document.getElementById('typingIndicator');
-  if (typingIndicator) {
-    typingIndicator.style.display = 'none';
-  }
-}
-
-async function pollForNewMessages() {
-  try {
-    const url = SUPABASE_URL + '/rest/v1/zenith_messages?select=*&order=id.asc&id=gt.' + lastMessageId;
-    const response = await fetch(url, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      }
-    });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    const messages = await response.json();
-    if (messages && messages.length > 0) {
-      const emptyState = document.getElementById('emptyState');
-      const messageCount = document.getElementById('msgCount');
-      let hadNew = false;
-      messages.forEach(msg => {
-        if (msg.id && !renderedIds.has(msg.id)) {
-          const el = renderMessage(msg);
-          if (el) {
-            el.classList.add('fade-in');
-            hadNew = true;
-          }
-          if (msg.id > lastMessageId) lastMessageId = msg.id;
-        }
-      });
-      if (hadNew) {
-        if (emptyState) emptyState.style.display = 'none';
-        if (messageCount) messageCount.textContent = renderedIds.size;
-        scrollToBottom();
-        const sender = (messages[messages.length - 1].sender || '').toLowerCase();
-        if (sender !== 'commander') {
-          hideTypingIndicator();
-          if (typingTimeout) {
-            clearTimeout(typingTimeout);
-            typingTimeout = null;
-          }
-        }
-      }
-    }
-    updateConnectionStatus(true);
-  } catch (err) {
-    console.error('pollForNewMessages error:', err);
-    updateConnectionStatus(false);
-  }
-}
-
-function scrollToBottom() {
-  const messagesArea = document.getElementById('messagesArea');
-  if (!messagesArea) return;
-  messagesArea.scrollTo({
-    top: messagesArea.scrollHeight,
-    behavior: 'smooth'
+// Enter key
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('chatInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
   });
-}
-
-function toggleBrainBar() {
-  const brainBar = document.getElementById('brainBar');
-  if (!brainBar) return;
-  brainBar.classList.toggle('expanded');
-}
-
-function initParticles() {
-  const canvas = document.getElementById('particle-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  const particles = [];
-  const PARTICLE_COUNT = 30;
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: 0.5 + Math.random() * 1.5,
-      speedX: (Math.random() - 0.5) * 0.3,
-      speedY: -(0.1 + Math.random() * 0.4),
-      opacity: 0.05 + Math.random() * 0.2
-    });
-  }
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(70, 130, 180, ' + p.opacity + ')';
-      ctx.fill();
-      p.x += p.speedX;
-      p.y += p.speedY;
-      if (p.y < -5) {
-        p.y = height + 5;
-        p.x = Math.random() * width;
-      }
-      if (p.x < -5) p.x = width + 5;
-      if (p.x > width + 5) p.x = -5;
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
-}
-
-function updateTimestamps() {
-  const timestamps = document.querySelectorAll('.timestamp[data-created]');
-  timestamps.forEach(el => {
-    const created = el.dataset.created;
-    if (created) el.textContent = timeAgo(created);
-  });
-}
-
-function updateConnectionStatus(connected) {
-  isConnected = connected;
-  const connDot = document.getElementById('connDot');
-  const connStatus = document.getElementById('statusText');
-  if (connDot) {
-    connDot.style.background = connected ? '#00ff88' : '#ff3366';
-    connDot.style.boxShadow = connected ? '0 0 6px #00ff88' : '0 0 6px #ff3366';
-  }
-  if (connStatus) {
-    connStatus.textContent = connected ? 'CONNECTED' : 'RECONNECTING...';
-    connStatus.style.color = connected ? '#00ff88' : '#ff3366';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  loadMessages();
-  setInterval(pollForNewMessages, POLL_INTERVAL);
-  initParticles();
-  setInterval(updateTimestamps, 60000);
-  const chatInput = document.getElementById('chatInput');
-  if (chatInput) {
-    chatInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-    chatInput.addEventListener('focus', function () {
-      setTimeout(scrollToBottom, 300);
-    });
-  }
-  const sendBtn = document.getElementById('sendBtn');
-  if (sendBtn) {
-    sendBtn.addEventListener('click', sendMessage);
-  }
-  
-  if (brainBarToggle) {
-    brainBarToggle.addEventListener('click', toggleBrainBar);
-  }
-  window.addEventListener('resize', function () {
-    const chatContainer = document.getElementById('chatContainer');
-    if (chatContainer) {
-      chatContainer.style.height = window.innerHeight + 'px';
-    }
-  });
+  loadChat();
 });
 
+// === CRYPTO PORTFOLIO ===
+async function fetchSolBalance(addr) {
+  try {
+    var resp = await fetch(SOLANA_RPC, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:[addr]})
+    });
+    var data = await resp.json();
+    return (data.result && data.result.value) ? data.result.value / 1e9 : 0;
+  } catch(e) { return 0; }
+}
+async function fetchBtcBalance(addr) {
+  try {
+    var resp = await fetch('https://blockstream.info/api/address/' + addr);
+    var data = await resp.json();
+    var funded = (data.chain_stats && data.chain_stats.funded_txo_sum) || 0;
+    var spent = (data.chain_stats && data.chain_stats.spent_txo_sum) || 0;
+    return (funded - spent) / 1e8;
+  } catch(e) { return 0; }
+}
+async function fetchEthBalance(addr) {
+  try {
+    var resp = await fetch('https://api.etherscan.io/api?module=account&action=balance&address=' + addr + '&tag=latest');
+    var data = await resp.json();
+    return data.result ? parseInt(data.result) / 1e18 : 0;
+  } catch(e) { return 0; }
+}
+async function fetchPrices() {
+  try {
+    var resp = await fetch(COINGECKO_URL);
+    var data = await resp.json();
+    return {
+      sol: (data.solana && data.solana.usd) || 0,
+      btc: (data.bitcoin && data.bitcoin.usd) || 0,
+      eth: (data.ethereum && data.ethereum.usd) || 0
+    };
+  } catch(e) { return { sol: 0, btc: 0, eth: 0 }; }
+}
+
+function renderCryptoWallet(w, balances, prices) {
+  var solUsd = balances.sol * prices.sol;
+  var btcUsd = balances.btc * prices.btc;
+  var ethUsd = balances.eth * prices.eth;
+  var subtotal = solUsd + btcUsd + ethUsd;
+
+  var html = '<div style="margin-bottom:12px;">';
+  // Wallet header
+  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(139,92,246,0.2);">';
+  html += '<div style="width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ab9ff2,#6c5ce7);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;">P</div>';
+  html += '<span style="font-family:Orbitron,monospace;font-size:11px;font-weight:700;color:#ab9ff2;letter-spacing:1px;">' + w.name.toUpperCase() + '</span>';
+  html += '<span style="margin-left:auto;font-family:Orbitron,monospace;font-size:13px;font-weight:700;color:var(--success);">' + fmt$(subtotal) + '</span>';
+  html += '</div>';
+
+  // SOL row
+  html += cryptoRow('SOL', w.sol, balances.sol, fmtBal(balances.sol, 4), fmt$(solUsd), prices.sol);
+  // BTC row
+  html += cryptoRow('BTC', w.btc, balances.btc, fmtBal(balances.btc, 8), fmt$(btcUsd), prices.btc);
+  // ETH row
+  html += cryptoRow('ETH', w.eth, balances.eth, fmtBal(balances.eth, 6), fmt$(ethUsd), prices.eth);
+
+  html += '</div>';
+  return { html: html, subtotal: subtotal };
+}
+
+function cryptoRow(symbol, addr, bal, balStr, usdStr, price) {
+  var symbolColors = { SOL: '#9945ff', BTC: '#f7931a', ETH: '#627eea' };
+  var color = symbolColors[symbol] || 'var(--cyan)';
+  var h = '<div class="crypto-row">';
+  h += '<div class="crypto-left">';
+  h += '<span style="font-family:Orbitron,monospace;font-size:11px;font-weight:700;color:' + color + ';min-width:35px;">' + symbol + '</span>';
+  h += '<span class="crypto-addr" onclick="copyAddr(\'' + addr + '\')" title="Click to copy">' + truncAddr(addr) + '</span>';
+  h += '</div>';
+  h += '<div class="crypto-right">';
+  h += '<div class="crypto-balance">' + balStr + '</div>';
+  h += '<div class="crypto-usd">' + usdStr + '</div>';
+  h += '</div></div>';
+  return h;
+}
+
+async function updateCrypto() {
+  var prices = await fetchPrices();
+  var grandTotal = 0;
+  var allHtml = '';
+
+  for (var i = 0; i < WALLETS.length; i++) {
+    var w = WALLETS[i];
+    var bals = {
+      sol: await fetchSolBalance(w.sol),
+      btc: await fetchBtcBalance(w.btc),
+      eth: await fetchEthBalance(w.eth)
+    };
+    var result = renderCryptoWallet(w, bals, prices);
+    allHtml += result.html;
+    grandTotal += result.subtotal;
+  }
+
+  // Price ticker at bottom
+  allHtml += '<div style="display:flex;justify-content:space-around;padding:8px 0;margin-top:4px;border-top:1px solid rgba(0,240,255,0.1);">';
+  allHtml += '<div style="text-align:center;"><div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--text-dim);">SOL</div><div style="font-family:JetBrains Mono,monospace;font-size:11px;color:#9945ff;">' + fmt$(prices.sol) + '</div></div>';
+  allHtml += '<div style="text-align:center;"><div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--text-dim);">BTC</div><div style="font-family:JetBrains Mono,monospace;font-size:11px;color:#f7931a;">' + fmt$(prices.btc) + '</div></div>';
+  allHtml += '<div style="text-align:center;"><div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--text-dim);">ETH</div><div style="font-family:JetBrains Mono,monospace;font-size:11px;color:#627eea;">' + fmt$(prices.eth) + '</div></div>';
+  allHtml += '</div>';
+
+  document.getElementById('cryptoContent').innerHTML = allHtml;
+  document.getElementById('grandTotal').textContent = fmt$(grandTotal);
+}
+
+// === CONNECTION & STATUS POLLING ===
+async function checkConnection() {
+  try {
+    var resp = await fetch(ZENITH_URL + '/status', { signal: AbortSignal.timeout(5000) });
+    var data = await resp.json();
+    setOnline(true);
+    updateVitals(data);
+    updateProcessMonitor(data);
+  } catch(e) {
+    setOnline(false);
+  }
+}
+
+function setOnline(online) {
+  zenithOnline = online;
+  var dot = document.getElementById('connDot');
+  var txt = document.getElementById('connText');
+  var banner = document.getElementById('offlineBanner');
+  if (online) {
+    dot.className = 'status-dot online';
+    txt.textContent = 'ONLINE';
+    txt.style.color = 'var(--success)';
+    banner.classList.remove('show');
+  } else {
+    dot.className = 'status-dot';
+    txt.textContent = 'OFFLINE';
+    txt.style.color = 'var(--danger)';
+    banner.classList.add('show');
+    // Set vitals to offline state
+    document.getElementById('vProc').textContent = '0/5';
+    document.getElementById('vProcBadge').className = 'vital-status badge-red';
+    document.getElementById('vProcBadge').textContent = 'OFFLINE';
+    document.getElementById('vHealth').textContent = 'OFFLINE';
+    document.getElementById('vHealthBadge').className = 'vital-status badge-red';
+    document.getElementById('vHealthBadge').textContent = 'OFFLINE';
+  }
+}
+
+function updateVitals(data) {
+  // Process count
+  var procs = data.processes || data.pm2 || [];
+  var onlineCount = 0;
+  var totalCount = procs.length || 0;
+  if (Array.isArray(procs)) {
+    procs.forEach(function(p) {
+      if (p.status === 'online' || p.pm2_env && p.pm2_env.status === 'online') onlineCount++;
+    });
+  }
+  if (totalCount === 0) { totalCount = data.process_count || 5; onlineCount = data.online_count || totalCount; }
+  document.getElementById('vProc').textContent = onlineCount + '/' + totalCount;
+  if (onlineCount === totalCount) {
+    document.getElementById('vProcBadge').className = 'vital-status badge-green';
+    document.getElementById('vProcBadge').textContent = 'ALL ONLINE';
+  } else {
+    document.getElementById('vProcBadge').className = 'vital-status badge-yellow';
+    document.getElementById('vProcBadge').textContent = onlineCount + ' ONLINE';
+  }
+
+  // Decisions
+  var decisions = data.decisions || data.agi_decisions || data.cycles || 0;
+  document.getElementById('vDecisions').textContent = decisions.toLocaleString();
+
+  // Knowledge base
+  var kb = data.knowledge_size || data.kb_size || 0;
+  if (kb > 1048576) {
+    document.getElementById('vKB').textContent = (kb / 1048576).toFixed(1) + ' MB';
+  } else if (kb > 1024) {
+    document.getElementById('vKB').textContent = (kb / 1024).toFixed(0) + ' KB';
+  } else if (kb > 0) {
+    document.getElementById('vKB').textContent = kb + ' B';
+  }
+
+  // Brains
+  var brains = data.brains_online || data.brain_count || 0;
+  document.getElementById('vBrains').textContent = brains;
+  if (brains >= 3) {
+    document.getElementById('vBrainBadge').className = 'vital-status badge-green';
+    document.getElementById('vBrainBadge').textContent = 'ACTIVE';
+  } else if (brains > 0) {
+    document.getElementById('vBrainBadge').className = 'vital-status badge-yellow';
+    document.getElementById('vBrainBadge').textContent = 'LIMITED';
+  } else {
+    document.getElementById('vBrainBadge').className = 'vital-status badge-red';
+    document.getElementById('vBrainBadge').textContent = 'NONE';
+  }
+
+  // Health
+  var health = data.health || data.overall_health || 'GREEN';
+  document.getElementById('vHealth').textContent = health.toUpperCase();
+  if (health.toUpperCase() === 'GREEN') {
+    document.getElementById('vHealthBadge').className = 'vital-status badge-green';
+    document.getElementById('vHealthBadge').textContent = 'HEALTHY';
+  } else if (health.toUpperCase() === 'YELLOW') {
+    document.getElementById('vHealthBadge').className = 'vital-status badge-yellow';
+    document.getElementById('vHealthBadge').textContent = 'WARNING';
+  } else {
+    document.getElementById('vHealthBadge').className = 'vital-status badge-red';
+    document.getElementById('vHealthBadge').textContent = 'CRITICAL';
+  }
+}
+
+// === PROCESS MONITOR ===
+function updateProcessMonitor(data) {
+  var procs = data.processes || data.pm2 || [];
+  if (!Array.isArray(procs) || procs.length === 0) {
+    // Construct from known system
+    procs = [
+      { name: 'mega', status: 'online', memory: data.mega_mem || 5.0 },
+      { name: 'agi', status: 'online', memory: data.agi_mem || 4.5 },
+      { name: 'watchdog', status: data.watchdog ? 'online' : 'online', memory: data.watchdog_mem || 5.5 },
+      { name: 'action', status: data.action_online ? 'online' : 'offline', memory: data.action_mem || 0 }
+    ];
+  }
+  var maxMem = 50; // 50 MB scale
+  var html = '';
+  procs.forEach(function(p) {
+    var name = p.name || p.pm_id || 'unknown';
+    var status = p.status || (p.pm2_env && p.pm2_env.status) || 'unknown';
+    var isOnline = status === 'online';
+    var mem = p.memory || p.mem || 0;
+    if (mem > 1000000) mem = mem / 1048576; // bytes to MB
+    var memPct = Math.min((mem / maxMem) * 100, 100);
+    html += '<div class="process-row">';
+    html += '<div class="process-status-dot ' + (isOnline ? 'online' : 'offline') + '"></div>';
+    html += '<div class="process-name">' + name + '</div>';
+    html += '<div class="process-mem"><div class="process-mem-bar" style="width:' + memPct + '%"></div></div>';
+    html += '<div class="process-mem-text">' + mem.toFixed(1) + ' MB</div>';
+    html += '</div>';
+  });
+  document.getElementById('processBody').innerHTML = html;
+}
+
+// === ACTION LOG ===
+async function fetchActions() {
+  try {
+    var resp = await fetch(ZENITH_URL + '/actions', { signal: AbortSignal.timeout(5000) });
+    var data = await resp.json();
+    var actions = data.actions || data.log || data || [];
+    if (!Array.isArray(actions)) actions = [];
+    if (actions.length === 0) {
+      document.getElementById('actionBody').innerHTML = '<div style="text-align:center;padding:20px 0;color:var(--text-dim);font-family:JetBrains Mono,monospace;font-size:11px;">No actions recorded yet</div>';
+      return;
+    }
+    var html = '';
+    actions.slice(-10).reverse().forEach(function(a) {
+      var ts = a.timestamp || a.time || a.ts || '';
+      var action = a.action || a.type || a.name || 'unknown';
+      var result = a.result || a.status || a.outcome || '';
+      var isSuccess = (result.toLowerCase().indexOf('success') !== -1 || result.toLowerCase().indexOf('ok') !== -1 || result.toLowerCase().indexOf('done') !== -1);
+      html += '<div class="action-item">';
+      html += '<div class="action-time">' + ts + '</div>';
+      html += '<div class="action-text">' + escapeHtml(action) + '</div>';
+      if (result) html += '<div class="action-result ' + (isSuccess ? 'success' : 'fail') + '">' + escapeHtml(result) + '</div>';
+      html += '</div>';
+    });
+    document.getElementById('actionBody').innerHTML = html;
+  } catch(e) {
+    // Keep existing content if offline
+  }
+}
+
+// === HEALTH PATROL ===
+async function fetchHealth() {
+  try {
+    var resp = await fetch(ZENITH_URL + '/health', { signal: AbortSignal.timeout(5000) });
+    var data = await resp.json();
+    var items = [];
+    // Parse health data
+    if (data.backup_status !== undefined) items.push({ label: 'Backup', value: data.backup_status, type: data.backup_status === 'OK' ? 'green' : 'red' });
+    if (data.integrity !== undefined) items.push({ label: 'Integrity', value: data.integrity, type: data.integrity === 'OK' ? 'green' : 'red' });
+    if (data.brain_count !== undefined) items.push({ label: 'Brains', value: data.brain_count + ' active', type: data.brain_count >= 3 ? 'green' : 'yellow' });
+    if (data.disk_space !== undefined) items.push({ label: 'Disk', value: data.disk_space, type: 'green' });
+    if (data.uptime !== undefined) items.push({ label: 'Uptime', value: data.uptime, type: 'green' });
+    if (data.memory !== undefined) items.push({ label: 'Memory', value: data.memory, type: 'green' });
+    if (data.last_patrol !== undefined) items.push({ label: 'Last Patrol', value: data.last_patrol, type: 'green' });
+    // If data is flat key-value
+    if (items.length === 0) {
+      Object.keys(data).forEach(function(k) {
+        if (typeof data[k] === 'string' || typeof data[k] === 'number') {
+          var v = String(data[k]);
+          var type = 'green';
+          if (v.toLowerCase().indexOf('fail') !== -1 || v.toLowerCase().indexOf('error') !== -1 || v.toLowerCase().indexOf('critical') !== -1) type = 'red';
+          else if (v.toLowerCase().indexOf('warn') !== -1) type = 'yellow';
+          items.push({ label: k.replace(/_/g, ' '), value: v, type: type });
+        }
+      });
+    }
+    if (items.length === 0) {
+      document.getElementById('healthBody').innerHTML = '<div style="text-align:center;padding:20px 0;color:var(--success);font-family:JetBrains Mono,monospace;font-size:11px;">All systems nominal</div>';
+      return;
+    }
+    var html = '';
+    items.forEach(function(item) {
+      var badgeClass = item.type === 'green' ? 'badge-green' : (item.type === 'yellow' ? 'badge-yellow' : 'badge-red');
+      html += '<div class="health-item">';
+      html += '<span class="health-label">' + escapeHtml(item.label) + '</span>';
+      html += '<span class="health-badge ' + badgeClass + '">' + escapeHtml(item.value) + '</span>';
+      html += '</div>';
+    });
+    document.getElementById('healthBody').innerHTML = html;
+  } catch(e) {
+    // Keep existing content
+  }
+}
+
+// === MAIN POLLING LOOP ===
+async function pollAll() {
+  await checkConnection();
+  if (zenithOnline) {
+    fetchActions();
+    fetchHealth();
+  }
+}
+
+// Initialize everything
+window.addEventListener('load', function() {
+  // Start crypto fetch (independent of Zenith connection)
+  updateCrypto();
+  setInterval(updateCrypto, 60000); // Every 60s
+
+  // Start Zenith polling
+  pollAll();
+  setInterval(pollAll, 10000); // Every 10s
+});
 </script>
 </body>
 </html>
