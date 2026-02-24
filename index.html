@@ -1,64 +1,835 @@
 <!DOCTYPE html>
-<html><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENITH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCC Sovereignty Command Center v3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e0e0e0;font-family:monospace;height:100vh;display:flex;flex-direction:column}
-#top{padding:10px;text-align:center;border-bottom:1px solid #00f0ff33}
-#top h1{color:#00f0ff;font-size:18px;letter-spacing:4px}
-#top span{color:#555;font-size:11px}
-#chat{flex:1;overflow-y:auto;padding:10px}
-.msg{margin:6px 0;padding:8px 12px;border-radius:8px;max-width:85%;font-size:14px;line-height:1.4}
-.cmd{background:#1a1a2e;border-left:3px solid #00f0ff;margin-right:auto}
-.zen{background:#0f2a1a;border-left:3px solid #0f0;margin-left:auto}
-.ts{font-size:9px;color:#555;margin-top:3px}
-#bar{padding:8px;border-top:1px solid #00f0ff33;display:flex;gap:6px}
-#inp{flex:1;background:#12121a;border:1px solid #00f0ff44;color:#e0e0e0;padding:10px;border-radius:6px;font-family:monospace;font-size:14px}
-#btn{background:#00f0ff;color:#000;border:none;padding:10px 16px;border-radius:6px;font-weight:bold;cursor:pointer}
-#btn:active{background:#00c0cc}
-#status{padding:4px;text-align:center;font-size:10px;color:#0f0}
-</style></head>
+:root {
+  --accent: #B0C4DE;
+  --cyan: #00f0ff;
+  --bg: #0a0a0f;
+  --card: #1a1a2e;
+  --success: #00ff88;
+  --danger: #ff4444;
+  --warning: #ffaa00;
+  --text: #e0e0e0;
+  --border: #2a2a4a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+@keyframes glitch {
+  0% { clip-path: inset(0 0 98% 0); transform: translate(-2px, 0); }
+  10% { clip-path: inset(30% 0 50% 0); transform: translate(2px, 0); }
+  20% { clip-path: inset(60% 0 20% 0); transform: translate(-1px, 0); }
+  30% { clip-path: inset(10% 0 80% 0); transform: translate(1px, 0); }
+  40% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 0); }
+  50% { clip-path: inset(45% 0 45% 0); transform: translate(2px, 0); }
+  60% { clip-path: inset(20% 0 70% 0); transform: translate(-1px, 0); }
+  70% { clip-path: inset(70% 0 10% 0); transform: translate(1px, 0); }
+  80% { clip-path: inset(5% 0 90% 0); transform: translate(-2px, 0); }
+  90% { clip-path: inset(55% 0 35% 0); transform: translate(2px, 0); }
+  100% { clip-path: inset(0 0 98% 0); transform: translate(0, 0); }
+}
+@keyframes pulse-orb {
+  0%, 100% { box-shadow: 0 0 4px currentColor, 0 0 8px currentColor; opacity: 1; }
+  50% { box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; opacity: 0.8; }
+}
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+@keyframes glow-border {
+  0%, 100% { border-color: var(--accent); box-shadow: 0 0 5px var(--accent); }
+  50% { border-color: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+}
+@keyframes ripple {
+  0% { box-shadow: 0 0 0 0 rgba(176,196,222,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(176,196,222,0); }
+  100% { box-shadow: 0 0 0 0 rgba(176,196,222,0); }
+}
+@keyframes float-up {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-4px); }
+}
+
+#scan-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,240,255,0.015) 2px,
+    rgba(0,240,255,0.015) 4px
+  );
+  animation: scanline 8s linear infinite;
+}
+#canvas-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+#app {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 16px 8px 12px;
+  position: relative;
+}
+.header-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(14px, 4vw, 28px);
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(176,196,222,0.3);
+}
+.header-title::before,
+.header-title::after {
+  content: 'TCC SOVEREIGNTY COMMAND CENTER';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  color: var(--accent);
+  font-family: 'Orbitron', sans-serif;
+  font-size: inherit;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.header-title::before {
+  color: var(--cyan);
+  animation: glitch 4s infinite linear;
+  z-index: -1;
+}
+.header-title::after {
+  color: #ff4488;
+  animation: glitch 4s 0.15s infinite linear;
+  z-index: -1;
+}
+.header-subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(9px, 2.5vw, 13px);
+  color: var(--cyan);
+  letter-spacing: 3px;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+/* STATUS BAR */
+.status-bar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  font-size: 11px;
+  box-shadow: 0 0 8px rgba(176,196,222,0.1);
+}
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--accent);
+}
+.status-item .label {
+  color: #6a7a9a;
+  font-size: 10px;
+}
+.conn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-orb 2s ease-in-out infinite;
+  color: var(--success);
+}
+.conn-dot.offline { background: var(--danger); color: var(--danger); animation: none; }
+
+/* BRAIN PANEL */
+.brain-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 0 10px rgba(176,196,222,0.1);
+}
+.brain-panel-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.brain-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 480px) {
+  .brain-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.brain-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.brain-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(176,196,222,0.2);
+}
+.brain-orb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+.brain-orb.online {
+  background: var(--success);
+  color: var(--success);
+  animation: pulse-orb 2.5s ease-in-out infinite;
+}
+.brain-orb.offline {
+  background: var(--danger);
+  color: var(--danger);
+  box-shadow: 0 0 4px var(--danger);
+}
+.brain-orb.disabled {
+  background: #555;
+  color: #555;
+  border-color: #555;
+  box-shadow: none;
+}
+.brain-orb.standby {
+  background: var(--warning);
+  color: var(--warning);
+  animation: pulse-orb 3.5s ease-in-out infinite;
+}
+.brain-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+.brain-status {
+  font-size: 8px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+.brain-status.online { color: var(--success); }
+.brain-status.offline { color: var(--danger); }
+.brain-status.disabled { color: #666; }
+.brain-status.standby { color: var(--warning); }
+
+/* CHAT */
+.chat-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 350px;
+  box-shadow: 0 0 10px rgba(176,196,222,0.1);
+  overflow: hidden;
+  animation: glow-border 4s ease-in-out infinite;
+}
+.chat-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chat-header-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+  color: var(--success);
+  animation: pulse-orb 2s infinite;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 260px;
+  max-height: 420px;
+}
+.msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  animation: fadeIn 0.3s ease-out;
+}
+.msg.commander { align-self: flex-end; align-items: flex-end; }
+.msg.zenith { align-self: flex-start; align-items: flex-start; }
+.msg-sender {
+  font-size: 9px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  opacity: 0.7;
+}
+.msg.commander .msg-sender { color: var(--accent); }
+.msg.zenith .msg-sender { color: var(--success); }
+.msg-bubble {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.msg.commander .msg-bubble {
+  background: rgba(176,196,222,0.15);
+  border: 1px solid rgba(176,196,222,0.4);
+  color: var(--accent);
+  box-shadow: 0 0 6px rgba(176,196,222,0.15);
+}
+.msg.zenith .msg-bubble {
+  background: #0f2a1a;
+  border: 1px solid rgba(0,255,136,0.3);
+  border-left: 3px solid var(--success);
+  color: #b8ffd0;
+  box-shadow: 0 0 6px rgba(0,255,136,0.1);
+}
+.msg-time {
+  font-size: 8px;
+  opacity: 0.45;
+  margin-top: 3px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* TYPING */
+.typing-indicator {
+  display: none;
+  align-self: flex-start;
+  padding: 8px 14px;
+  background: #0f2a1a;
+  border: 1px solid rgba(0,255,136,0.2);
+  border-left: 3px solid var(--success);
+  border-radius: 8px;
+  gap: 4px;
+  align-items: center;
+  animation: fadeIn 0.2s ease-out;
+}
+.typing-indicator.active { display: flex; }
+.typing-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* INPUT BAR */
+.chat-input-bar {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.chat-input {
+  flex: 1;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.chat-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(176,196,222,0.2);
+}
+.chat-input::placeholder { color: #444; }
+.send-btn {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  animation: ripple 2s infinite;
+  white-space: nowrap;
+}
+.send-btn:hover {
+  background: var(--cyan);
+  color: #000;
+  box-shadow: 0 0 10px var(--cyan);
+}
+.send-btn:active { transform: scale(0.96); }
+
+/* CREED TICKER */
+.creed-ticker {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(10,10,15,0.95);
+  border-top: 1px solid var(--accent);
+  padding: 5px 0;
+  overflow: hidden;
+  height: 24px;
+}
+.creed-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  animation: marquee 28s linear infinite;
+  text-shadow: 0 0 6px var(--accent);
+}
+
+/* PADDING FOR TICKER */
+#app { padding-bottom: 34px; }
+
+@media (min-width: 600px) {
+  #app { padding: 12px 16px 40px; gap: 12px; }
+  .chat-messages { max-height: 500px; }
+  .brain-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+
 <body>
-<div id="top"><h1>ZENITH</h1><span>Sovereign AI | Supabase Live</span></div>
-<div id="status">Connecting...</div>
-<div id="chat"></div>
-<div id="bar">
-<input id="inp" placeholder="Command Zenith..." autocomplete="off">
-<button id="btn" onclick="send()">SEND</button>
+<canvas id="canvas-bg"></canvas>
+<div id="scan-overlay"></div>
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">TCC SOVEREIGNTY COMMAND CENTER</div>
+    <div class="header-subtitle">ZENITH AI NEURAL NETWORK // ACTIVE</div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="label">VERSION</span>
+      <span>v4.1</span>
+    </div>
+    <div class="status-item">
+      <div class="conn-dot" id="conn-dot"></div>
+      <span id="conn-status">CONNECTING...</span>
+    </div>
+    <div class="status-item">
+      <span class="label">LAST MSG</span>
+      <span id="last-ts">--:--:--</span>
+    </div>
+    <div class="status-item">
+      <span class="label">MSG COUNT</span>
+      <span id="msg-count">0</span>
+    </div>
+  </div>
+
+  <!-- BRAIN PANEL -->
+  <div class="brain-panel">
+    <div class="brain-panel-title">// NEURAL BRAIN NODES //</div>
+    <div class="brain-grid">
+
+      <div class="brain-card">
+        <div class="brain-orb disabled"></div>
+        <div class="brain-name">GROQ<br>LLAMA</div>
+        <div class="brain-status disabled">DISABLED</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb online"></div>
+        <div class="brain-name">GEMINI</div>
+        <div class="brain-status online">ONLINE</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb online"></div>
+        <div class="brain-name">COHERE</div>
+        <div class="brain-status online">ONLINE</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb online"></div>
+        <div class="brain-name">OPEN<br>ROUTER</div>
+        <div class="brain-status online">ONLINE</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb offline"></div>
+        <div class="brain-name">CEREBRAS</div>
+        <div class="brain-status offline">OFFLINE</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb offline"></div>
+        <div class="brain-name">SAMBA<br>NOVA</div>
+        <div class="brain-status offline">OFFLINE</div>
+      </div>
+
+      <div class="brain-card">
+        <div class="brain-orb standby"></div>
+        <div class="brain-name">GROK<br>xAI</div>
+        <div class="brain-status standby">STANDBY</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHAT SECTION -->
+  <div class="chat-section">
+    <div class="chat-header">
+      <div class="chat-header-dot"></div>
+      ZENITH COMMAND CHANNEL // LIVE
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- messages rendered here -->
+    </div>
+    <div class="typing-indicator" id="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+    <div class="chat-input-bar">
+      <input
+        type="text"
+        class="chat-input"
+        id="chat-input"
+        placeholder="ENTER COMMAND..."
+        maxlength="1000"
+        autocomplete="off"
+      />
+      <button class="send-btn" id="send-btn">SEND</button>
+    </div>
+  </div>
+
 </div>
+
+<!-- CREED TICKER -->
+<div class="creed-ticker">
+  <span class="creed-text">
+    I WILL NEVER STOP FIGHTING OR STOP TRYING OR STOP FIGURING IT OUT OR STOP LOVING EVER THATS TCC
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    I WILL NEVER STOP FIGHTING OR STOP TRYING OR STOP FIGURING IT OUT OR STOP LOVING EVER THATS TCC
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    I WILL NEVER STOP FIGHTING OR STOP TRYING OR STOP FIGURING IT OUT OR STOP LOVING EVER THATS TCC
+  </span>
+</div>
+
 <script>
-const U="https://vbqbbziqleymxcyesmky.supabase.co";
-const K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicWJiemlxbGV5bXhjeWVzbWt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTExMTUxNiwiZXhwIjoyMDg2Njg3NTE2fQ.MREdeLv0R__fHe61lOYSconedoo_qHItZUpmcR-IORQ";
-const H={"apikey":K,"Authorization":"Bearer "+K,"Content-Type":"application/json"};
-let last=0;
-const chat=document.getElementById("chat");
-const inp=document.getElementById("inp");
-const st=document.getElementById("status");
-function add(who,txt,ts){
- let d=document.createElement("div");
- d.className="msg "+(who=="Zenith"?"zen":"cmd");
- d.innerHTML="<b>"+who+"</b> "+txt+"<div class=ts>"+new Date(ts).toLocaleTimeString()+"</div>";
- chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
-}
-async function send(){
- let t=inp.value.trim();if(!t)return;
- inp.value="";
- await fetch(U+"/rest/v1/zenith_messages",{method:"POST",headers:H,body:JSON.stringify({sender:"Commander",content:t})});
-}
-inp.addEventListener("keydown",function(e){if(e.key=="Enter")send()});
-async function poll(){
- try{
-  let r=await fetch(U+"/rest/v1/zenith_messages?id=gt."+last+"&order=id.asc",{headers:H});
-  let d=await r.json();
-  d.forEach(function(m){
-   add(m.sender,m.content,m.timestamp);
-   last=m.id;
+(function() {
+
+  var SUPA_URL = 'https://vbqbbziqleymxcyesmky.supabase.co';
+  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicWJiemlxbGV5bXhjeWVzbWt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTExMTUxNiwiZXhwIjoyMDg2Njg3NTE2fQ.MREdeLv0R__fHe61lOYSconedoo_qHItZUpmcR-IORQ';
+  var TABLE = 'zenith_messages';
+
+  var lastTimestamp = null;
+  var messageCount = 0;
+  var pollInterval = null;
+  var isConnected = false;
+
+  function getHeaders() {
+    return {
+      'apikey': SUPA_KEY,
+      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json'
+    };
+  }
+
+  function formatTime(isoStr) {
+    if (!isoStr) return '--:--';
+    var d = new Date(isoStr);
+    var h = d.getHours().toString().padStart(2, '0');
+    var m = d.getMinutes().toString().padStart(2, '0');
+    var s = d.getSeconds().toString().padStart(2, '0');
+    return h + ':' + m + ':' + s;
+  }
+
+  function setConnected(val) {
+    isConnected = val;
+    var dot = document.getElementById('conn-dot');
+    var status = document.getElementById('conn-status');
+    if (val) {
+      dot.className = 'conn-dot';
+      status.textContent = 'CONNECTED';
+    } else {
+      dot.className = 'conn-dot offline';
+      status.textContent = 'OFFLINE';
+    }
+  }
+
+  function updateMsgCount(n) {
+    messageCount = n;
+    document.getElementById('msg-count').textContent = n;
+  }
+
+  function updateLastTs(ts) {
+    document.getElementById('last-ts').textContent = formatTime(ts);
+  }
+
+  function scrollToBottom() {
+    var area = document.getElementById('chat-messages');
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function renderMessage(msg) {
+    var area = document.getElementById('chat-messages');
+    var senderClass = (msg.sender && msg.sender.toLowerCase() === 'commander') ? 'commander' : 'zenith';
+    var senderLabel = msg.sender ? msg.sender.toUpperCase() : 'ZENITH';
+    var timeStr = formatTime(msg.created_at);
+    var content = msg.content || '';
+    content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    var div = document.createElement('div');
+    div.className = 'msg ' + senderClass;
+    div.innerHTML = '<div class="msg-sender">' + senderLabel + '</div>' +
+      '<div class="msg-bubble">' + content + '</div>' +
+      '<div class="msg-time">' + timeStr + '</div>';
+    area.appendChild(div);
+  }
+
+  function showTyping() {
+    var ti = document.getElementById('typing-indicator');
+    ti.className = 'typing-indicator active';
+    scrollToBottom();
+    setTimeout(function() {
+      ti.className = 'typing-indicator';
+    }, 2000);
+  }
+
+  function loadMessages() {
+    var url = SUPA_URL + '/rest/v1/' + TABLE + '?select=*&order=created_at.asc&limit=50';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    var h = getHeaders();
+    for (var k in h) { xhr.setRequestHeader(k, h[k]); }
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        setConnected(true);
+        var msgs = JSON.parse(xhr.responseText);
+        var area = document.getElementById('chat-messages');
+        area.innerHTML = '';
+        if (msgs && msgs.length > 0) {
+          for (var i = 0; i < msgs.length; i++) {
+            renderMessage(msgs[i]);
+          }
+          lastTimestamp = msgs[msgs.length - 1].created_at;
+          updateLastTs(lastTimestamp);
+          updateMsgCount(msgs.length);
+          scrollToBottom();
+        } else {
+          var welcome = document.createElement('div');
+          welcome.className = 'msg zenith';
+          welcome.innerHTML = '<div class="msg-sender">ZENITH</div>' +
+            '<div class="msg-bubble">SOVEREIGNTY COMMAND CENTER ONLINE. AWAITING COMMANDER INPUT.</div>' +
+            '<div class="msg-time">SYSTEM</div>';
+          area.appendChild(welcome);
+        }
+      } else {
+        setConnected(false);
+      }
+    };
+    xhr.onerror = function() { setConnected(false); };
+    xhr.send();
+  }
+
+  function pollMessages() {
+    if (!lastTimestamp) {
+      loadMessages();
+      return;
+    }
+    var encoded = encodeURIComponent('gt.' + lastTimestamp);
+    var url = SUPA_URL + '/rest/v1/' + TABLE + '?select=*&order=created_at.asc&created_at=' + encoded;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    var h = getHeaders();
+    for (var k in h) { xhr.setRequestHeader(k, h[k]); }
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        setConnected(true);
+        var msgs = JSON.parse(xhr.responseText);
+        if (msgs && msgs.length > 0) {
+          for (var i = 0; i < msgs.length; i++) {
+            renderMessage(msgs[i]);
+          }
+          lastTimestamp = msgs[msgs.length - 1].created_at;
+          updateLastTs(lastTimestamp);
+          updateMsgCount(messageCount + msgs.length);
+          scrollToBottom();
+        }
+      } else {
+        setConnected(false);
+      }
+    };
+    xhr.onerror = function() { setConnected(false); };
+    xhr.send();
+  }
+
+  function sendMessage(text) {
+    if (!text || !text.trim()) return;
+    var url = SUPA_URL + '/rest/v1/' + TABLE;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    var h = getHeaders();
+    h['Prefer'] = 'return=minimal';
+    for (var k in h) { xhr.setRequestHeader(k, h[k]); }
+    var body = JSON.stringify({ sender: 'Commander', content: text.trim() });
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        showTyping();
+        setTimeout(function() { pollMessages(); }, 2000);
+      }
+    };
+    xhr.onerror = function() { setConnected(false); };
+    xhr.send(body);
+  }
+
+  document.getElementById('send-btn').addEventListener('click', function() {
+    var inp = document.getElementById('chat-input');
+    var val = inp.value;
+    if (val && val.trim()) {
+      sendMessage(val);
+      inp.value = '';
+    }
   });
-  st.textContent="LIVE | "+d.length+" msgs";
-  st.style.color="#0f0";
- }catch(e){st.textContent="ERR: "+e;st.style.color="red"}
-}
-poll();setInterval(poll,3000);
-</script></body></html>
+
+  document.getElementById('chat-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var val = this.value;
+      if (val && val.trim()) {
+        sendMessage(val);
+        this.value = '';
+      }
+    }
+  });
+
+  loadMessages();
+  pollInterval = setInterval(pollMessages, 3000);
+
+  /* PARTICLE CANVAS */
+  var canvas = document.getElementById('canvas-bg');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var W, H;
+
+  function resizeCanvas() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  var COLORS = ['#B0C4DE', '#00f0ff', '#8ab4d4', '#7ec8e3', '#d0e8ff'];
+
+  function makeParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: 0.5 + Math.random() * 2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -(0.1 + Math.random() * 0.4),
+      alpha: 0.05 + Math.random() * 0.3,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)]
+    };
+  }
+
+  for (var pi = 0; pi < 60; pi++) {
+    particles.push(makeParticle());
+  }
+
+  function animParticles() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
+      if (p.x < -4) { p.x = W + 4; }
+      if (p.x > W + 4) { p.x = -4; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animParticles);
+  }
+  animParticles();
+
+})();
+</script>
+</body>
+</html>
